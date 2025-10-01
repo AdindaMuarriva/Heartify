@@ -2,6 +2,7 @@ import React from "react";
 import "./landingPage.css";
 
 const LandingPage: React.FC = () => {
+  const isLoggedIn = false;
   return (
     <div className="landing-body">
       {/* Navbar */}
@@ -11,9 +12,9 @@ const LandingPage: React.FC = () => {
             Heartify
           </a>
           <div className="navbar-links">
-            <a href="/register">Beranda</a>
-            <a href="/register">Tentang Kami</a>
-            <a href="/register">Profil</a>
+            <a href={isLoggedIn ? "/" : "/register"}>Beranda</a>
+            <a href={isLoggedIn ? "/about" : "/register"}>Tentang Kami</a>
+            <a href={isLoggedIn ? "/profile" : "/register"}>Profil</a>
           </div>
           <a href="/login" className="navbar-login-button">
             Masuk
@@ -22,14 +23,19 @@ const LandingPage: React.FC = () => {
       </header>
 
       {/* Hero Section */}
-<section className="hero-section">
-  <h1 className="hero-title">Raise Your Hand for Humanity</h1>
-  <p className="hero-subtitle">
-    Heartify adalah platform donasi yang menghubungkan mereka yang peduli dengan sesama yang membutuhkan. 
-    Bersama, kita bisa membawa harapan dan menciptakan masa depan yang lebih baik.
-  </p>
-  <a href="/register" className="button button-cream">Donasi Sekarang</a>
-</section>
+    <section className="hero-section">
+      <h1 className="hero-title">Raise Your Hand for Humanity</h1>
+      <p className="hero-subtitle">
+        Heartify adalah platform donasi yang menghubungkan mereka yang peduli dengan sesama yang membutuhkan. 
+        Bersama, kita bisa membawa harapan dan menciptakan masa depan yang lebih baik.
+      </p>
+      <a
+          href={isLoggedIn ? "/donate" : "/register"}
+          className="button button-cream"
+        >
+          Donasi Sekarang
+        </a>
+    </section>
 
     {/* Mission Section */}
     <section className="mission-section">
@@ -39,7 +45,12 @@ const LandingPage: React.FC = () => {
         Dukungan finansial Anda memungkinkan kami memberikan bantuan langsung dan membuat dampak nyata di kehidupan banyak orang. 
         Setiap donasi, besar maupun kecil, membantu kami terus menjalankan misi ini dan memberdayakan komunitas yang membutuhkan.
       </p>
-      <a href="/register" className="button button-dark">Gabung Sekarang</a>
+      <a
+          href={isLoggedIn ? "/campaigns" : "/register"}
+          className="button button-dark"
+        >
+          Gabung Sekarang
+        </a>
     </section>
 
     {/* How We Work */}

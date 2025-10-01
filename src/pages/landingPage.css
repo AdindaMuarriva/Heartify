@@ -204,7 +204,7 @@ section {
 
 /* How We Work Section */
 .work-section {
-  background-color: var(--maroon-red);
+  background-color: var(--maroon-dark);
   color: var(--cream);
 }
 .work-grid {
@@ -215,7 +215,7 @@ section {
   margin: 0 auto;
 }
 .work-card {
-  background-color: var(--maroon-dark);
+  background-color: var(--maroon-red);
   padding: 2rem;
   border-radius: 0.75rem;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);

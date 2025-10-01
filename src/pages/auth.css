@@ -171,3 +171,64 @@ body {
   }
 }
 
+.register-btn {
+  display: inline-block;
+  text-align: center;
+  background-color: var(--maroon-dark);
+  color: var(--white);
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.register-btn:hover {
+  background-color: var(--maroon-red);
+  transform: translateY(-2px);
+}
+
+/* Popup overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Popup card */
+.popup-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  width: 300px;
+  color: black;
+  box-shadow: 0px 5px 20px rgba(0,0,0,0.3);
+}
+
+.popup-card h3 {
+  margin-bottom: 10px;
+  color: black;
+}
+
+.popup-card button {
+  margin: 5px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #b32820;
+  color: white;
+  font-weight: bold;
+}
+
+.popup-card button:hover {
+  background-color: #8b1c15;
+}
