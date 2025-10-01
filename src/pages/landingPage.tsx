@@ -1,5 +1,5 @@
 import React from "react";
-import "./auth.css";
+import "./landingPage.css";
 
 const LandingPage: React.FC = () => {
   return (
@@ -22,54 +22,45 @@ const LandingPage: React.FC = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="hero-section">
-        <h1 className="hero-title">
-          Raise Your Hand for Humanity
-        </h1>
-        <p className="hero-subtitle">
-          Heartify adalah platform donasi yang menghubungkan mereka yang peduli dengan sesama yang membutuhkan. Bersama, kita bisa membawa harapan dan menciptakan masa depan yang lebih baik.
-        </p>
-        <a href="/register" className="button button-cream">Donasi Sekarang</a>
-      </section>
+<section className="hero-section">
+  <h1 className="hero-title">Raise Your Hand for Humanity</h1>
+  <p className="hero-subtitle">
+    Heartify adalah platform donasi yang menghubungkan mereka yang peduli dengan sesama yang membutuhkan. 
+    Bersama, kita bisa membawa harapan dan menciptakan masa depan yang lebih baik.
+  </p>
+  <a href="/register" className="button button-cream">Donasi Sekarang</a>
+</section>
 
+    {/* Mission Section */}
+    <section className="mission-section">
+      <h2 className="section-title">Misi Kami</h2>
+      <p className="section-description">
+        Di <b>Heartify</b>, kami berdedikasi untuk menghadirkan harapan dan perubahan bagi mereka yang sedang berjuang menghadapi kesulitan. 
+        Dukungan finansial Anda memungkinkan kami memberikan bantuan langsung dan membuat dampak nyata di kehidupan banyak orang. 
+        Setiap donasi, besar maupun kecil, membantu kami terus menjalankan misi ini dan memberdayakan komunitas yang membutuhkan.
+      </p>
+      <a href="/register" className="button button-dark">Gabung Sekarang</a>
+    </section>
 
-      {/* Mission Section */}
-      <section className="mission-section">
-        <h2 className="section-title">Misi Kami</h2>
-        <p className="section-description">
-          Di <b>Heartify</b>, kami berdedikasi untuk menghadirkan harapan dan perubahan bagi mereka yang sedang berjuang menghadapi kesulitan. 
-          Dukungan finansial Anda memungkinkan kami memberikan bantuan langsung dan membuat dampak nyata di kehidupan banyak orang. 
-          Setiap donasi, besar maupun kecil, membantu kami terus menjalankan misi ini dan memberdayakan komunitas yang membutuhkan.
-        </p>
-
-        <a href="/register" className="button button-dark">Gabung Sekarang</a>
-      </section>
-
-      {/* How We Work */}
-      <section className="work-section">
-        <h2 className="section-title">Amanah Donasi Anda</h2>
-        <div className="work-grid">
-          {[
-            {
-              title: "Tepat Sasaran",
-              desc: "Kami bekerja sama langsung dengan komunitas lokal untuk memastikan setiap bantuan diterima oleh mereka yang paling berhak.",
-            },
-            {
-              title: "Proses Transparan",
-              desc: "Setiap donasi dapat Anda lacak. Kami menjamin semua proses penyaluran dilakukan secara terbuka dan akuntabel.",
-            },
-            {
-              title: "Dampak Berkelanjutan",
-              desc: "Bantuan yang kami salurkan bertujuan untuk menciptakan perubahan jangka panjang, bukan sekadar solusi sementara.",
-            },
-          ].map((item, index) => (
-            <div key={index} className="work-card">
-              <h3 className="work-card-title">{item.title}</h3>
-              <p>{item.desc}</p>
-            </div>
-          ))}
+    {/* How We Work */}
+    <section className="work-section">
+      <h2 className="section-title">Amanah Donasi Anda</h2>
+      <div className="work-grid">
+        <div className="work-card">
+          <h3 className="work-card-title">Tepat Sasaran</h3>
+          <p>Kami bekerja sama langsung dengan komunitas lokal untuk memastikan setiap bantuan diterima oleh mereka yang paling berhak.</p>
         </div>
-      </section>
+        <div className="work-card">
+          <h3 className="work-card-title">Proses Transparan</h3>
+          <p>Setiap donasi dapat Anda lacak. Kami menjamin semua proses penyaluran dilakukan secara terbuka dan akuntabel.</p>
+        </div>
+        <div className="work-card">
+          <h3 className="work-card-title">Dampak Berkelanjutan</h3>
+          <p>Bantuan yang kami salurkan bertujuan untuk menciptakan perubahan jangka panjang, bukan sekadar solusi sementara.</p>
+        </div>
+      </div>
+    </section>
+
 
       {/* Testimonials Section */}
       <section className="testimonial-section">
