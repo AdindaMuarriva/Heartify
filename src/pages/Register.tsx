@@ -8,6 +8,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
 
   return (
+    <div className="auth-page">\
     <div className="auth-container">
       <div className="auth-card">
         <h2>Create Account</h2>
@@ -36,6 +37,7 @@ export default function Register() {
           Already have an account? <Link to="/login">Login</Link>
         </p>
       </div>
+    </div>
     </div>
   );
 }

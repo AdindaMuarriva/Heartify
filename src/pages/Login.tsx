@@ -7,6 +7,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   return (
+    <div className="auth-page">
     <div className="auth-container">
       <div className="auth-card">
         <h2>Heartify Login</h2>
@@ -29,6 +30,7 @@ export default function Login() {
           Don’t have an account? <Link to="/register">Register</Link>
         </p>
       </div>
+    </div>
     </div>
   );
 }
