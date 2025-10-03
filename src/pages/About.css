@@ -1,0 +1,102 @@
+:root {
+  --maroon-dark: #3e0703;
+  --maroon-mid: #660e0a;
+  --maroon-red: #8b1c15;
+  --maroon-bright: #b32820;
+  --cream: #fff1c7;
+  --white: #ffffff;
+  --gray: #4a5568;
+}
+
+.about-page {
+  background: var(--cream);
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  color: var(--maroon-dark);
+  font-family: "Poppins", sans-serif;
+}
+
+/* Title */
+.about-page h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  color: var(--maroon-dark);
+  margin-bottom: 1rem;
+}
+
+.about-page p {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--gray);
+}
+
+/* Visi & Misi */
+.visi-misi {
+  display: flex;
+  justify-content: space-around;
+  gap: 2rem;
+  margin: 3rem 0;
+  flex-wrap: wrap;
+}
+
+.visi, .misi {
+  flex: 1;
+  min-width: 300px;
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.visi h2, .misi h2 {
+  color: var(--maroon-mid);
+  margin-bottom: 1rem;
+}
+
+/* Tim Kami */
+.team-section {
+  text-align: center;
+  margin-top: 4rem;
+}
+
+.team-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.team-card {
+  background: var(--white);
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 220px;
+  transition: transform 0.3s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-8px);
+}
+
+.team-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid var(--maroon-bright);
+}
+
+.team-card h3 {
+  margin: 1rem 0 0.5rem;
+  color: var(--maroon-dark);
+}
+
+.team-card p {
+  color: var(--gray);
+  font-size: 0.95rem;
+}

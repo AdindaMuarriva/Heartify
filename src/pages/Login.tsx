@@ -1,28 +1,34 @@
-import { useState, type FormEvent } from "react"; 
-import { Link } from "react-router-dom";
+import { useState, type FormEvent } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import "./auth.css";
 
 export default function Login() {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [showPopup, setShowPopup] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [popupMessage, setPopupMessage] = useState<string | null>(null);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const registeredUser = localStorage.getItem("registeredUser");
 
+    // 🔹 Belum register
     if (!registeredUser) {
-      setShowPopup(true); // tampilkan popup kalau belum register
+      setPopupMessage("Anda belum register. Silakan daftar terlebih dahulu.");
       return;
     }
 
     const user = JSON.parse(registeredUser);
+
+    // 🔹 Cek login
     if (user.email === email && user.password === password) {
-      alert("Login berhasil!");
-      window.location.href = "/";
+      setPopupMessage("Login berhasil!!");
+      setTimeout(() => {
+        navigate("/beranda"); // pindah ke beranda
+      }, 1500);
     } else {
-      alert("Email atau Password salah!");
+      setPopupMessage("Email atau Password salah!");
     }
   };
 
@@ -44,7 +50,9 @@ export default function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button type="submit">Login</button>
+            <button type="submit" disabled={!email || !password}>
+              Login
+            </button>
           </form>
           <p>
             Don’t have an account? <Link to="/register">Register</Link>
@@ -52,16 +60,14 @@ export default function Login() {
         </div>
       </div>
 
-      {/* 🔹 Popup muncul kalau belum register */}
-      {showPopup && (
+      {/* 🔹 Popup di sini */}
+      {popupMessage && (
         <div className="popup-overlay">
           <div className="popup-card">
-            <h3>Anda belum Register</h3>
-            <p>Silakan daftar terlebih dahulu sebelum login.</p>
-            <button onClick={() => (window.location.href = "/register")}>
-              Register Sekarang
+            <p>{popupMessage}</p>
+            <button className="popup-ok-btn" onClick={() => setPopupMessage(null)}>
+              OK
             </button>
-            <button onClick={() => setShowPopup(false)}>Tutup</button>
           </div>
         </div>
       )}
