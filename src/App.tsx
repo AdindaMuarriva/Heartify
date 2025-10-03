@@ -4,6 +4,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Beranda from "./pages/beranda";
 import AboutPage  from "./pages/AboutPage";
+import Profile  from "./pages/Profile";
+import DetailKampanye from "./pages/detailKampanye";
 
 function App() {
   return (
@@ -15,8 +17,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/beranda" element={<Beranda />} />
-        <Route path="/AboutPage" element={<AboutPage />} />
-
+        <Route path="/informasi/:id" element={<DetailKampanye />} />
+        <Route path="/AboutPage/" element={<AboutPage />} />
+        <Route path="/Profile/" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );
