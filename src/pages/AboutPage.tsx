@@ -1,8 +1,25 @@
 import "./about.css";
 
 export default function About() {
-  return (
+return (
     <div className="about-page">
+        {/* Navbar */}
+      <header className="navbar-container">
+        <nav className="navbar">
+          <a href="/" className="navbar-logo">
+            Heartify
+          </a>
+          <div className="navbar-links">
+            <a href="/beranda">Beranda</a>
+            <a href="/AboutPage">Tentang Kami</a>
+            <a href="/profile">Profil</a>
+          </div>
+          <a href="/login" className="navbar-login-button">
+            Keluar
+          </a>
+        </nav>
+      </header>
+      
       {/* Hero / Header Tentang Kami */}
       <section className="hero-section">
         <h1 className="hero-title">Tentang Kami</h1>
