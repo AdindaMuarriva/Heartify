@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import "./detailKampanye.css";
 
 const DetailKampanye: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   
   const [campaigns, setCampaigns] = useState<any[]>([]);
   const [campaign, setCampaign] = useState<any>(null);
@@ -18,6 +17,8 @@ const DetailKampanye: React.FC = () => {
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState("");
+  const [proofFile, setProofFile] = useState<File | null>(null);
+  const [proofPreview, setProofPreview] = useState<string>("");
 
   // Load data dari localStorage saat komponen mount
   useEffect(() => {
@@ -38,30 +39,60 @@ const DetailKampanye: React.FC = () => {
   const steps = [
     { number: 1, title: 'Jumlah Donasi' },
     { number: 2, title: 'Metode Bayar' },
-    { number: 3, title: 'Konfirmasi' }
+    { number: 3, title: 'Upload Bukti' }
   ];
 
-  // Informasi metode pembayaran
-  const paymentMethodsInfo = {
-    "Bank Transfer": {
-      description: "Transfer melalui ATM/Internet Banking/Mobile Banking",
-      processingTime: "1-2 jam kerja",
-      fees: "Rp 0"
+  // Informasi rekening/akun pembayaran untuk setiap provider
+  const paymentAccounts: { [key: string]: { [key: string]: string } } = {
+    "BCA": {
+      accountNumber: "123-456-7890",
+      accountName: "Yayasan Heartify Indonesia",
+      type: "Bank Transfer"
     },
-    "E-Wallet": {
-      description: "Pembayaran instan melalui dompet digital",
-      processingTime: "Instan",
-      fees: "Rp 0"
+    "Mandiri": {
+      accountNumber: "098-765-4321", 
+      accountName: "Yayasan Heartify Indonesia",
+      type: "Bank Transfer"
     },
-    "Credit Card": {
-      description: "Pembayaran dengan kartu kredit",
-      processingTime: "Instan",
-      fees: "2% dari total donasi"
+    "BNI": {
+      accountNumber: "567-890-1234",
+      accountName: "Yayasan Heartify Indonesia", 
+      type: "Bank Transfer"
     },
-    "Convenience Store": {
-      description: "Bayar di gerai Alfamart/Indomaret terdekat",
-      processingTime: "1-2 jam kerja",
-      fees: "Rp 2.500"
+    "BRI": {
+      accountNumber: "345-678-9012",
+      accountName: "Yayasan Heartify Indonesia",
+      type: "Bank Transfer"
+    },
+    "CIMB Niaga": {
+      accountNumber: "789-012-3456",
+      accountName: "Yayasan Heartify Indonesia",
+      type: "Bank Transfer"
+    },
+    "GoPay": {
+      accountNumber: "0812-3456-7890",
+      accountName: "Heartify Official",
+      type: "E-Wallet"
+    },
+    "OVO": {
+      accountNumber: "0812-3456-7890", 
+      accountName: "Heartify Official",
+      type: "E-Wallet"
+    },
+    "Dana": {
+      accountNumber: "0812-3456-7890",
+      accountName: "Heartify Official",
+      type: "E-Wallet"
+    },
+    "ShopeePay": {
+      accountNumber: "0812-3456-7890",
+      accountName: "Heartify Official", 
+      type: "E-Wallet"
+    },
+    "LinkAja": {
+      accountNumber: "0812-3456-7890",
+      accountName: "Heartify Official",
+      type: "E-Wallet"
     }
   };
 
@@ -90,25 +121,6 @@ const DetailKampanye: React.FC = () => {
     return null;
   };
 
-  // Hitung biaya admin
-  const calculateFees = (amount: number) => {
-    let adminFee = 0;
-    
-    if (selectedPayment === "Credit Card") {
-      adminFee = amount * 0.02; // 2% untuk credit card
-    } else if (selectedPayment === "Convenience Store") {
-      adminFee = 2500; // Flat fee untuk convenience store
-    }
-    
-    const total = amount + adminFee;
-    
-    return {
-      donationAmount: amount,
-      adminFee: adminFee,
-      totalAmount: total
-    };
-  };
-
   // Simpan riwayat donasi
   const saveDonationHistory = (donationData: any) => {
     const history = JSON.parse(localStorage.getItem('donationHistory') || '[]');
@@ -120,14 +132,44 @@ const DetailKampanye: React.FC = () => {
       paymentMethod: donationData.paymentMethod,
       provider: donationData.provider,
       date: new Date().toISOString(),
-      status: 'completed',
+      status: 'pending', // Status pending menunggu konfirmasi bukti
       receiptNumber: `RC-${Date.now()}`,
-      isAnonymous: isAnonymous
+      isAnonymous: isAnonymous,
+      proofUploaded: !!proofFile,
+      accountNumber: paymentAccounts[donationData.provider]?.accountNumber || ''
     };
     
     history.unshift(newDonation);
     localStorage.setItem('donationHistory', JSON.stringify(history));
     return newDonation;
+  };
+
+  // Handler untuk upload bukti transfer
+  const handleProofUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Validasi tipe file
+      if (!file.type.startsWith('image/')) {
+        setError('Harap upload file gambar (JPG, PNG, etc)');
+        return;
+      }
+      
+      // Validasi ukuran file (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        setError('Ukuran file maksimal 5MB');
+        return;
+      }
+
+      setProofFile(file);
+      setError('');
+      
+      // Buat preview gambar
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setProofPreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   // Handler functions
@@ -140,6 +182,8 @@ const DetailKampanye: React.FC = () => {
     setQuickAmount(0);
     setIsAnonymous(false);
     setError("");
+    setProofFile(null);
+    setProofPreview("");
   };
 
   const handleCloseModal = () => {
@@ -151,6 +195,8 @@ const DetailKampanye: React.FC = () => {
     setQuickAmount(0);
     setIsAnonymous(false);
     setError("");
+    setProofFile(null);
+    setProofPreview("");
   };
 
   const handleQuickAmountSelect = (amount: number) => {
@@ -205,27 +251,18 @@ const DetailKampanye: React.FC = () => {
       return;
     }
 
+    if (!proofFile) {
+      setError("Harap upload bukti transfer terlebih dahulu");
+      return;
+    }
+
     setIsProcessing(true);
     setError("");
 
     try {
-      // Simulasi proses pembayaran
+      // Simulasi proses upload
       await new Promise(resolve => setTimeout(resolve, 2000));
 
-      // Update campaign data dengan donasi baru
-      const updatedCampaigns = campaigns.map(c => {
-        if (c.id === campaign.id) {
-          return {
-            ...c,
-            collected: c.collected + Number(donationAmount)
-          };
-        }
-        return c;
-      });
-
-      // Simpan ke localStorage
-      localStorage.setItem("campaignsData", JSON.stringify(updatedCampaigns));
-      
       // Simpan riwayat donasi
       const receipt = saveDonationHistory({
         amount: Number(donationAmount),
@@ -233,25 +270,19 @@ const DetailKampanye: React.FC = () => {
         provider: selectedProvider
       });
 
-      // Update state
-      setCampaigns(updatedCampaigns);
-      setCampaign({
-        ...campaign,
-        collected: campaign.collected + Number(donationAmount)
-      });
-
-      // Tampilkan receipt
+      // Tampilkan konfirmasi
       alert(
-        `Terima kasih! Donasi berhasil!\n\n` +
+        `Terima kasih! Bukti transfer berhasil diupload!\n\n` +
         `No. Resi: ${receipt.receiptNumber}\n` +
         `Jumlah: Rp ${Number(donationAmount).toLocaleString("id-ID")}\n` +
         `Metode: ${selectedProvider} (${selectedPayment})\n` +
-        `Status: ${isAnonymous ? 'Donasi Anonim' : 'Donasi Teridentifikasi'}`
+        `Status: Menunggu verifikasi admin\n\n` +
+        `Donasi akan diproses setelah bukti transfer diverifikasi.`
       );
       
       handleCloseModal();
     } catch (error) {
-      setError('Terjadi kesalahan saat memproses pembayaran');
+      setError('Terjadi kesalahan saat mengupload bukti transfer');
     } finally {
       setIsProcessing(false);
     }
@@ -260,8 +291,6 @@ const DetailKampanye: React.FC = () => {
   const selectedPaymentMethod = campaign.paymentMethods.find(
     (method: any) => method.name === selectedPayment
   );
-
-  const fees = calculateFees(Number(donationAmount || 0));
 
   return (
     <div className="detail-body">
@@ -401,11 +430,6 @@ const DetailKampanye: React.FC = () => {
                       >
                         <div className="payment-icon">{method.icon}</div>
                         <div className="payment-name">{method.name}</div>
-                        {paymentMethodsInfo[method.name as keyof typeof paymentMethodsInfo] && (
-                          <div className="payment-info">
-                            <small>{paymentMethodsInfo[method.name as keyof typeof paymentMethodsInfo].fees}</small>
-                          </div>
-                        )}
                       </div>
                     ))}
                   </div>
@@ -413,11 +437,6 @@ const DetailKampanye: React.FC = () => {
                   {selectedPaymentMethod && (
                     <div className="provider-selection">
                       <div className="info-label">Pilih {selectedPayment}</div>
-                      {paymentMethodsInfo[selectedPayment as keyof typeof paymentMethodsInfo] && (
-                        <div className="payment-description">
-                          <small>{paymentMethodsInfo[selectedPayment as keyof typeof paymentMethodsInfo].description}</small>
-                        </div>
-                      )}
                       <div className="providers">
                         {selectedPaymentMethod.providers.map((provider: string) => (
                           <div
@@ -433,47 +452,113 @@ const DetailKampanye: React.FC = () => {
                       </div>
                     </div>
                   )}
+
+                  {/* Informasi Rekening/Account */}
+                  {selectedProvider && paymentAccounts[selectedProvider] && (
+                    <div className="available-payments">
+                      <h3>Informasi Pembayaran</h3>
+                      <div className="payment-accounts">
+                        <div className="account-info">
+                          <div className="account-header">
+                            <strong>{selectedProvider}</strong>
+                          </div>
+                          <div className="account-details">
+                            <div>
+                              <strong>Nomor {paymentAccounts[selectedProvider].type === 'Bank Transfer' ? 'Rekening' : 'Akun'}:</strong> {paymentAccounts[selectedProvider].accountNumber}
+                            </div>
+                            <div>
+                              <strong>Nama {paymentAccounts[selectedProvider].type === 'Bank Transfer' ? 'Pemilik Rekening' : 'Pemilik Akun'}:</strong> {paymentAccounts[selectedProvider].accountName}
+                            </div>
+                            <div>
+                              <strong>Tipe:</strong> {paymentAccounts[selectedProvider].type}
+                            </div>
+                          </div>
+                          <div className="instructions">
+                            <small>
+                              <strong>Petunjuk:</strong> Lakukan transfer sesuai jumlah donasi ke {paymentAccounts[selectedProvider].type === 'Bank Transfer' ? 'rekening' : 'akun'} di atas, kemudian upload bukti transfer pada langkah selanjutnya.
+                            </small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
 
-            {/* Step 3: Konfirmasi */}
+            {/* Step 3: Upload Bukti Transfer */}
             {currentStep === 3 && (
               <div className="donation-info">
                 <div className="info-item">
-                  <div className="info-label">Ringkasan Donasi</div>
-                  <div className="donation-receipt">
-                    <div className="receipt-item">
-                      <span>Kampanye:</span>
-                      <span>{campaign.title}</span>
+                  <div className="info-label">Upload Bukti Transfer</div>
+                  
+                  {/* Informasi Pembayaran */}
+                  {selectedProvider && paymentAccounts[selectedProvider] && (
+                    <div className="payment-info">
+                      <div className="info-label">Informasi Pembayaran</div>
+                      <div className="info-value">
+                        <strong>{selectedProvider}:</strong> {paymentAccounts[selectedProvider].accountNumber} - {paymentAccounts[selectedProvider].accountName}
+                      </div>
+                      <div className="info-value">
+                        <strong>Jumlah Donasi:</strong> Rp {Number(donationAmount).toLocaleString("id-ID")}
+                      </div>
                     </div>
-                    <div className="receipt-item">
-                      <span>Jumlah Donasi:</span>
-                      <span>Rp {Number(donationAmount).toLocaleString("id-ID")}</span>
-                    </div>
-                    {fees.adminFee > 0 && (
-                      <div className="receipt-item">
-                        <span>Biaya Admin:</span>
-                        <span>Rp {fees.adminFee.toLocaleString("id-ID")}</span>
+                  )}
+
+                  {/* Area Upload */}
+                  <div className="proof-upload">
+                    {!proofPreview ? (
+                      <div className="upload-area">
+                        <label className="upload-label">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleProofUpload}
+                            style={{ display: 'none' }}
+                          />
+                          <div className="upload-icon">📁</div>
+                          <div className="upload-text">
+                            <strong>Klik untuk upload bukti transfer</strong>
+                            <small>Format: JPG, PNG (Maks. 5MB)</small>
+                          </div>
+                        </label>
+                      </div>
+                    ) : (
+                      <div className="proof-preview">
+                        <img src={proofPreview} alt="Bukti Transfer Preview" />
+                        <button 
+                          className="change-proof-btn"
+                          onClick={() => {
+                            setProofFile(null);
+                            setProofPreview("");
+                          }}
+                        >
+                          Ganti File
+                        </button>
                       </div>
                     )}
-                    <div className="receipt-item receipt-total">
-                      <span>Total Bayar:</span>
-                      <span>Rp {fees.totalAmount.toLocaleString("id-ID")}</span>
-                    </div>
-                    <div className="receipt-item">
-                      <span>Metode Pembayaran:</span>
-                      <span>{selectedProvider} ({selectedPayment})</span>
-                    </div>
-                    <div className="receipt-item">
-                      <span>Status:</span>
-                      <span>{isAnonymous ? 'Donasi Anonim' : 'Donasi Teridentifikasi'}</span>
-                    </div>
+                  </div>
+
+                  <div className="confirmation-note">
+                    <p>
+                      <strong>Pastikan bukti transfer menunjukkan:</strong><br />
+                      - Nomor {paymentAccounts[selectedProvider]?.type === 'Bank Transfer' ? 'rekening' : 'akun'} tujuan<br />
+                      - Nama {paymentAccounts[selectedProvider]?.type === 'Bank Transfer' ? 'pemilik rekening' : 'pemilik akun'}<br />
+                      - Jumlah transfer sesuai donasi<br />
+                      - Tanggal dan waktu transfer
+                    </p>
                   </div>
                 </div>
 
-                <div className="confirmation-note">
-                  <p>Dengan mengkonfirmasi, Anda menyetujui donasi ini dan proses tidak dapat dibatalkan.</p>
+                <div className="anonymous-option">
+                  <label>
+                    <input 
+                      type="checkbox" 
+                      checked={isAnonymous} 
+                      onChange={(e) => setIsAnonymous(e.target.checked)} 
+                    />
+                    Sembunyikan nama saya (Donasi Anonim)
+                  </label>
                 </div>
               </div>
             )}
@@ -497,9 +582,9 @@ const DetailKampanye: React.FC = () => {
                 <button 
                   className="button-confirm" 
                   onClick={handleConfirmDonation} 
-                  disabled={isProcessing}
+                  disabled={isProcessing || !proofFile}
                 >
-                  {isProcessing ? "Memproses..." : "Konfirmasi Donasi"}
+                  {isProcessing ? "Mengupload..." : "Konfirmasi & Upload Bukti"}
                 </button>
               )}
             </div>
