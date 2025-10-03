@@ -3,9 +3,9 @@ import LandingPage from "./pages/landingPage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Beranda from "./pages/beranda";
-import AboutPage  from "./pages/AboutPage";
-import Profile  from "./pages/Profile";
 import DetailKampanye from "./pages/detailKampanye";
+import Laporan from "./pages/laporan";
+import AboutPage from "./pages/AboutPage"; 
 
 function App() {
   return (
@@ -18,8 +18,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/beranda" element={<Beranda />} />
         <Route path="/informasi/:id" element={<DetailKampanye />} />
+        <Route path="/laporan" element={<Laporan />} />
         <Route path="/AboutPage/" element={<AboutPage />} />
-        <Route path="/Profile/" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );
