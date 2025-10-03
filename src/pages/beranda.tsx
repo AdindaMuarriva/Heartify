@@ -1,7 +1,101 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./beranda.css"; 
+import { Link } from "react-router-dom";
 
 // Data dummy untuk laporan donasi
+const initialCampaigns = [
+  {
+    id: "1",
+    title: "Bantu Penuhi Gizi Anak-Anak",
+    category: "Kesehatan",
+    target: 15000000,
+    collected: 4500000,
+    description:
+      "Banyak anak-anak yang masih kekurangan gizi. Melalui kampanye ini, kami berusaha memberikan makanan bergizi agar mereka tumbuh sehat dan kuat.",
+    image:
+      "https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=2070&auto=format&fit=crop",
+    admin: "Yayasan Peduli Gizi Indonesia",
+    beneficiary: "Anak-anak kurang gizi di daerah terpencil",
+    paymentMethods: [
+      {
+        name: "Bank Transfer",
+        providers: ["BCA", "Mandiri", "BNI", "BRI"],
+        icon: "🏦",
+      },
+      {
+        name: "E-Wallet",
+        providers: ["GoPay", "OVO", "Dana", "ShopeePay"],
+        icon: "📱",
+      },
+      {
+        name: "Credit Card",
+        providers: ["Visa", "MasterCard", "JCB"],
+        icon: "💳",
+      },
+    ],
+  },
+  {
+    id: "2",
+    title: "Peralatan untuk Sekolah Desa",
+    category: "Pendidikan",
+    target: 5000000,
+    collected: 4500000,
+    description:
+      "Bantu kami menyediakan peralatan sekolah seperti buku, pensil, dan seragam agar anak-anak di desa bisa belajar lebih nyaman.",
+    image:
+      "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=2070&auto=format&fit=crop",
+    admin: "Komunitas Pendidikan Desa",
+    beneficiary: "Sekolah-sekolah di daerah tertinggal",
+    paymentMethods: [
+      {
+        name: "Bank Transfer",
+        providers: ["BCA", "Mandiri", "BNI"],
+        icon: "🏦",
+      },
+      {
+        name: "E-Wallet",
+        providers: ["GoPay", "OVO", "Dana"],
+        icon: "📱",
+      },
+    ],
+  },
+  {
+    id: "3",
+    title: "Bantuan Korban Gempa Bumi",
+    category: "Kemanusiaan",
+    target: 25000000,
+    collected: 8200000,
+    description:
+      "Korban gempa membutuhkan makanan, tempat tinggal sementara, serta layanan medis darurat. Mari bantu mereka bangkit kembali.",
+    image:
+      "https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2070&auto=format&fit=crop",
+    admin: "Palang Merah Indonesia",
+    beneficiary: "Korban gempa di wilayah terdampak",
+    paymentMethods: [
+      {
+        name: "Bank Transfer",
+        providers: ["BCA", "Mandiri", "BNI", "BRI", "CIMB Niaga"],
+        icon: "🏦",
+      },
+      {
+        name: "E-Wallet",
+        providers: ["GoPay", "OVO", "Dana", "LinkAja", "ShopeePay"],
+        icon: "📱",
+      },
+      {
+        name: "Credit Card",
+        providers: ["Visa", "MasterCard", "American Express"],
+        icon: "💳",
+      },
+      {
+        name: "Convenience Store",
+        providers: ["Alfamart", "Indomaret"],
+        icon: "🏪",
+      },
+    ],
+  },
+];
+
 const reportData = [
   {
     id: 1,
@@ -21,7 +115,7 @@ const reportData = [
   },
   {
     id: 3,
-    title: "Santunan Panti Jompo",
+    title: "Santunan Panti Asuhan",
     category: "Kemanusiaan",
     amount: 5200000,
     date: "15 Juli 2025",
@@ -56,6 +150,37 @@ const reportData = [
 const Beranda: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState(reportData);
+  const [campaigns, setCampaigns] = useState(initialCampaigns);
+
+  // Load data dari localStorage saat komponen mount dan setiap kali ada perubahan
+  useEffect(() => {
+    const loadCampaigns = () => {
+      const savedCampaigns = localStorage.getItem("campaignsData");
+      if (savedCampaigns) {
+        setCampaigns(JSON.parse(savedCampaigns));
+      } else {
+        // Jika belum ada data di localStorage, gunakan data awal dan simpan
+        localStorage.setItem("campaignsData", JSON.stringify(initialCampaigns));
+      }
+    };
+
+    loadCampaigns();
+
+    // Tambahkan event listener untuk mendeteksi perubahan di localStorage
+    const handleStorageChange = () => {
+      loadCampaigns();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Polling untuk update real-time (opsional, untuk tab/window yang sama)
+    const interval = setInterval(loadCampaigns, 1000);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(interval);
+    };
+  }, []);
 
   // Format currency function
   const formatCurrency = (amount: number) => {
@@ -87,6 +212,16 @@ const Beranda: React.FC = () => {
   const clearSearch = () => {
     setSearchTerm("");
     setSearchResults(reportData);
+  };
+
+  // Hitung sisa donasi
+  const calculateRemaining = (target: number, collected: number): number => {
+    return Math.max(0, target - collected);
+  };
+
+  // Hitung progress percentage
+  const calculateProgress = (target: number, collected: number): number => {
+    return Math.min((collected / target) * 100, 100);
   };
 
   return (
@@ -133,86 +268,55 @@ const Beranda: React.FC = () => {
         </div>
 
         <div className="campaign-grid">
-          {/* Contoh Kartu Kampanye 1 */}
-          <div className="campaign-card">
-            <img
-              src="https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=2070&auto=format&fit=crop"
-              alt="Bantuan Pangan"
-              className="campaign-image"
-            />
-            <div className="campaign-card-content">
-              <span className="campaign-category-kesehatan">Kesehatan</span>
-              <h3 className="campaign-title">Bantu Penuhi Gizi Anak-Anak</h3>
-              <div className="campaign-details">
-                <p>
-                  Target: <span>Rp 15.000.000</span>
-                </p>
-                <p>
-                  Terkumpul: <span>Rp 4.500.000</span>
-                </p>
-                <p>
-                  Sisa: <span>Rp 10.500.000</span>
-                </p>
+          {campaigns.map((campaign) => {
+            const remaining = calculateRemaining(campaign.target, campaign.collected);
+            const progress = calculateProgress(campaign.target, campaign.collected);
+            
+            return (
+              <div key={campaign.id} className="campaign-card">
+                <img
+                  src={campaign.image}
+                  alt={campaign.title}
+                  className="campaign-image"
+                />
+                <div className="campaign-card-content">
+                  <span className={`campaign-category-${campaign.category.toLowerCase()}`}>
+                    {campaign.category}
+                  </span>
+                  <h3 className="campaign-title">{campaign.title}</h3>
+                  <div className="campaign-details">
+                    <p>
+                      Target: <span>{formatCurrency(campaign.target)}</span>
+                    </p>
+                    <p>
+                      Terkumpul: <span>{formatCurrency(campaign.collected)}</span>
+                    </p>
+                    <p>
+                      Sisa: <span>{formatCurrency(remaining)}</span>
+                    </p>
+                  </div>
+                  
+                  {/* Progress Bar */}
+                  <div className="progress-bar" style={{margin: '10px 0'}}>
+                    <div 
+                      className="progress" 
+                      style={{ 
+                        width: `${progress}%`,
+                        backgroundColor: '#3e0703',
+                        height: '8px',
+                        borderRadius: '4px',
+                        transition: 'width 0.3s ease'
+                      }} 
+                    ></div>
+                  </div>
+                  
+                  <Link to={`/informasi/${campaign.id}`} className="campaign-see-more">
+                    Lihat Selengkapnya →
+                  </Link>
+                </div>
               </div>
-              <a href="/informasi1" className="campaign-see-more">
-                Lihat Selengkapnya →
-              </a>
-            </div>
-          </div>
-
-          {/* Contoh Kartu Kampanye 2 */}
-          <div className="campaign-card">
-            <img
-              src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=2070&auto=format&fit=crop"
-              alt="Donasi Pendidikan"
-              className="campaign-image"
-            />
-            <div className="campaign-card-content">
-              <span className="campaign-category-edukasi">Pendidikan</span>
-              <h3 className="campaign-title">Peralatan untuk Sekolah Desa</h3>
-              <div className="campaign-details">
-                <p>
-                  Target: <span>Rp 5.000.000</span>
-                </p>
-                <p>
-                  Terkumpul: <span>Rp 5.000.000</span>
-                </p>
-                <p>
-                  Sisa: <span>Rp 0</span>
-                </p>
-              </div>
-              <a href="/informasi2" className="campaign-see-more">
-                Lihat Selengkapnya →
-              </a>
-            </div>
-          </div>
-
-          {/* Contoh Kartu Kampanye 3 - TAMBAHAN */}
-          <div className="campaign-card">
-            <img
-              src="https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2070&auto=format&fit=crop"
-              alt="Bantuan Bencana Alam"
-              className="campaign-image"
-            />
-            <div className="campaign-card-content">
-              <span className="campaign-category-kemanusiaan">Kemanusiaan</span>
-              <h3 className="campaign-title">Bantuan Korban Gempa Bumi</h3>
-              <div className="campaign-details">
-                <p>
-                  Target: <span>Rp 25.000.000</span>
-                </p>
-                <p>
-                  Terkumpul: <span>Rp 8.200.000</span>
-                </p>
-                <p>
-                  Sisa: <span>Rp 16.800.000</span>
-                </p>
-              </div>
-              <a href="/informasi3" className="campaign-see-more">
-                Lihat Selengkapnya →
-              </a>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </section>
 
@@ -227,7 +331,7 @@ const Beranda: React.FC = () => {
           <div className="search-wrapper">
             <input
               type="text"
-              placeholder="Cari berdasarkan judul atau kategori..."
+              placeholder="Cari berdasarkan judul"
               className="search-bar"
               value={searchTerm}
               onChange={handleSearch}
@@ -268,7 +372,7 @@ const Beranda: React.FC = () => {
                   <h3 className="report-title">{report.title}</h3>
                   <p className="report-info">Terkumpul: {formatCurrency(report.amount)}</p>
                   <p className="report-date">Diterbitkan: {report.date}</p>
-                  <a href="#" className="button button-dark-full">
+                  <a href="/laporan" className="button button-dark-full">
                     Lihat Laporan ❯
                   </a>
                 </div>

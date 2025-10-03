@@ -293,6 +293,21 @@
   height: 100%;
 }
 
+.campaign-card .progress-bar {
+  background: #eee;
+  border-radius: 4px;
+  height: 8px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.campaign-card .progress {
+  background: var(--maroon-dark);
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
 .campaign-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
@@ -311,6 +326,7 @@
   flex-direction: column;
 }
 
+.campaign-category-pendidikan,
 .campaign-category-kemanusiaan,
 .campaign-category-kesehatan,
 .campaign-category-edukasi {
