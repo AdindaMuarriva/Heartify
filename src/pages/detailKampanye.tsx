@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link, } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import "./detailKampanye.css";
 
 const DetailKampanye: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   
   const [campaigns, setCampaigns] = useState<any[]>([]);
   const [campaign, setCampaign] = useState<any>(null);

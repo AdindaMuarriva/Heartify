@@ -1,18 +1,12 @@
 /* === General Styling & Animated Background === */
-.auth-page {
+.auth-page,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
   font-family: "Poppins", sans-serif;
-
-  background: linear-gradient(-45deg, #3E0703, #660E0A, #230403, #8B1515);
-  background-size: 400% 400%;
-  animation: gradientAnimation 15s ease infinite;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: #FFF4CC; /* warna krem sesuai section tengah */
 }
 
 body {
