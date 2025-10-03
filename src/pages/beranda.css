@@ -66,6 +66,7 @@
 .navbar-links {
   display: flex;
   gap: 2rem;
+  align-items: center;
 }
 
 .navbar-links a {
@@ -73,7 +74,9 @@
   font-weight: 600;
   text-decoration: none;
   position: relative;
+  padding: 0.25rem 0;
   transition: color 0.3s ease;
+  display: inline-block; 
 }
 
 .navbar-links a::after {
@@ -81,19 +84,18 @@
   position: absolute;
   width: 0;
   height: 2px;
-  bottom: -5px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  bottom: 0;
   background-color: var(--maroon-red);
   transition: width 0.3s ease;
 }
 
 .navbar-links a:hover {
-  color: var(--maroon-dark);
+  color: var(--maroon-red);
 }
 
 .navbar-links a:hover::after {
-  width: 100%;
+  width: 100%; 
 }
 
 .navbar-login-button {

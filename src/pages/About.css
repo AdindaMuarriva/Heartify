@@ -17,112 +17,6 @@
   line-height: 1.6;
 }
 
-/* Navbar Styling - Premium */
-.navbar-container {
-  background-color: var(--white);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  box-shadow: 0 2px 30px rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(20px);
-  background: rgba(255, 255, 255, 0.95);
-}
-
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 0;
-}
-
-.navbar-logo {
-  font-size: 1.75rem;
-  font-weight: 800;
-  color: var(--maroon-dark);
-  text-decoration: none;
-  letter-spacing: -0.5px;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.navbar-logo::before {
-  font-size: 1.5rem;
-}
-
-.navbar-logo:hover {
-  color: var(--maroon-red);
-  transition: color 0.3s ease;
-}
-
-.navbar-links {
-  display: flex;
-  gap: 2.5rem;
-}
-
-.navbar-links a {
-  text-decoration: none;
-  color: var(--gray);
-  font-weight: 500;
-  position: relative;
-  transition: color 0.3s ease;
-  font-size: 0.95rem;
-}
-
-.navbar-links a:hover {
-  color: var(--maroon-dark);
-}
-
-.navbar-links a:hover::after {
-  width: 100%;
-}
-
-.navbar-buttons {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-.navbar-login-button {
-  background-color: transparent;
-  color: var(--maroon-dark);
-  font-weight: 600;
-  padding: 0.7rem 1.5rem;
-  border-radius: 8px;
-  text-decoration: none;
-  border: 2px solid var(--maroon-dark);
-  transition: all 0.3s ease;
-  font-size: 0.95rem;
-}
-
-.navbar-register-button {
-  background-color: var(--maroon-dark);
-  color: var(--white);
-  font-weight: 600;
-  padding: 0.7rem 1.5rem;
-  border-radius: 8px;
-  text-decoration: none;
-  border: 2px solid var(--maroon-dark);
-  transition: all 0.3s ease;
-  font-size: 0.95rem;
-}
-
-.navbar-login-button:hover {
-  background-color: var(--maroon-dark);
-  color: var(--white);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(62, 7, 3, 0.3);
-}
-
-.navbar-register-button:hover {
-  background-color: var(--maroon-bright);
-  border-color: var(--maroon-bright);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(179, 40, 32, 0.3);
-  color: var(--cream);
-}
-
-
 /* Hero Section */
 .hero-section {
   padding: 4rem 2rem 3rem;
@@ -196,19 +90,13 @@
   text-align: center;
 }
 
-
-.mission-image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0;
+.mission-box ul {
+  padding-left: 1.2rem;
 }
 
-.mission-img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+.mission-box li {
+  margin-bottom: 0.8rem;
+  color: var(--gray);
 }
 
 /* Work Section */
