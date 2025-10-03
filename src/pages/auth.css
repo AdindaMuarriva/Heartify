@@ -1,12 +1,18 @@
 /* === General Styling & Animated Background === */
-.auth-page,
-body {
+.auth-page {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
   font-family: "Poppins", sans-serif;
-  background-color: #FFF4CC; /* warna krem sesuai section tengah */
+
+  background: linear-gradient(-45deg, #3E0703, #660E0A, #230403, #8B1515);
+  background-size: 400% 400%;
+  animation: gradientAnimation 15s ease infinite;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 body {
@@ -211,6 +217,91 @@ body {
 
 .popup-card button:hover {
   background-color: #8b1c15;
+}
+
+/* === Popup overlay modern === */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* penting biar di atas semua */
+}
+
+/* === Popup card modern (Glassmorphism + shadow) === */
+.popup-card {
+  position: relative;
+  background: rgba(255, 244, 204, 0.95); /* cream, sedikit transparan */
+  backdrop-filter: blur(8px);
+  padding: 25px 20px;
+  border-radius: 15px;
+  width: 320px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+  transform: scale(0.9);
+  animation: scaleIn 0.3s forwards;
+}
+
+/* Teks popup */
+.popup-card p {
+  font-size: 1.1rem;
+  color: #660E0A; /* maroon tua */
+  margin: 0;
+}
+
+/* === Popup Styling === */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-card {
+  background: #fff4cc;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  text-align: center;
+  max-width: 350px;
+  animation: fadeIn 0.3s ease;
+}
+
+.popup-card p {
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: #3E0703;
+}
+
+.popup-ok-btn {
+  background: #8B1C1C;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.popup-ok-btn:hover {
+  background: #660E0A;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 /* === Popup overlay modern === */
