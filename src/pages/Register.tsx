@@ -21,7 +21,7 @@ export default function Register() {
     const user = { name, email, password };
     localStorage.setItem("registeredUser", JSON.stringify(user));
 
-    setPopupMessage("Register berhasil! Silakan login.");
+    setPopupMessage("Register berhasil!");
     setTimeout(() => {
       navigate("/login");
     }, 1500);

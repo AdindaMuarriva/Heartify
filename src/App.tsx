@@ -6,6 +6,8 @@ import Beranda from "./pages/beranda";
 import DetailKampanye from "./pages/detailKampanye";
 import Laporan from "./pages/laporan";
 import AboutPage from "./pages/AboutPage"; 
+import Profile  from "./pages/Profile";
+
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
         <Route path="/informasi/:id" element={<DetailKampanye />} />
         <Route path="/laporan" element={<Laporan />} />
         <Route path="/AboutPage/" element={<AboutPage />} />
+        <Route path="/Profile/" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );

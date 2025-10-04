@@ -350,7 +350,7 @@ const Laporan: React.FC = () => {
           </Link>
           <div className="navbar-links">
             <Link to="/beranda">Beranda</Link>
-            <Link to="/about">Tentang Kami</Link>
+            <Link to="/AboutPage">Tentang Kami</Link>
             <Link to="/profile">Profil</Link>
           </div>
           <Link to="/login" className="navbar-login-button">
