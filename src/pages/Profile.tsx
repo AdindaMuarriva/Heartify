@@ -264,8 +264,7 @@ export default function Profile() {
 
           <div className="stats-card">
             <h2>Statistik Donasi</h2>
-            <div className="stats-grid">
-              
+            <div className="stats-grid"> 
               <div className="stat-item">
                 <div className="stat-icon">⭐</div>
                 <div className="stat-content">

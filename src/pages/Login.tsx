@@ -23,7 +23,7 @@ export default function Login() {
 
     // 🔹 Cek login
     if (user.email === email && user.password === password) {
-      setPopupMessage("Login berhasil!!");
+      setPopupMessage("Login berhasil");
       setTimeout(() => {
         navigate("/beranda"); // pindah ke beranda
       }, 1500);

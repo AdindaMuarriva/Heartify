@@ -1,8 +1,7 @@
 import "./about.css";
 
-export default function About() {
-
-  return (
+export default function About() 
+return (
     <div className="about-page">
         {/* Navbar */}
       <header className="navbar-container">
@@ -20,7 +19,7 @@ export default function About() {
           </a>
         </nav>
       </header>
-
+      
       {/* Hero / Header Tentang Kami */}
       <section className="hero-section">
         <h1 className="hero-title">Tentang Kami</h1>
