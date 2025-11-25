@@ -1,0 +1,809 @@
+/* Import font dari Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+
+/* === Palet Warna === */
+:root {
+  --maroon-dark: #3e0703;
+  --maroon-mid: #660e0a;
+  --maroon-red: #8b1c15;
+  --maroon-bright: #b32820;
+  --cream: #fff1c7;
+  --white: #ffffff;
+  --gray: #4a5568;
+}
+
+/* === Reset & Global === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* === Body === */
+.beranda-body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--cream);
+  color: var(--maroon-dark);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* === Navbar === */
+.navbar-container {
+  background-color: var(--white);
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.navbar {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--maroon-dark);
+  text-decoration: none;
+}
+
+.navbar-logo:hover {
+  color: var(--maroon-red);
+  transition: color 0.3s ease;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.navbar-links a {
+  color: var(--maroon-dark);
+  font-weight: 600;
+  text-decoration: none;
+  position: relative;
+  padding: 0.25rem 0;
+  transition: color 0.3s ease;
+  display: inline-block; 
+}
+
+.navbar-links a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  left: 0;
+  bottom: 0;
+  background-color: var(--maroon-red);
+  transition: width 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: var(--maroon-red);
+}
+
+.navbar-links a:hover::after {
+  width: 100%; 
+}
+
+.navbar-login-button {
+  background-color: var(--white);
+  color: var(--maroon-dark);
+  font-weight: 600;
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 2px solid var(--maroon-dark);
+}
+
+.navbar-login-button:hover {
+  background-color: var(--maroon-dark);
+  color: var(--white);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* === Hero Section === */
+.hero-section-beranda {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+    url("https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=2070&auto=format&fit=crop");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: var(--white);
+  text-align: center;
+  padding: 160px 20px;
+  width: 100%;
+  margin: 0;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hero-title-beranda {
+  font-size: 3.2rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  line-height: 1.2;
+}
+
+.hero-subtitle-beranda {
+  font-size: 1.3rem;
+  margin-bottom: 2.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0.95;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+/* === Button === */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 32px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  font-size: 1.1rem;
+  min-width: 180px;
+}
+
+.button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.button-cream {
+  background-color: var(--cream);
+  color: var(--maroon-dark);
+  border: 2px solid var(--cream);
+}
+
+.button-cream:hover {
+  background-color: var(--maroon-bright);
+  color: var(--white);
+  border-color: var(--maroon-bright);
+}
+
+.button-dark-full {
+  background-color: var(--maroon-dark);
+  color: var(--white);
+  width: 100%;
+  text-align: center;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: auto;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.button-dark-full:hover {
+  background-color: var(--maroon-mid);
+  transform: translateY(-2px);
+  color: var(--cream);
+}
+
+/* === Section Wrapper === */
+.section-wrapper {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* === Campaign Section === */
+.campaign-section {
+  padding: 100px 0;
+  background: var(--cream);
+  width: 100%;
+}
+
+.campaign-section .section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 20px;
+}
+
+.section-tag {
+  background-color: var(--maroon-bright);
+  color: var(--white);
+  padding: 10px 24px;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.5px;
+}
+
+.section-title-dark {
+  font-size: 2.3rem;
+  color: var(--maroon-dark);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+}
+/* === Campaign Section === */
+.campaign-section {
+  padding: 80px 0;
+  background: var(--cream);
+  width: 100%;
+}
+
+.campaign-section .section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 20px;
+}
+
+.campaign-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cards per baris */
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.campaign-card {
+  background-color: var(--white);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.campaign-card .progress-bar {
+  background: #eee;
+  border-radius: 4px;
+  height: 8px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.campaign-card .progress {
+  background: var(--maroon-dark);
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.campaign-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.campaign-image {
+  width: 100%;
+  height: 150px; /* Diperkecil lagi */
+  object-fit: cover;
+}
+
+.campaign-card-content {
+  padding: 1.25rem; /* Diperkecil lagi */
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.campaign-category-pendidikan,
+.campaign-category-kemanusiaan,
+.campaign-category-kesehatan,
+.campaign-category-edukasi {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 4px 10px; /* Diperkecil lagi */
+  border-radius: 5px;
+  font-size: 0.75rem; /* Diperkecil lagi */
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  background-color: var(--maroon-red);
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.campaign-title {
+  font-size: 1.1rem; /* Diperkecil lagi */
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--maroon-dark);
+  line-height: 1.3;
+  flex-grow: 0;
+}
+
+.campaign-details {
+  margin-bottom: 1rem; /* Diperkecil lagi */
+  font-size: 0.85rem; /* Diperkecil lagi */
+  color: var(--gray);
+  flex-grow: 1;
+}
+
+.campaign-details p {
+  margin: 4px 0; /* Diperkecil lagi */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1px 0;
+}
+
+.campaign-details span {
+  font-weight: 700;
+  color: var(--maroon-dark);
+  font-size: 0.85rem; /* Diperkecil lagi */
+}
+
+.campaign-see-more {
+  text-align: center;
+  color: var(--maroon-red);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.85rem; /* Diperkecil lagi */
+  margin-top: 0.75rem;
+  transition: color 0.3s ease;
+  padding: 4px 0;
+}
+
+.campaign-see-more:hover {
+  color: var(--maroon-bright);
+  text-decoration: underline;
+}
+
+/* === Search Bar Styles === */
+.search-bar-container {
+  max-width: 700px;
+  margin: 0 auto 3rem auto;
+  padding: 0 20px;
+}
+
+.search-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 16px 50px 16px 20px;
+  border-radius: 12px;
+  border: 2px solid var(--maroon-mid);
+  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+  transition: all 0.3s ease;
+  background: var(--white);
+  color: black;
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: var(--maroon-red);
+  box-shadow: 0 0 0 4px rgba(139, 28, 21, 0.1);
+  transform: translateY(-2px);
+  color: black;
+}
+
+.search-bar::placeholder {
+  color: var(--gray);
+  opacity: 0.7;
+}
+
+.clear-search-btn {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(139, 28, 21, 0.1);
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: var(--maroon-red);
+  padding: 6px;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.clear-search-btn:hover {
+  background-color: var(--maroon-red);
+  color: var(--white);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.search-info {
+  text-align: center;
+  margin-top: 1rem;
+  color: var(--maroon-dark);
+  font-weight: 500;
+}
+
+.search-info p {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+/* === No Results Styles === */
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.no-results h3 {
+  font-size: 1.5rem;
+  color: var(--maroon-dark);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.no-results p {
+  color: var(--gray);
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+/* === Laporan Donasi Section === */
+.report-section {
+  padding: 80px 0;
+  background-color: #fdf8e9;
+  width: 100%;
+}
+
+.report-section .section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 20px;
+}
+
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cards per baris */
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.report-card {
+  background-color: var(--white);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.report-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.report-image {
+  width: 100%;
+  height: 150px; /* Diperkecil */
+  object-fit: cover;
+}
+
+.report-card-content {
+  padding: 1.25rem; /* Diperkecil */
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.report-category-lainnya,
+.report-category-pendidikan,
+.report-category-kemanusiaan,
+.report-category-kesehatan {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 4px 10px; /* Diperkecil */
+  border-radius: 5px;
+  font-size: 0.75rem; /* Diperkecil */
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.report-title {
+  font-size: 1.1rem; /* Diperkecil */
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--maroon-dark);
+  line-height: 1.3;
+}
+
+.report-info {
+  font-size: 1rem; /* Diperkecil */
+  font-weight: 700;
+  color: var(--maroon-dark);
+  margin-bottom: 0.25rem;
+}
+
+.report-date {
+  font-size: 0.8rem; /* Diperkecil */
+  color: var(--gray);
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+
+/* === Responsive Design === */
+@media (max-width: 1024px) {
+  .hero-title-beranda {
+    font-size: 2.8rem;
+  }
+
+  .campaign-grid,
+  .report-grid {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 1.25rem;
+  }
+  
+  .section-title-dark {
+    font-size: 2.4rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .navbar-links {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    margin-top: 1rem;
+    gap: 1.5rem;
+  }
+  
+  .hero-section-beranda {
+    padding: 120px 20px;
+    min-height: 70vh;
+  }
+  
+  .hero-title-beranda {
+    font-size: 2.2rem;
+  }
+  
+  .hero-subtitle-beranda {
+    font-size: 1.1rem;
+  }
+  
+  .section-title-dark {
+    font-size: 2rem;
+  }
+
+  .campaign-section,
+  .report-section {
+    padding: 60px 0;
+  }
+  
+  .campaign-grid,
+  .report-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0 15px;
+  }
+  
+  .campaign-card-content,
+  .report-card-content {
+    padding: 1.5rem;
+  }
+  
+  .button {
+    padding: 12px 24px;
+    font-size: 1rem;
+    min-width: 160px;
+  }
+}
+
+/* Footer */
+.footer {
+  background-color: var(--maroon-dark);
+  color: rgba(255, 241, 199, 0.75);
+  padding: 5rem 3 2.5rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 4rem;
+  margin-bottom: 3rem;
+}
+
+.footer-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 2rem; 
+}
+
+.footer-column h3 {
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: var(--cream);
+}
+
+.footer-about p {
+  line-height: 1.8;
+  margin-bottom: 1.8rem;
+}
+
+.footer-links {
+  list-style: none;
+}
+
+.footer-links li {
+  margin-bottom: 0.75rem;
+}
+
+.footer-links a {
+  color: rgba(255, 241, 199, 0.75);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: var(--white);
+}
+
+.contact-info a,
+.contact-info p,
+.social-links a {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-decoration: none;
+  color: rgba(255, 241, 199, 0.75);
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.contact-info a:hover,
+.social-links a:hover {
+  color: var(--white);
+  transform: translateX(5px);
+}
+
+.contact-info svg,
+.social-links svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(139, 28, 21, 0.3);
+  padding-top: 2rem;
+  text-align: center;
+}
+
+.footer-copyright {
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+@media (max-width: 480px) {
+  .hero-section-beranda {
+    padding: 100px 15px;
+    min-height: 60vh;
+  }
+  
+  .hero-title-beranda {
+    font-size: 1.8rem;
+  }
+  
+  .hero-subtitle-beranda {
+    font-size: 1rem;
+  }
+  
+  .section-title-dark {
+    font-size: 1.6rem;
+  }
+  
+  .campaign-grid,
+  .report-grid {
+    padding: 0 10px;
+  }
+  
+  .campaign-card-content,
+  .report-card-content {
+    padding: 0.875rem;
+  }
+  
+    .campaign-image,
+    .report-image {
+    height: 130px;
+  }
+
+  .campaign-image,
+  .report-image {
+    height: 130px;
+  }
+  
+  .campaign-title,
+  .report-title {
+    font-size: 0.95rem;
+  }
+  
+  .campaign-details,
+  .report-info {
+    font-size: 0.8rem;
+  }
+  
+  .campaign-details span {
+    font-size: 0.8rem;
+  }
+  
+  .report-date {
+    font-size: 0.75rem;
+  }
+
+  .section-tag {
+    font-size: 0.85rem;
+    padding: 8px 20px;
+  }
+}
