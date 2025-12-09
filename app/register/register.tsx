@@ -1,12 +1,12 @@
-"use client"; // Wajib ditambahkan karena kita pakai useState dan useRouter
+"use client";
 
 import { useState, type FormEvent } from "react";
-import { useRouter } from "next/navigation"; // Pengganti useNavigate
-import Link from "next/link"; // Pengganti Link dari react-router-dom
-import "./auth.css"; // Pastikan file css ini ada di folder yang sama
+import { useRouter } from "next/navigation";
+import Link from "next/link"; 
+import "./auth.css"; 
 
 export default function Register() {
-  const router = useRouter(); // Inisialisasi router Next.js
+  const router = useRouter(); 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
