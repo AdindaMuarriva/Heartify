@@ -1,0 +1,65 @@
+/* Sama konsepnya, tapi class utamanya .register-scope-wrapper */
+.register-scope-wrapper {
+  --cream-bg: #fff1c7;
+  --maroon-dark: #3e0703;
+  --red-accent: #8b1c15;
+  
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(-45deg, #3E0703, #660E0A, #230403, #8B1515);
+  background-size: 400% 400%;
+  animation: regGradient 15s ease infinite;
+}
+
+@keyframes regGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.register-scope-wrapper .auth-card {
+  background: rgba(20, 2, 2, 0.75);
+  backdrop-filter: blur(12px);
+  padding: 3rem 2.5rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 241, 199, 0.1);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  color: var(--cream-bg);
+}
+
+.register-scope-wrapper h2 {
+  font-size: 2rem; margin-bottom: 2rem; color: var(--cream-bg);
+}
+
+.register-scope-wrapper input {
+  width: 100%; padding: 12px; margin-bottom: 1rem; border-radius: 10px;
+  border: 2px solid var(--red-accent); background: #3E0703;
+  color: var(--cream-bg); outline: none; box-sizing: border-box;
+}
+
+.register-scope-wrapper button {
+  width: 100%; padding: 12px; border-radius: 10px;
+  background: linear-gradient(135deg, #B32820, #8B1C15);
+  color: var(--cream-bg); border: none; font-weight: 600; cursor: pointer; margin-top: 10px;
+}
+
+.register-scope-wrapper a { color: var(--cream-bg); font-weight: bold; text-decoration: none; }
+
+.register-scope-wrapper .popup-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 1000;
+}
+.register-scope-wrapper .popup-card {
+  background: var(--cream-bg); padding: 20px; border-radius: 12px;
+  text-align: center; color: var(--maroon-dark); min-width: 250px;
+}
+.register-scope-wrapper .popup-ok-btn {
+  background: var(--red-accent); width: auto; padding: 5px 20px; margin-top: 10px;
+}
