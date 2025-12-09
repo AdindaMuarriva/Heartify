@@ -24,7 +24,7 @@ const LandingPage: React.FC = () => {
             <a href="/login" className="navbar-login-button">
               Masuk
             </a>
-            <a href="/beranda" className="navbar-beranda-button">
+            <a href="/register" className="navbar-beranda-button">
               Daftar
             </a>
           </div>

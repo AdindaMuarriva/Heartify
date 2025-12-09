@@ -1,5 +1,4 @@
-/* CSS Login Terisolasi */
-.login-scope-wrapper {
+.register-scope-wrapper {
   --cream-bg: #fff1c7;
   --maroon-dark: #3e0703;
   --red-accent: #8b1c15;
@@ -10,20 +9,18 @@
   justify-content: center;
   align-items: center;
   font-family: "Poppins", sans-serif;
-  
-  /* Background Gradient Merah Gelap */
   background: linear-gradient(-45deg, #3E0703, #660E0A, #230403, #8B1515);
   background-size: 400% 400%;
-  animation: loginGradient 15s ease infinite;
+  animation: regGradient 15s ease infinite;
 }
 
-@keyframes loginGradient {
+@keyframes regGradient {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-.login-scope-wrapper .auth-card {
+.register-scope-wrapper .auth-card {
   background: rgba(20, 2, 2, 0.75);
   backdrop-filter: blur(12px);
   padding: 3rem 2.5rem;
@@ -36,35 +33,32 @@
   color: var(--cream-bg);
 }
 
-.login-scope-wrapper h2 {
+.register-scope-wrapper h2 {
   font-size: 2rem; margin-bottom: 2rem; color: var(--cream-bg);
 }
 
-.login-scope-wrapper input {
+.register-scope-wrapper input {
   width: 100%; padding: 12px; margin-bottom: 1rem; border-radius: 10px;
   border: 2px solid var(--red-accent); background: #3E0703;
   color: var(--cream-bg); outline: none; box-sizing: border-box;
 }
 
-.login-scope-wrapper button {
+.register-scope-wrapper button {
   width: 100%; padding: 12px; border-radius: 10px;
   background: linear-gradient(135deg, #B32820, #8B1C15);
   color: var(--cream-bg); border: none; font-weight: 600; cursor: pointer; margin-top: 10px;
 }
 
-.login-scope-wrapper a {
-  color: var(--cream-bg); font-weight: bold; text-decoration: none;
-}
+.register-scope-wrapper a { color: var(--cream-bg); font-weight: bold; text-decoration: none; }
 
-/* Popup Styles */
-.login-scope-wrapper .popup-overlay {
+.register-scope-wrapper .popup-overlay {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 1000;
 }
-.login-scope-wrapper .popup-card {
+.register-scope-wrapper .popup-card {
   background: var(--cream-bg); padding: 20px; border-radius: 12px;
   text-align: center; color: var(--maroon-dark); min-width: 250px;
 }
-.login-scope-wrapper .popup-ok-btn {
+.register-scope-wrapper .popup-ok-btn {
   background: var(--red-accent); width: auto; padding: 5px 20px; margin-top: 10px;
 }
