@@ -15,7 +15,7 @@ export default function About() {
           <div className="navbar-links">
             <Link href="/beranda">Beranda</Link>
             <Link href="/aboutpage">Tentang Kami</Link>
-            <Link href="/profile">Profil</Link>
+            <Link href="/profile">Profile</Link>
           </div>
           <Link href="/login" className="navbar-login-button">
             Keluar
@@ -33,24 +33,23 @@ export default function About() {
         </p>
       </section>
 
-      {/* Visi Misi */}
-      <section className="mission-section">
-        <h2 className="section-title">Visi & Misi</h2>
-        <div className="mission-content">
-          <div className="vision-box">
-            <h3>Visi</h3>
-            <p>Menjadi jembatan kebaikan digital yang mendorong semangat gotong royong di era teknologi.</p>
-          </div>
-          <div className="mission-box">
-            <h3>Misi</h3>
-            <ul>
-              <li>Mempermudah masyarakat untuk berdonasi secara online.</li>
-              <li>Memberikan transparansi penuh dalam penyaluran dana.</li>
-              <li>Memberdayakan komunitas melalui aksi sosial berkelanjutan.</li>
-            </ul>
-          </div>
-        </div>
-      </section>
+    {/* Visi Misi */}
+          <section className="mission-section">
+            <div className="mission-content">
+              <div className="mission-box">
+                <h3>Visi</h3>
+                <p>Menjadi jembatan kebaikan digital yang mendorong semangat gotong royong di era teknologi.</p>
+              </div>
+              <div className="mission-box">
+                <h3>Misi</h3>
+                <ul>
+                  <li>Mempermudah masyarakat untuk berdonasi secara online.</li>
+                  <li>Memberikan transparansi penuh dalam penyaluran dana.</li>
+                  <li>Memberdayakan komunitas melalui aksi sosial berkelanjutan.</li>
+                </ul>
+              </div>
+            </div>
+          </section>
 
       {/* Cara Kami Bekerja */}
       <section className="work-section">

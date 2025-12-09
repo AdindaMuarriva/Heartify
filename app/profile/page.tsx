@@ -1,305 +1,93 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation"; 
-import Link from "next/link"; 
-import "./profile.css";
-
-interface User {
-  name: string;
-  email: string;
-  password: string;
-}
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import "./profile.css"; // CSS khusus Profile
 
 export default function Profile() {
-  const router = useRouter(); // Inisialisasi router Next.js
-  const [user, setUser] = useState<User | null>(null);
+  const router = useRouter();
+  const [user, setUser] = useState<any>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [editData, setEditData] = useState({
-    name: "",
-    email: "",
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: ""
-  });
+  const [editData, setEditData] = useState({ name: "", email: "" });
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    // Cek localStorage hanya saat komponen sudah dimuat di client
+    // Ambil data hanya saat di client
     const registeredUser = localStorage.getItem("registeredUser");
     if (!registeredUser) {
-      router.push("/login"); // Redirect jika tidak ada user
+      router.push("/login");
       return;
     }
-    
-    const userData = JSON.parse(registeredUser);
-    setUser(userData);
-    setEditData(prev => ({
-      ...prev,
-      name: userData.name,
-      email: userData.email
-    }));
+    const parsed = JSON.parse(registeredUser);
+    setUser(parsed);
+    setEditData({ name: parsed.name, email: parsed.email });
   }, [router]);
 
   const handleLogout = () => {
     localStorage.removeItem("registeredUser");
-    setPopupMessage("Logout berhasil!");
-    setTimeout(() => {
-      router.push("/login"); // Redirect menggunakan router.push
-    }, 1500);
-  };
-
-  const handleEdit = () => {
-    setIsEditing(true);
-    setEditData(prev => ({
-      ...prev,
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: ""
-    }));
-  };
-
-  const handleCancel = () => {
-    setIsEditing(false);
-    if (user) {
-      setEditData(prev => ({
-        ...prev,
-        name: user.name,
-        email: user.email,
-        currentPassword: "",
-        newPassword: "",
-        confirmPassword: ""
-      }));
-    }
+    setPopupMessage("Berhasil Keluar");
+    setTimeout(() => router.push("/login"), 1000);
   };
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!user) return;
 
-    // Validasi untuk perubahan password
-    if (editData.newPassword || editData.confirmPassword || editData.currentPassword) {
-      if (!editData.currentPassword) {
-        setPopupMessage("Harap masukkan password saat ini untuk mengubah password!");
-        return;
-      }
-
-      if (editData.currentPassword !== user.password) {
-        setPopupMessage("Password saat ini salah!");
-        return;
-      }
-
-      if (editData.newPassword.length < 6) {
-        setPopupMessage("Password baru harus minimal 6 karakter!");
-        return;
-      }
-
-      if (editData.newPassword !== editData.confirmPassword) {
-        setPopupMessage("Password baru dan konfirmasi password tidak cocok!");
-        return;
-      }
-    }
-
-    // Update user data
-    const updatedUser = {
-      name: editData.name,
-      email: editData.email,
-      password: editData.newPassword || user.password
-    };
-
-    // Simpan ke localStorage
-    localStorage.setItem("registeredUser", JSON.stringify(updatedUser));
-    setUser(updatedUser);
+    // Simpan data baru
+    const updated = { ...user, name: editData.name, email: editData.email };
+    localStorage.setItem("registeredUser", JSON.stringify(updated));
+    setUser(updated);
     setIsEditing(false);
-    
-    setPopupMessage("Profil berhasil diperbarui!");
-    setTimeout(() => setPopupMessage(null), 2000);
+    setPopupMessage("Profil Diperbarui!");
+    setTimeout(() => setPopupMessage(null), 1500);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
-  };
-
-  if (!user) {
-    return (
-      <div className="profile-page">
-        <div className="loading">Memuat...</div>
-      </div>
-    );
-  }
+  if (!user) return <div className="profile-scope-wrapper">Loading...</div>;
 
   return (
-    <div className="profile-page">
-      {/* Navbar */}
-      <header className="profile-navbar">
-        <div className="navbar-container">
-          {/* Ubah 'to' menjadi 'href' */}
-          <Link href="/beranda" className="navbar-logo">
-            Heartify
-          </Link>
+    <div className="profile-scope-wrapper">
+      <header className="navbar-container">
+        <nav className="navbar">
+          <Link href="/beranda" className="navbar-logo">Heartify</Link>
           <div className="navbar-links">
             <Link href="/beranda">Beranda</Link>
-            <Link href="/AboutPage">Tentang Kami</Link>
+            <Link href="/aboutpage">Tentang Kami</Link>
             <Link href="/profile" className="active">Profil</Link>
           </div>
-          <button onClick={handleLogout} className="navbar-logout-btn">
-            Keluar
-          </button>
-        </div>
+          <button onClick={handleLogout} className="navbar-logout-btn">Keluar</button>
+        </nav>
       </header>
 
       <div className="profile-container">
-        <div className="profile-header">
-          <h1>Profil Saya</h1>
-          <p>Kelola informasi profil Anda untuk mengontrol dan mengamankan akun</p>
-        </div>
-
-        <div className="profile-content">
-          <div className="profile-card">
-            <div className="card-header">
-              <h2>Informasi Pribadi</h2>
-              {!isEditing && (
-                <button onClick={handleEdit} className="edit-btn">
-                  Edit Profil
-                </button>
-              )}
-            </div>
-
-            {!isEditing ? (
-              <div className="profile-info">
-                <div className="info-item">
-                  <label>Nama Lengkap</label>
-                  <p>{user.name}</p>
-                </div>
-                <div className="info-item">
-                  <label>Email</label>
-                  <p>{user.email}</p>
-                </div>
-                <div className="info-item">
-                  <label>Status</label>
-                  <p className="status-active">Aktif</p>
-                </div>
-              </div>
-            ) : (
-              <form onSubmit={handleSave} className="edit-form">
-                <div className="form-group">
-                  <label htmlFor="name">Nama Lengkap</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={editData.name}
-                    onChange={handleInputChange}
-                    className="form-input"
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={editData.email}
-                    onChange={handleInputChange}
-                    className="form-input"
-                    required
-                  />
-                </div>
-
-                <div className="password-section">
-                  <h3>Ubah Password</h3>
-                  
-                  <div className="form-group">
-                    <label htmlFor="currentPassword">Password Saat Ini</label>
-                    <input
-                      type="password"
-                      id="currentPassword"
-                      name="currentPassword"
-                      value={editData.currentPassword}
-                      onChange={handleInputChange}
-                      className="form-input"
-                      placeholder="Masukkan password saat ini"
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="newPassword">Password Baru</label>
-                    <input
-                      type="password"
-                      id="newPassword"
-                      name="newPassword"
-                      value={editData.newPassword}
-                      onChange={handleInputChange}
-                      className="form-input"
-                      placeholder="Minimal 6 karakter"
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="confirmPassword">Konfirmasi Password Baru</label>
-                    <input
-                      type="password"
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      value={editData.confirmPassword}
-                      onChange={handleInputChange}
-                      className="form-input"
-                      placeholder="Ulangi password baru"
-                    />
-                  </div>
-                </div>
-
-                <div className="form-actions">
-                  <button type="submit" className="save-btn">
-                    Simpan Perubahan
-                  </button>
-                  <button type="button" onClick={handleCancel} className="cancel-btn">
-                    Batal
-                  </button>
-                </div>
-              </form>
-            )}
+        <h1 className="header-title">Profil Saya</h1>
+        <div className="profile-card">
+          <div className="card-top">
+            <h2>Info Pribadi</h2>
+            {!isEditing && <button onClick={() => setIsEditing(true)} className="btn-edit">Edit</button>}
           </div>
 
-          <div className="stats-card">
-            <h2>Statistik Donasi</h2>
-            <div className="stats-grid"> 
-              <div className="stat-item">
-                <div className="stat-icon">⭐</div>
-                <div className="stat-content">
-                  <h3>Member Sejak</h3>
-                  <p>{new Date().toLocaleDateString('id-ID', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
-                  })}</p>
-                </div>
-              </div>
+          {!isEditing ? (
+            <div className="info-display">
+              <div className="row"><label>Nama</label> <span>{user.name}</span></div>
+              <div className="row"><label>Email</label> <span>{user.email}</span></div>
             </div>
-          </div>
+          ) : (
+            <form onSubmit={handleSave} className="form-edit">
+              <label>Nama Lengkap</label>
+              <input value={editData.name} onChange={(e) => setEditData({...editData, name: e.target.value})} />
+              <label>Email</label>
+              <input value={editData.email} onChange={(e) => setEditData({...editData, email: e.target.value})} />
+              <div className="form-actions">
+                <button type="submit" className="btn-save">Simpan</button>
+                <button type="button" onClick={() => setIsEditing(false)} className="btn-cancel">Batal</button>
+              </div>
+            </form>
+          )}
         </div>
       </div>
 
-      {/* Popup */}
-      {popupMessage && (
-        <div className="popup-overlay">
-          <div className="popup-card">
-            <p>{popupMessage}</p>
-            <button 
-              className="popup-ok-btn" 
-              onClick={() => setPopupMessage(null)}
-            >
-              OK
-            </button>
-          </div>
-        </div>
-      )}
+      {popupMessage && <div className="popup-overlay"><div className="popup-card"><p>{popupMessage}</p></div></div>}
     </div>
   );
 }

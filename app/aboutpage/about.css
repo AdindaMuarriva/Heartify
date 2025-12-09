@@ -23,7 +23,7 @@
 
 /* === Navbar === */
 .about-page .navbar-container {
-  background-color: transparent; /* Atau sesuaikan background navbar */
+  background-color: transparent;
 }
 
 .about-page .navbar {
@@ -68,7 +68,6 @@
   color: var(--white);
 }
 
-
 /* === Hero Section === */
 .hero-section {
   padding: 4rem 2rem 3rem;
@@ -111,39 +110,45 @@
   border-radius: 2px;
 }
 
-/* === Mission Section === */
+/* === Mission Section (REVISI VERTIKAL) === */
 .mission-section {
-  padding: 3rem 2rem;
+  padding: 2rem 2rem; /* Mengurangi padding atas */
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .mission-content {
   display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: center;
+  flex-direction: column; /* MEMBUAT SUSUNAN VERTIKAL (ATAS-BAWAH) */
+  gap: 2rem;              /* Jarak antar kotak Visi dan Misi */
+  align-items: center;    /* Agar kotak berada tepat di tengah layar */
 }
 
 .vision-box, .mission-box {
-  flex: 1;
-  min-width: 300px;
   background: var(--white);
-  padding: 2rem;
+  padding: 2.5rem;
   border-radius: 12px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-  border-top: 4px solid var(--maroon-bright);
+  border-top: 5px solid var(--maroon-bright);
+  
+  width: 100%;           /* Lebar mengambil ruang yang tersedia */
+  max-width: 800px;      /* Membatasi agar tidak terlalu lebar (gepeng) */
+  text-align: center;    /* Teks judul di tengah */
 }
 
 .vision-box h3, .mission-box h3 {
   color: var(--maroon-mid);
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   margin-bottom: 1rem;
   text-align: center;
+  font-weight: 700;
 }
 
+/* Style khusus list agar rapi di tengah */
 .mission-box ul {
-  padding-left: 1.2rem;
+  display: inline-block; /* Membuat list mengikuti lebar konten */
+  text-align: left;      /* Poin list tetap rata kiri agar enak dibaca */
+  padding-left: 1.5rem;
 }
 
 .mission-box li {
