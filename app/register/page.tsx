@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation"; 
 import Link from "next/link"; 
-import "./login.css"; 
+import "./register.css"; 
 
 export default function Register() {
   const router = useRouter(); 
