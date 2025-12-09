@@ -1,0 +1,59 @@
+.about-scope-wrapper {
+  --maroon: #3e0703;
+  --red: #8b1c15;
+  --cream: #fff1c7;
+  --white: #ffffff;
+  
+  background-color: var(--cream);
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  color: var(--maroon);
+}
+
+/* Navbar (Custom Local) */
+.about-scope-wrapper .navbar {
+  display: flex; justify-content: space-between; align-items: center; 
+  padding: 1.5rem 2rem; max-width: 1200px; margin: 0 auto;
+}
+.about-scope-wrapper .navbar-logo { font-size: 1.5rem; font-weight: 800; text-decoration: none; color: var(--maroon); }
+.about-scope-wrapper .navbar-links { display: flex; gap: 1.5rem; }
+.about-scope-wrapper .navbar-links a { text-decoration: none; color: var(--maroon); font-weight: 600; }
+.about-scope-wrapper .navbar-links a.active { color: var(--red); }
+.about-scope-wrapper .navbar-login-button { 
+  border: 2px solid var(--maroon); padding: 5px 15px; border-radius: 20px; 
+  text-decoration: none; color: var(--maroon); font-weight: 600; 
+}
+
+/* Hero */
+.about-scope-wrapper .hero-section {
+  text-align: center; background: linear-gradient(to bottom, #660e0a, var(--red));
+  color: var(--white); padding: 4rem 2rem; border-radius: 0 0 40px 40px;
+}
+.about-scope-wrapper .hero-title { font-size: 2.5rem; margin-bottom: 1rem; }
+
+/* Section Generic */
+.about-scope-wrapper .mission-section,
+.about-scope-wrapper .team-section { padding: 3rem 2rem; max-width: 1000px; margin: 0 auto; }
+.about-scope-wrapper .section-title { text-align: center; color: var(--maroon); margin-bottom: 2rem; }
+
+/* Mission Boxes */
+.about-scope-wrapper .mission-content { display: flex; gap: 2rem; flex-wrap: wrap; }
+.about-scope-wrapper .mission-box { 
+  flex: 1; background: var(--white); padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+}
+
+/* Team */
+.about-scope-wrapper .team-layout { display: flex; flex-direction: column; gap: 2rem; }
+.about-scope-wrapper .team-card {
+  display: flex; background: var(--white); border-radius: 20px; overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1); align-items: center;
+}
+.about-scope-wrapper .team-card.right { flex-direction: row-reverse; }
+
+.about-scope-wrapper .team-photo { 
+  padding: 2rem; background: #FFF9E6; display: flex; justify-content: center; width: 200px;
+}
+.about-scope-wrapper .team-photo img {
+  width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--red);
+}
+.about-scope-wrapper .team-info { padding: 2rem; flex: 1; }
