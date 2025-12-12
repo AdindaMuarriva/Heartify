@@ -9,7 +9,7 @@ export default function About() {
           <Link href="/beranda" className="navbar-logo">Heartify</Link>
           <div className="navbar-links">
             <Link href="/beranda">Beranda</Link>
-            <Link href="/aboutpage" className="active">Tentang Kami</Link>
+            <Link href="/about" className="active">Tentang Kami</Link>
             <Link href="/profile">Profil</Link>
           </div>
           <Link href="/login" className="navbar-login-button">Keluar</Link>
