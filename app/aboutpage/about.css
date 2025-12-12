@@ -1,7 +1,6 @@
-/* Import font dari Google Fonts */
+/* Import Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
 
-/* Scoped Variable - Agar tidak merusak halaman lain */
 .about-page {
   --maroon-dark: #3e0703;
   --maroon-mid: #660e0a;
@@ -10,10 +9,7 @@
   --cream: #fff1c7;
   --white: #ffffff;
   --gray: #4a5568;
-  --gray-light: #718096;
-}
 
-.about-page {
   background: var(--cream);
   min-height: 100vh;
   color: var(--maroon-dark);
@@ -21,489 +17,103 @@
   line-height: 1.6;
 }
 
-/* === Navbar === */
-.navbar-container {
+/* === NAVBAR TERBARU (Sesuai Request) === */
+.about-page .navbar-container {
   background-color: var(--white);
-  border-bottom: 1px solid #eee;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
+  position: sticky; top: 0; z-index: 1000;
+}
+
+.about-page .navbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 2rem; max-width: 1200px; margin: 0 auto;
+}
+
+.about-page .navbar-logo {
+  font-size: 1.8rem; font-weight: 800; color: var(--maroon-dark); text-decoration: none;
+}
+
+.about-page .navbar-links {
+  display: flex; gap: 2.5rem;
+}
+
+/* Animasi Teks Menu */
+.about-page .navbar-links a {
+  text-decoration: none; color: var(--maroon-dark); font-weight: 700;
+  position: relative; padding-bottom: 5px;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s ease;
+}
+
+/* Efek Hover (Membesar) */
+.about-page .navbar-links a:hover {
+  transform: scale(1.1); color: var(--maroon-red);
+}
+/* Efek Klik (Mengecil) */
+.about-page .navbar-links a:active {
+  transform: scale(0.95);
+}
+
+/* Garis Bawah (Underline) */
+.about-page .navbar-links a::after {
+  content: ''; position: absolute; width: 0; height: 3px; bottom: 0; left: 0;
+  background-color: var(--maroon-red); transition: width 0.3s ease-out; border-radius: 2px;
+}
+.about-page .navbar-links a:hover::after,
+.about-page .navbar-links a.active::after {
   width: 100%;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
+.about-page .navbar-links a.active::after { background-color: var(--maroon-dark); }
 
-.navbar {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* Tombol Keluar */
+.about-page .navbar-login-button {
+  text-decoration: none; background-color: transparent;
+  border: 2px solid var(--maroon-dark); color: var(--maroon-dark);
+  padding: 0.6rem 2rem; border-radius: 50px; font-weight: 700;
+  transition: transform 0.2s ease, background-color 0.3s ease;
 }
-
-.navbar-logo {
-  font-size: 1.75rem;
-  font-weight: 800;
-  color: var(--maroon-dark);
-  text-decoration: none;
+.about-page .navbar-login-button:hover {
+  background-color: var(--maroon-dark); color: var(--white); transform: scale(1.05);
 }
+.about-page .navbar-login-button:active { transform: scale(0.95); }
 
-.navbar-logo:hover {
-  color: var(--maroon-red);
-  transition: color 0.3s ease;
-}
 
-.navbar-links {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-}
-
-.navbar-links a {
-  color: var(--maroon-dark);
-  font-weight: 600;
-  text-decoration: none;
-  position: relative;
-  padding: 0.25rem 0;
-  transition: color 0.3s ease;
-  display: inline-block; 
-}
-
-.navbar-links a::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  left: 0;
-  bottom: 0;
-  background-color: var(--maroon-red);
-  transition: width 0.3s ease;
-}
-
-.navbar-links a:hover {
-  color: var(--maroon-red);
-}
-
-.navbar-links a:hover::after {
-  width: 100%; 
-}
-
-.navbar-login-button {
-  background-color: var(--white);
-  color: var(--maroon-dark);
-  font-weight: 600;
-  padding: 0.6rem 1.5rem;
-  border-radius: 50px;
-  text-decoration: none;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  border: 2px solid var(--maroon-dark);
-}
-
-.navbar-login-button:hover {
-  background-color: var(--maroon-dark);
-  color: var(--white);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-  transform: translateY(-2px);
-}
-
-/* === Hero Section === */
-.hero-section {
-  padding: 4rem 2rem 3rem;
-  text-align: center;
+/* === HERO SECTION === */
+.about-page .hero-section {
+  padding: 4rem 2rem 3rem; text-align: center;
   background: linear-gradient(to bottom, var(--maroon-mid), var(--maroon-red));
-  color: var(--white);
-  border-radius: 0 0 30px 30px;
-  margin-bottom: 3rem;
+  color: var(--white); border-radius: 0 0 30px 30px; margin-bottom: 3rem;
 }
+.about-page .hero-title { font-size: 2.5rem; margin-bottom: 1.5rem; font-weight: 700; }
+.about-page .hero-subtitle { font-size: 1.2rem; max-width: 800px; margin: 0 auto; opacity: 0.9; }
 
-.hero-title {
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
-  font-weight: 700;
+/* === VISI MISI VERTIKAL === */
+.about-page .mission-section { padding: 2rem; max-width: 1200px; margin: 0 auto; }
+.about-page .mission-content { display: flex; flex-direction: column; gap: 2rem; align-items: center; }
+.about-page .vision-box, .about-page .mission-box {
+  background: var(--white); padding: 2.5rem; border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08); border-top: 5px solid var(--maroon-bright);
+  width: 100%; max-width: 800px; text-align: center;
 }
+.about-page .vision-box h3, .about-page .mission-box h3 {
+  color: var(--maroon-mid); font-size: 1.8rem; margin-bottom: 1rem;
+}
+.about-page .mission-box ul { display: inline-block; text-align: left; padding-left: 1.5rem; }
+.about-page .mission-box li { margin-bottom: 0.8rem; color: var(--gray); }
 
-.hero-subtitle {
-  font-size: 1.2rem;
-  max-width: 800px;
-  margin: 0 auto;
-  opacity: 0.9;
+/* === TEAM & OTHERS === */
+.about-page .section-title { text-align: center; font-size: 2rem; color: var(--maroon-dark); margin-bottom: 2rem; }
+.about-page .work-section { padding: 3rem 2rem; background: rgba(255,255,255,0.5); }
+.about-page .work-grid { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; }
+.about-page .work-card { 
+  background: var(--white); padding: 2rem; border-radius: 12px; max-width: 320px; 
+  text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); flex: 1;
 }
+.about-page .work-number { background: var(--maroon-bright); color: white; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; justify-content: center; align-items: center; margin-bottom: 1rem; font-weight: bold; }
 
-/* === Section Titles === */
-.section-title {
-  text-align: center;
-  font-size: 2rem;
-  color: var(--maroon-dark);
-  margin-bottom: 2.5rem;
-  position: relative;
-}
-
-.section-title::after {
-  content: '';
-  display: block;
-  width: 80px;
-  height: 4px;
-  background: var(--maroon-bright);
-  margin: 0.5rem auto;
-  border-radius: 2px;
-}
-
-/* === Mission Section (REVISI VERTIKAL) === */
-.mission-section {
-  padding: 2rem 2rem; /* Mengurangi padding atas */
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.mission-content {
-  display: flex;
-  flex-direction: column; /* MEMBUAT SUSUNAN VERTIKAL (ATAS-BAWAH) */
-  gap: 2rem;              /* Jarak antar kotak Visi dan Misi */
-  align-items: center;    /* Agar kotak berada tepat di tengah layar */
-}
-
-.vision-box, .mission-box {
-  background: var(--white);
-  padding: 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-  border-top: 5px solid var(--maroon-bright);
-  
-  width: 100%;           /* Lebar mengambil ruang yang tersedia */
-  max-width: 800px;      /* Membatasi agar tidak terlalu lebar (gepeng) */
-  text-align: center;    /* Teks judul di tengah */
-}
-
-.vision-box h3, .mission-box h3 {
-  color: var(--maroon-mid);
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  text-align: center;
-  font-weight: 700;
-}
-
-/* Style khusus list agar rapi di tengah */
-.mission-box ul {
-  display: inline-block; /* Membuat list mengikuti lebar konten */
-  text-align: left;      /* Poin list tetap rata kiri agar enak dibaca */
-  padding-left: 1.5rem;
-}
-
-.mission-box li {
-  margin-bottom: 0.8rem;
-  color: var(--gray);
-}
-
-/* === Work Section === */
-.work-section {
-  padding: 3rem 2rem;
-  background: rgba(255, 255, 255, 0.5);
-}
-
-.work-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.work-card {
-  flex: 1;
-  min-width: 250px;
-  max-width: 320px;
-  background: var(--white);
-  padding: 2rem 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border-top: 4px solid var(--maroon-bright);
-}
-
-.work-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
-}
-
-.work-number {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: var(--maroon-bright);
-  color: var(--white);
-  border-radius: 50%;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-
-.work-card-title {
-  color: var(--maroon-dark);
-  margin-bottom: 1rem;
-  font-size: 1.3rem;
-}
-
-.work-card p {
-  color: var(--gray);
-  text-align: center;
-}
-
-/* === Team Section - Horizontal Layout === */
-.team-section {
-  padding: 3rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.team-horizontal-layout {
-  display: flex;
-  flex-direction: column;
-  gap: 4rem;
-}
-
-.team-member-left,
-.team-member-right {
-  display: flex;
-  justify-content: center;
-}
-
-.team-member-left .team-card-horizontal {
-  flex-direction: row;
-  margin-right: auto;
-}
-
-.team-member-right .team-card-horizontal {
-  flex-direction: row-reverse;
-  margin-left: auto;
-}
-
-.team-card-horizontal {
-  display: flex;
-  background: var(--white);
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  max-width: 800px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.team-card-horizontal:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-}
-
-.team-photo-container {
-  flex: 0 0 250px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--cream);
-  padding: 2rem;
-}
-
-.team-photo {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid var(--maroon-bright);
-  box-shadow: 0 4px 15px rgba(139, 28, 21, 0.3);
-}
-
-.team-content {
-  flex: 1;
-  padding: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.team-name {
-  color: var(--maroon-dark);
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.team-role {
-  color: var(--maroon-bright);
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 0.8rem;
-  position: relative;
-  padding-bottom: 0.8rem;
-}
-
-.team-role::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 50px;
-  height: 3px;
-  background: var(--maroon-bright);
-}
-
-.team-education {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--gray);
-  font-size: 0.95rem;
-  margin-bottom: 1.5rem;
-  padding: 0.5rem 0;
-  font-style: italic;
-}
-
-.education-icon {
-  font-size: 1.2rem;
-}
-
-.team-bio p {
-  text-align: justify;
-  text-justify: inter-word;
-}
-
-.team-details {
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  background: rgba(255, 241, 199, 0.3);
-  border-radius: 8px;
-  border-left: 3px solid var(--maroon-bright);
-}
-
-.detail-item {
-  display: flex;
-  margin-bottom: 0.5rem;
-  align-items: flex-start;
-}
-
-.detail-item:last-child {
-  margin-bottom: 0;
-}
-
-.detail-label {
-  font-weight: 600;
-  color: var(--maroon-dark);
-  min-width: 100px;
-  margin-right: 0.5rem;
-  font-size: 0.9rem;
-}
-
-.detail-value {
-  color: var(--gray);
-  font-size: 0.9rem;
-  flex: 1;
-}
-
-.team-skills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-}
-
-.skill-tag {
-  background: var(--cream);
-  color: var(--maroon-dark);
-  padding: 0.4rem 1rem;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  border: 1px solid rgba(139, 28, 21, 0.2);
-  transition: all 0.3s ease;
-}
-
-.skill-tag:hover {
-  background: var(--maroon-bright);
-  color: var(--white);
-  transform: translateY(-2px);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .team-horizontal-layout {
-    gap: 3rem;
-  }
-  
-  .team-member-left .team-card-horizontal,
-  .team-member-right .team-card-horizontal {
-    flex-direction: column;
-    margin: 0 auto;
-    max-width: 400px;
-  }
-  
-  .team-photo-container {
-    flex: 0 0 auto;
-    padding: 2rem;
-  }
-  
-  .team-photo {
-    width: 140px;
-    height: 140px;
-  }
-  
-  .team-content {
-    padding: 2rem;
-  }
-  
-  .team-name {
-    font-size: 1.5rem;
-    text-align: center;
-  }
-  
-  .team-role {
-    font-size: 1.1rem;
-    text-align: center;
-  }
-  
-  .team-role::after {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  
-  .team-education {
-    justify-content: center;
-    text-align: center;
-  }
-  
-  .detail-item {
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .detail-label {
-    min-width: auto;
-    margin-right: 0;
-    margin-bottom: 0.2rem;
-  }
-  
-  .team-skills {
-    justify-content: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .team-card-horizontal {
-    max-width: 100%;
-  }
-  
-  .team-photo-container {
-    padding: 1.5rem;
-  }
-  
-  .team-content {
-    padding: 1.5rem;
-  }
-  
-  .team-name {
-    font-size: 1.3rem;
-  }
-  
-  .team-role {
-    font-size: 1rem;
-  }
-}
+.about-page .team-section { padding: 3rem 2rem; max-width: 1000px; margin: 0 auto; }
+.about-page .team-layout { display: flex; flex-direction: column; gap: 2rem; }
+.about-page .team-card { display: flex; background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); align-items: center; }
+.about-page .team-card.right { flex-direction: row-reverse; }
+.about-page .team-photo { padding: 2rem; background: #fff9e6; display: flex; justify-content: center; width: 200px; }
+.about-page .team-photo img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--maroon-red); }
+.about-page .team-info { padding: 2rem; flex: 1; }
