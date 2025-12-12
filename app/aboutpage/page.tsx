@@ -7,21 +7,21 @@ export default function About() {
   return (
     <div className="about-page">
       {/* Navbar */}
-      <header className="navbar-container">
+      <div className="navbar-container">
         <nav className="navbar">
-          <Link href="/" className="navbar-logo">
+          <Link href="/beranda" className="navbar-logo">
             Heartify
           </Link>
           <div className="navbar-links">
             <Link href="/beranda">Beranda</Link>
-            <Link href="/aboutpage">Tentang Kami</Link>
-            <Link href="/profile">Profile</Link>
+            <Link href="/aboutpage" className="active">Tentang Kami</Link>
+            <Link href="/profile">Profil</Link>
           </div>
           <Link href="/login" className="navbar-login-button">
             Keluar
           </Link>
         </nav>
-      </header>
+      </div>
       
       {/* Hero / Header Tentang Kami */}
       <section className="hero-section">
@@ -33,23 +33,23 @@ export default function About() {
         </p>
       </section>
 
-    {/* Visi Misi */}
-          <section className="mission-section">
-            <div className="mission-content">
-              <div className="mission-box">
-                <h3>Visi</h3>
-                <p>Menjadi jembatan kebaikan digital yang mendorong semangat gotong royong di era teknologi.</p>
-              </div>
-              <div className="mission-box">
-                <h3>Misi</h3>
-                <ul>
-                  <li>Mempermudah masyarakat untuk berdonasi secara online.</li>
-                  <li>Memberikan transparansi penuh dalam penyaluran dana.</li>
-                  <li>Memberdayakan komunitas melalui aksi sosial berkelanjutan.</li>
-                </ul>
-              </div>
-            </div>
-          </section>
+      {/* Visi Misi (Layout Vertikal) */}
+      <section className="mission-section">
+        <div className="mission-content">
+          <div className="vision-box">
+            <h3>Visi</h3>
+            <p>Menjadi jembatan kebaikan digital yang mendorong semangat gotong royong di era teknologi.</p>
+          </div>
+          <div className="mission-box">
+            <h3>Misi</h3>
+            <ul>
+              <li>Mempermudah masyarakat untuk berdonasi secara online.</li>
+              <li>Memberikan transparansi penuh dalam penyaluran dana.</li>
+              <li>Memberdayakan komunitas melalui aksi sosial berkelanjutan.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
       {/* Cara Kami Bekerja */}
       <section className="work-section">
@@ -76,79 +76,27 @@ export default function About() {
       {/* Tim */}
       <section className="team-section">
         <h2 className="section-title">Tim Kami</h2>
-        <div className="team-horizontal-layout">
-          {/* Maulizar - Kiri */}
-          <div className="team-member-left">
-            <div className="team-card-horizontal">
-              <div className="team-photo-container">
-                <img src="/maulizar.jpg" alt="Maulizar" className="team-photo" />
-              </div>
-              <div className="team-content">
-                <h3 className="team-name">Maulizar</h3>
-                <p className="team-role">UI/UX Designer</p>
-                <div className="team-education">
-                  <span className="education-icon">🎓</span>
-                  Mahasiswi Informatika, Universitas Syiah Kuala
-                </div>
-                <div className="team-bio">
-                  <p>Mendesain pengalaman pengguna yang intuitif dan antarmuka yang menarik. Fokus pada desain yang accessible dan user-centered untuk memastikan platform mudah digunakan semua kalangan. Berpengalaman dalam menciptakan solusi desain yang tidak hanya indah secara visual tetapi juga fungsional dan mudah dipahami.</p>
-                </div>
-                <div className="team-details">
-                  <div className="detail-item">
-                    <span className="detail-label">Spesialisasi:</span>
-                    <span className="detail-value">UI Design, UX Research, Prototyping</span>
-                  </div>
-                  <div className="detail-item">
-                    <span className="detail-label">Tools:</span>
-                    <span className="detail-value">Figma, Adobe XD, Illustrator</span>
-                  </div>
-                </div>
-                <div className="team-skills">
-                  <span className="skill-tag">Figma</span>
-                  <span className="skill-tag">User Research</span>
-                  <span className="skill-tag">Wireframing</span>
-                  <span className="skill-tag">Prototyping</span>
-                  <span className="skill-tag">UI Design</span>
-                </div>
-              </div>
+        <div className="team-layout">
+          {/* Member 1 - Kiri */}
+          <div className="team-card">
+            <div className="team-photo">
+              {/* Pastikan file maulizar.jpg ada di public */}
+              <img src="/maulizar.jpg" alt="Maulizar" />
+            </div>
+            <div className="team-info">
+              <h3>Maulizar</h3>
+              <p>UI/UX Designer</p>
             </div>
           </div>
-
-          {/* Adinda Muarriva - Kanan */}
-          <div className="team-member-right">
-            <div className="team-card-horizontal">
-              <div className="team-photo-container">
-                <img src="/adinda.jpg" alt="Adinda Muarriva" className="team-photo" />
-              </div>
-              <div className="team-content">
-                <h3 className="team-name">Adinda Muarriva</h3>
-                <p className="team-role">Frontend Developer</p>
-                <div className="team-education">
-                  <span className="education-icon">🎓</span>
-                  Mahasiswi Informatika, Universitas Syiah Kuala
-                </div>
-                <div className="team-bio">
-                  <p>Bertanggung jawab dalam pengembangan antarmuka pengguna yang responsif dan interaktif. Memastikan pengalaman donasi yang seamless dan mudah digunakan oleh semua pengguna. Memiliki passion dalam menciptakan kode yang bersih, efisien, dan maintainable untuk aplikasi web modern.</p>
-                </div>
-                <div className="team-details">
-                  <div className="detail-item">
-                    <span className="detail-label">Spesialisasi:</span>
-                    <span className="detail-value">Frontend Development, React, Responsive Design</span>
-                  </div>
-                  <div className="detail-item">
-                    <span className="detail-label">Tools:</span>
-                    <span className="detail-value">VS Code, Git, Chrome DevTools</span>
-                  </div>
-                </div>
-                <div className="team-skills">
-                  <span className="skill-tag">React</span>
-                  <span className="skill-tag">JavaScript</span>
-                  <span className="skill-tag">CSS</span>
-                  <span className="skill-tag">HTML</span>
-                  <span className="skill-tag">Git</span>
-                  <span className="skill-tag">Responsive Design</span>
-                </div>
-              </div>
+          {/* Member 2 - Kanan */}
+          <div className="team-card right">
+            <div className="team-photo">
+              {/* Pastikan file adinda.jpg ada di public */}
+              <img src="/adinda.jpg" alt="Adinda" />
+            </div>
+            <div className="team-info">
+              <h3>Adinda Muarriva</h3>
+              <p>Frontend Developer</p>
             </div>
           </div>
         </div>
