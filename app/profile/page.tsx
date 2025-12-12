@@ -89,7 +89,7 @@ export default function Profile() {
 
           <div className="navbar-links">
             <Link href="/beranda">Beranda</Link>
-            <Link href="/aboutpage">Tentang Kami</Link>
+            <Link href="/about">Tentang Kami</Link>
             <Link href="/profile" className="active">
               Profile
             </Link>
@@ -102,7 +102,7 @@ export default function Profile() {
       </div>
 
       <div className="profile-container">
-        <h1>Pengaturan Profil</h1>
+        <h1>Informasi Pribadi</h1>
 
         <div className="profile-dashboard">
           {/* SIDEBAR */}
@@ -134,7 +134,7 @@ export default function Profile() {
           {/* MAIN CONTENT */}
           <main className="profile-main">
             <div className="main-header">
-              <h3>Informasi Pribadi</h3>
+              <h3>Detail Profile</h3>
               {!isEditing && (
                 <button className="btn-edit" onClick={() => setIsEditing(true)}>
                   Edit Profil
