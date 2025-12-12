@@ -53,7 +53,7 @@ export default function Profile() {
           <Link href="/beranda" className="navbar-logo">Heartify</Link>
           <div className="navbar-links">
             <Link href="/beranda">Beranda</Link>
-            <Link href="/aboutpage">Tentang Kami</Link>
+            <Link href="/about">Tentang Kami</Link>
             <Link href="/profile">Profile</Link>
           </div>
           <button onClick={handleLogout} className="navbar-login-button">Keluar</button>
