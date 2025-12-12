@@ -1,59 +1,430 @@
-.about-scope-wrapper {
-  --maroon: #3e0703;
-  --red: #8b1c15;
+/* Import Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+
+.about-page {
+  --maroon-dark: #3e0703;
+  --maroon-mid: #660e0a;
+  --maroon-red: #8b1c15;
+  --maroon-bright: #b32820;
   --cream: #fff1c7;
   --white: #ffffff;
-  
-  background-color: var(--cream);
+  --gray: #4a5568;
+
+  background: var(--cream);
   min-height: 100vh;
+  color: var(--maroon-dark);
   font-family: "Poppins", sans-serif;
-  color: var(--maroon);
+  line-height: 1.6;
 }
 
-/* Navbar (Custom Local) */
-.about-scope-wrapper .navbar {
-  display: flex; justify-content: space-between; align-items: center; 
-  padding: 1.5rem 2rem; max-width: 1200px; margin: 0 auto;
-}
-.about-scope-wrapper .navbar-logo { font-size: 1.5rem; font-weight: 800; text-decoration: none; color: var(--maroon); }
-.about-scope-wrapper .navbar-links { display: flex; gap: 1.5rem; }
-.about-scope-wrapper .navbar-links a { text-decoration: none; color: var(--maroon); font-weight: 600; }
-.about-scope-wrapper .navbar-links a.active { color: var(--red); }
-.about-scope-wrapper .navbar-login-button { 
-  border: 2px solid var(--maroon); padding: 5px 15px; border-radius: 20px; 
-  text-decoration: none; color: var(--maroon); font-weight: 600; 
+/* === Navbar === */
+.navbar-container {
+  background-color: var(--white);
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
 }
 
-/* Hero */
-.about-scope-wrapper .hero-section {
-  text-align: center; background: linear-gradient(to bottom, #660e0a, var(--red));
-  color: var(--white); padding: 4rem 2rem; border-radius: 0 0 40px 40px;
-}
-.about-scope-wrapper .hero-title { font-size: 2.5rem; margin-bottom: 1rem; }
-
-/* Section Generic */
-.about-scope-wrapper .mission-section,
-.about-scope-wrapper .team-section { padding: 3rem 2rem; max-width: 1000px; margin: 0 auto; }
-.about-scope-wrapper .section-title { text-align: center; color: var(--maroon); margin-bottom: 2rem; }
-
-/* Mission Boxes */
-.about-scope-wrapper .mission-content { display: flex; gap: 2rem; flex-wrap: wrap; }
-.about-scope-wrapper .mission-box { 
-  flex: 1; background: var(--white); padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
+.navbar {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* Team */
-.about-scope-wrapper .team-layout { display: flex; flex-direction: column; gap: 2rem; }
-.about-scope-wrapper .team-card {
-  display: flex; background: var(--white); border-radius: 20px; overflow: hidden;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1); align-items: center;
+.navbar-logo {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--maroon-dark);
+  text-decoration: none;
 }
-.about-scope-wrapper .team-card.right { flex-direction: row-reverse; }
 
-.about-scope-wrapper .team-photo { 
-  padding: 2rem; background: #FFF9E6; display: flex; justify-content: center; width: 200px;
+.navbar-logo:hover {
+  color: var(--maroon-red);
+  transition: color 0.3s ease;
 }
-.about-scope-wrapper .team-photo img {
-  width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--red);
+
+.navbar-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
 }
-.about-scope-wrapper .team-info { padding: 2rem; flex: 1; }
+
+.navbar-links a {
+  color: var(--maroon-dark);
+  font-weight: 600;
+  text-decoration: none;
+  position: relative;
+  padding: 0.25rem 0;
+  transition: color 0.3s ease;
+  display: inline-block; 
+}
+
+.navbar-links a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  left: 0;
+  bottom: 0;
+  background-color: var(--maroon-red);
+  transition: width 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: var(--maroon-red);
+}
+
+.navbar-links a:hover::after {
+  width: 100%; 
+}
+
+.navbar-login-button {
+  background-color: var(--white);
+  color: var(--maroon-dark);
+  font-weight: 600;
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 2px solid var(--maroon-dark);
+}
+
+.navbar-login-button:hover {
+  background-color: var(--maroon-dark);
+  color: var(--white);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* === HERO SECTION === */
+.about-page .hero-section {
+  padding: 4rem 2rem 3rem; text-align: center;
+  background: linear-gradient(to bottom, var(--maroon-mid), var(--maroon-red));
+  color: var(--white); border-radius: 0 0 30px 30px; margin-bottom: 3rem;
+}
+.about-page .hero-title { font-size: 2.5rem; margin-bottom: 1.5rem; font-weight: 700; }
+.about-page .hero-subtitle { font-size: 1.2rem; max-width: 800px; margin: 0 auto; opacity: 0.9; }
+
+/* === VISI MISI VERTIKAL === */
+.about-page .mission-section { padding: 2rem; max-width: 1200px; margin: 0 auto; }
+.about-page .mission-content { display: flex; flex-direction: column; gap: 2rem; align-items: center; }
+.about-page .vision-box, .about-page .mission-box {
+  background: var(--white); padding: 2.5rem; border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08); border-top: 5px solid var(--maroon-bright);
+  width: 100%; max-width: 800px; text-align: center;
+}
+.about-page .vision-box h3, .about-page .mission-box h3 {
+  color: var(--maroon-mid); font-size: 1.8rem; margin-bottom: 1rem;
+}
+.about-page .mission-box ul { display: inline-block; text-align: left; padding-left: 1.5rem; }
+.about-page .mission-box li { margin-bottom: 0.8rem; color: var(--gray); }
+
+/* === WORK SECTION (Bagaimana Kami Bekerja) === */
+
+/* Container Utama */
+.about-page .work-section {
+  padding: 4rem 2rem;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+/* Grid Pembungkus 3 Kartu */
+.about-page .work-grid {
+  display: flex;            /* Ini kuncinya biar sejajar ke samping */
+  justify-content: center;  /* Rata tengah */
+  gap: 2.5rem;              /* Jarak antar kartu */
+  flex-wrap: wrap;          /* Agar turun ke bawah kalau di HP */
+  margin-top: 2rem;
+}
+
+/* Tampilan Kartu (Kotak Putih) */
+.about-page .work-card {
+  flex: 1;                  /* Membagi ukuran sama rata */
+  min-width: 280px;         /* Lebar minimal agar tidak gepeng */
+  max-width: 350px;
+  background: var(--white);
+  padding: 3rem 2rem;
+  border-radius: 20px;
+  text-align: center;
+  
+  /* Efek Bayangan & Border Atas */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border-top: 6px solid var(--maroon-bright);
+  
+  /* Flex untuk menata isi dalam kartu */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efek saat mouse diarahkan ke kartu */
+.about-page .work-card:hover {
+  transform: translateY(-10px); /* Kartu naik sedikit */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Lingkaran Angka (1, 2, 3) */
+.about-page .work-number {
+  width: 70px;
+  height: 70px;
+  background-color: var(--maroon-dark);
+  color: var(--white);
+  border-radius: 50%; /* Membuat lingkaran */
+  
+  /* Menengahkan Angka */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 5px 15px rgba(62, 7, 3, 0.3);
+}
+
+/* Judul dalam kartu (Donasi, Transparansi, dll) */
+.about-page .work-card-title {
+  font-size: 1.5rem;
+  color: var(--maroon-mid);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+/* Teks deskripsi dalam kartu */
+.about-page .work-card p {
+  color: var(--gray);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* === TEAM SECTION STYLING === */
+
+/* Wrapper Utama */
+.about-page .team-section {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Judul Section */
+.about-page .section-title {
+  text-align: center;
+  font-size: 2.2rem;
+  color: var(--maroon-dark);
+  font-weight: 700;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+/* Garis di bawah judul */
+.about-page .section-title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: var(--maroon-bright);
+  margin: 0.8rem auto;
+  border-radius: 2px;
+}
+
+/* Layout Vertikal (List member ke bawah) */
+.about-page .team-horizontal-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem; /* Jarak antar member */
+}
+
+/* Mengatur posisi: Kiri dan Kanan */
+.about-page .team-member-left {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.about-page .team-member-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* === CARD MEMBER HORIZONTAL === */
+.about-page .team-card-horizontal {
+  display: flex;
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  max-width: 900px; /* Lebar kartu */
+  width: 100%;
+  transition: transform 0.3s ease;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.about-page .team-card-horizontal:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+}
+
+/* Logika Reverse untuk Member Kanan */
+/* Member kiri (default): Foto Kiri, Konten Kanan */
+.about-page .team-member-left .team-card-horizontal {
+  flex-direction: row;
+}
+
+/* Member kanan: Foto Kanan, Konten Kiri */
+.about-page .team-member-right .team-card-horizontal {
+  flex-direction: row-reverse;
+}
+
+/* === FOTO === */
+.about-page .team-photo-container {
+  flex: 0 0 320px; /* Lebar area foto fix */
+  background: linear-gradient(135deg, var(--cream), #fff); /* Background sedikit gradien */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.about-page .team-photo {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid var(--maroon-bright);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* === KONTEN TEKS === */
+.about-page .team-content {
+  flex: 1;
+  padding: 3rem;
+  text-align: left;
+}
+
+/* Nama & Role */
+.about-page .team-name {
+  font-size: 2rem;
+  color: var(--maroon-dark);
+  font-weight: 800;
+  margin-bottom: 0.2rem;
+}
+
+.about-page .team-role {
+  font-size: 1.2rem;
+  color: var(--maroon-bright);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #eee;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+/* Education Info */
+.about-page .team-education {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--gray);
+  font-size: 0.95rem;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  background: #f8f9fa;
+  padding: 8px 15px;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+/* Bio */
+.about-page .team-bio {
+  color: var(--gray);
+  margin-bottom: 2rem;
+  line-height: 1.8;
+  text-align: justify;
+  font-size: 1rem;
+}
+
+/* === DETAIL SPESIFIKASI & TOOLS (Kotak Kecil) === */
+.about-page .team-details {
+  background-color: #fff9e6; /* Warna cream sangat muda */
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-left: 5px solid var(--maroon-mid);
+  margin-bottom: 2rem;
+}
+
+.about-page .detail-item {
+  display: flex;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.about-page .detail-label {
+  font-weight: 700;
+  color: var(--maroon-dark);
+  min-width: 130px; /* Lebar label biar rata */
+}
+
+.about-page .detail-value {
+  color: #555;
+}
+
+/* === SKILLS (Tags) === */
+.about-page .team-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.about-page .skill-tag {
+  background: var(--white);
+  color: var(--maroon-dark);
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid #ddd;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.about-page .skill-tag:hover {
+  background: var(--maroon-bright);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+/* === RESPONSIVE (Untuk HP/Tablet) === */
+@media (max-width: 900px) {
+  /* Ubah layout kartu jadi tumpuk vertikal */
+  .about-page .team-member-left .team-card-horizontal,
+  .about-page .team-member-right .team-card-horizontal {
+    flex-direction: column;
+    align-items: center;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  /* Reset area foto biar full width */
+  .about-page .team-photo-container {
+    width: 100%;
+    flex: none;
+    padding: 2.5rem 0;
+  }
+  
+  .about-page .team-content {
+    padding: 2rem;
+  }
+  
+  /* Reset alignment container */
+  .about-page .team-member-left, 
+  .about-page .team-member-right {
+    justify-content: center;
+  }
+}
