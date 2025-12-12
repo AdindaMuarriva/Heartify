@@ -14,7 +14,6 @@ export default function About() {
           </Link>
           <div className="navbar-links">
             <Link href="/beranda">Beranda</Link>
-            {/* PENTING: href harus huruf kecil sesuai nama folder */}
             <Link href="/aboutpage" className="active">Tentang Kami</Link>
             <Link href="/profile">Profil</Link>
           </div>

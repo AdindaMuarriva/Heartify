@@ -1,140 +1,52 @@
-/* FILE: app/register/register.css */
-
-/* Wrapper Utama - Kunci agar tampilan rapi */
 .register-scope-wrapper {
-  --cream-bg: #fff1c7;
   --maroon-dark: #3e0703;
   --red-accent: #8b1c15;
+  --cream-bg: #fff1c7;
   
-  /* Pastikan height 100vh agar full layar */
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  min-height: 100vh; width: 100%;
+  display: flex; justify-content: center; align-items: center;
   font-family: "Poppins", sans-serif;
-
-  /* Background Gradient */
   background: linear-gradient(-45deg, #3E0703, #660E0A, #230403, #8B1515);
   background-size: 400% 400%;
   animation: regGradient 15s ease infinite;
-  
-  /* Reset margin/padding browser */
-  margin: 0;
-  padding: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 @keyframes regGradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
 }
 
-/* Card Form Register */
 .register-scope-wrapper .auth-card {
-  background: rgba(20, 2, 2, 0.75);
-  backdrop-filter: blur(12px);
-  padding: 3rem 2.5rem;
-  border-radius: 20px;
+  background: rgba(20, 2, 2, 0.75); backdrop-filter: blur(12px);
+  padding: 3rem 2.5rem; border-radius: 20px;
   border: 1px solid rgba(255, 241, 199, 0.1);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-  width: 100%;
-  max-width: 400px; /* Lebar maksimal card */
-  text-align: center;
-  color: var(--cream-bg);
-  display: flex;
-  flex-direction: column;
+  width: 100%; max-width: 400px; text-align: center; color: var(--cream-bg);
 }
 
-.register-scope-wrapper h2 {
-  font-size: 2rem; 
-  margin-bottom: 2rem; 
-  color: var(--cream-bg);
-  font-weight: 700;
-}
+.register-scope-wrapper h2 { font-size: 2rem; margin-bottom: 2rem; font-weight: 700; color: #fff1c7; }
 
-/* Form Styles */
-.register-scope-wrapper form {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
+.register-scope-wrapper form { display: flex; flex-direction: column; width: 100%; }
 
 .register-scope-wrapper input {
-  width: 100%; 
-  padding: 12px; 
-  margin-bottom: 1rem; 
-  border-radius: 10px;
-  border: 2px solid var(--red-accent); 
-  background: #3E0703;
-  color: var(--cream-bg); 
-  outline: none; 
-  box-sizing: border-box; /* Agar padding tidak merusak lebar */
+  width: 100%; padding: 12px; margin-bottom: 1rem; border-radius: 10px;
+  border: 2px solid var(--red-accent); background: #3E0703; color: var(--cream-bg);
+  outline: none; box-sizing: border-box;
 }
-
-.register-scope-wrapper input::placeholder {
-  color: rgba(255, 241, 199, 0.5);
-}
+.register-scope-wrapper input::placeholder { color: rgba(255, 241, 199, 0.5); }
 
 .register-scope-wrapper button {
-  width: 100%; 
-  padding: 12px; 
-  border-radius: 10px;
+  width: 100%; padding: 12px; border-radius: 10px;
   background: linear-gradient(135deg, #B32820, #8B1C15);
-  color: var(--cream-bg); 
-  border: none; 
-  font-weight: 600; 
-  cursor: pointer; 
-  margin-top: 10px;
-  transition: transform 0.2s;
+  color: var(--cream-bg); border: none; font-weight: 600; cursor: pointer;
+  margin-top: 10px; transition: transform 0.2s;
 }
+.register-scope-wrapper button:hover { transform: scale(1.02); }
+.register-scope-wrapper button:disabled { opacity: 0.6; cursor: not-allowed; }
 
-.register-scope-wrapper button:hover {
-  transform: scale(1.02);
-}
+.register-scope-wrapper p { margin-top: 20px; font-size: 0.9rem; }
+.register-scope-wrapper a { color: var(--cream-bg); font-weight: bold; margin-left: 5px; text-decoration: underline; }
 
-.register-scope-wrapper button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.register-scope-wrapper p {
-  margin-top: 20px;
-  font-size: 0.9rem;
-}
-
-.register-scope-wrapper a { 
-  color: var(--cream-bg); 
-  font-weight: bold; 
-  text-decoration: underline; 
-  margin-left: 5px;
-}
-
-/* Popup Styles */
-.register-scope-wrapper .popup-overlay {
-  position: fixed; 
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.6); 
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-  z-index: 2000;
-}
-.register-scope-wrapper .popup-card {
-  background: var(--cream-bg); 
-  padding: 20px; 
-  border-radius: 12px;
-  text-align: center; 
-  color: var(--maroon-dark); 
-  min-width: 250px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-}
-.register-scope-wrapper .popup-ok-btn {
-  background: var(--red-accent); 
-  width: auto; 
-  padding: 5px 20px; 
-  margin-top: 10px;
-}
+/* Popup */
+.register-scope-wrapper .popup-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 2000; }
+.register-scope-wrapper .popup-card { background: var(--cream-bg); padding: 20px; border-radius: 12px; text-align: center; color: var(--maroon-dark); min-width: 250px; }
+.register-scope-wrapper .popup-ok-btn { background: var(--red-accent); color: white; padding: 5px 20px; margin-top: 10px; border: none; border-radius: 5px; cursor: pointer; }

@@ -22,52 +22,42 @@ export default function Register() {
     e.preventDefault();
 
     if (!name || !email || !password) {
-      setPopupMessage("Harap isi semua field!");
+      setPopupMessage("Harap isi semua kolom!");
       return;
     }
 
     const user = { name, email, password };
     localStorage.setItem("registeredUser", JSON.stringify(user));
 
-    setPopupMessage("Register berhasil!");
+    setPopupMessage("Registrasi Berhasil!");
     setTimeout(() => {
       router.push("/login");
     }, 1500);
   };
 
   return (
-    // PENTING: ClassName ini harus SAMA PERSIS dengan di CSS
-    <div className="register-scope-wrapper"> 
-      
+    <div className="register-scope-wrapper">
       <div className="auth-card">
-        <h2>Create Account</h2>
+        <h2>Buat Akun</h2>
         <form onSubmit={handleRegister}>
-          <input
-            type="text"
-            placeholder="Full Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+          <input 
+            type="text" placeholder="Nama Lengkap" 
+            value={name} onChange={(e) => setName(e.target.value)} 
           />
-          <input
-            type="email"
-            placeholder="Email Address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+          <input 
+            type="email" placeholder="Alamat Email" 
+            value={email} onChange={(e) => setEmail(e.target.value)} 
           />
-          <input
-            type="password"
-            placeholder="Create Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+          <input 
+            type="password" placeholder="Kata Sandi" 
+            value={password} onChange={(e) => setPassword(e.target.value)} 
           />
-
           <button type="submit" disabled={!name || !email || !password}>
-            Register
+            Daftar
           </button>
         </form>
-
         <p>
-          Already have an account? <Link href="/login">Login</Link>
+          Sudah punya akun? <Link href="/login">Masuk disini</Link>
         </p>
       </div>
 
@@ -75,9 +65,7 @@ export default function Register() {
         <div className="popup-overlay">
           <div className="popup-card">
             <p>{popupMessage}</p>
-            <button className="popup-ok-btn" onClick={() => setPopupMessage(null)}>
-              OK
-            </button>
+            <button className="popup-ok-btn" onClick={() => setPopupMessage(null)}>OK</button>
           </div>
         </div>
       )}
