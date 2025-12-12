@@ -1,5 +1,5 @@
 import Link from "next/link"; // Import komponen Link dari Next.js
-import "./aboutpage.css"; // Pastikan file CSS ada di folder yang sama
+import "./about.css"; // Pastikan file CSS ada di folder yang sama
 
 export default function About() {
   return (
