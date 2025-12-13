@@ -111,7 +111,7 @@ export default function Profile() {
               <img
                 src={
                   form.photo ||
-                  `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=8b1c15&color=fff`
+                  'https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=8b1c15&color=fff'
                 }
                 className="avatar"
                 alt="avatar"
@@ -135,6 +135,7 @@ export default function Profile() {
           <main className="profile-main">
             <div className="main-header">
               <h3>Detail Profile</h3>
+              <h3>Informasi Pribadi</h3>
               {!isEditing && (
                 <button className="btn-edit" onClick={() => setIsEditing(true)}>
                   Edit Profil
