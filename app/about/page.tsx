@@ -4,72 +4,81 @@ import Link from "next/link";
 import "./about.css";
 
 export default function About() {
-return (
+  return (
     <div className="about-page">
-      {/* Navbar */}
-      <header className="navbar-container">
-        <nav className="navbar">
-          <a href="/" className="navbar-logo">
-            Heartify
-          </a>
+      {/* NAVBAR REQUESTED */}
+      <div className="navbar-container">
+        <div className="navbar">
+          <Link href="/beranda" className="navbar-logo">Heartify</Link>
           <div className="navbar-links">
-            <a href="/beranda">Beranda</a>
-            <a href="/aboutpage">Tentang Kami</a>
-            <a href="/profile">Profile</a>
+            <Link href="/beranda">Beranda</Link>
+            <Link href="/aboutpage">Tentang Kami</Link>
+            <Link href="/Profile">Profile</Link>
           </div>
-          <a href="/login" className="navbar-login-button">
+
+          <Link href="/login" className="navbar-login-button">
             Keluar
-          </a>
-        </nav>
-      </header>
-      
-      {/* Hero / Header Tentang Kami */}
+          </Link>
+        </div>
+      </div>
+
+      {/* HERO SECTION */}
       <section className="hero-section">
-        <h1 className="hero-title">Tentang Kami</h1>
-        <p className="hero-subtitle">
-          Kami hadir sebagai platform digital yang mempermudah masyarakat
-          untuk berbagi kebaikan melalui donasi yang aman, transparan, dan
-          berdampak nyata.
-        </p>
+        <div className="hero-content">
+          <h1>Mewujudkan Kebaikan Bersama</h1>
+          <p>
+            Platform donasi terpercaya yang menghubungkan niat baik Anda dengan mereka yang
+            membutuhkan secara transparan.
+          </p>
+        </div>
       </section>
 
-      {/* Visi Misi */}
+      {/* VISI MISI (Vertikal Rapi) */}
       <section className="mission-section">
         <h2 className="section-title">Visi & Misi</h2>
-        <div className="mission-content">
-          <div className="vision-box">
-            <h3>Visi</h3>
-            <p>Menjadi jembatan kebaikan digital yang mendorong semangat gotong royong di era teknologi.</p>
+
+        <div className="mission-cards">
+          <div className="mission-card visi">
+            <div className="icon">🤝🏻</div>
+            <h3>Visi Kami</h3>
+            <p>
+              Menjadi jembatan kebaikan digital yang memupuk semangat gotong royong di era modern.
+            </p>
           </div>
-          <div className="mission-box">
-            <h3>Misi</h3>
+
+          <div className="mission-card misi">
+            <div className="icon">🚀</div>
+            <h3>Misi Kami</h3>
             <ul>
-              <li>Mempermudah masyarakat untuk berdonasi secara online.</li>
-              <li>Memberikan transparansi penuh dalam penyaluran dana.</li>
+              <li>Mempermudah akses donasi secara digital dan aman.</li>
+              <li>Menjamin transparansi total dalam setiap penyaluran.</li>
               <li>Memberdayakan komunitas melalui aksi sosial berkelanjutan.</li>
             </ul>
           </div>
         </div>
       </section>
 
-      {/* Cara Kami Bekerja */}
+      {/* CARA KERJA (Grid) */}
       <section className="work-section">
-        <h2 className="section-title">Bagaimana Kami Bekerja</h2>
+        <h2 className="section-title">Cara Kerja</h2>
+
         <div className="work-grid">
           <div className="work-card">
-            <div className="work-number">1</div>
-            <h3 className="work-card-title">Donasi</h3>
-            <p>Donatur memilih program dan melakukan donasi dengan mudah.</p>
+            <div className="num">1</div>
+            <h3>Pilih Program</h3>
+            <p>Cari kampanye donasi yang menyentuh hati Anda.</p>
           </div>
+
           <div className="work-card">
-            <div className="work-number">2</div>
-            <h3 className="work-card-title">Transparansi</h3>
-            <p>Kami memastikan setiap donasi tercatat dan dapat dipantau.</p>
+            <div className="num">2</div>
+            <h3>Donasi Mudah</h3>
+            <p>Lakukan pembayaran dengan metode yang aman.</p>
           </div>
+
           <div className="work-card">
-            <div className="work-number">3</div>
-            <h3 className="work-card-title">Penyaluran</h3>
-            <p>Dana disalurkan tepat sasaran kepada penerima manfaat.</p>
+            <div className="num">3</div>
+            <h3>Transparan</h3>
+            <p>Pantau laporan penyaluran dana secara berkala.</p>
           </div>
         </div>
       </section>
