@@ -62,7 +62,7 @@ export default function AjukanKampanye() {
       );
 
       const newCampaign = {
-        id: `campaign-${Date.now()}`,
+        id: 'campaign-${Date.now()}',
         ...form,
         target: Number(form.target),
         collected: 0,

@@ -90,6 +90,7 @@ export default function Profile() {
           <div className="navbar-links">
             <Link href="/beranda">Beranda</Link>
             <Link href="/about">Tentang Kami</Link>
+            <Link href="/ajukankampanye">Ajukan Kampanye</Link>
             <Link href="/profile" className="active">
               Profile
             </Link>

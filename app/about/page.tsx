@@ -15,11 +15,8 @@ export default function About() {
 
           <div className="navbar-links">
             <Link href="/beranda">Beranda</Link>
-            <Link href="/aboutpage" className="active">
-              Tentang Kami
-            </Link>
-            <Link href="/profile">Profile</Link>
             <Link href="/aboutpage">Tentang Kami</Link>
+            <Link href="/ajukankampanye">Ajukan Kampanye</Link>
             <Link href="/Profile">Profile</Link>
           </div>
 
@@ -46,7 +43,6 @@ export default function About() {
 
         <div className="mission-cards">
           <div className="mission-card visi">
-            <div className="icon">👁️</div>
             <div className="icon">🤝🏻</div>
             <h3>Visi Kami</h3>
             <p>
