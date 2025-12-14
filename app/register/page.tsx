@@ -74,7 +74,7 @@ export default function Register() {
               onChange={(e) => setRole(e.target.value as Role)}
             >
               <option value="user">👤 User</option>
-              <option value="admin">🛡️ Admin</option>
+              <option value="admin">👤 Admin</option>
             </select>
 
             <span className="role-badge">

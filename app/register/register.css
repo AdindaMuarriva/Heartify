@@ -80,7 +80,7 @@ select:focus {
 ================================ */
 .role-select {
   position: relative;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.2rem;
 }
 
 .role-badge {
