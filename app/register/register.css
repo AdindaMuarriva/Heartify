@@ -1,19 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
-/* Wrapper */
+/* ===============================
+   WRAPPER
+================================ */
 .register-wrapper {
   --cream-bg: #fff1c7;
   --maroon-dark: #3e0703;
   --red-accent: #8b1c15;
 
   min-height: 100vh;
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: "Poppins", sans-serif;
 
-  background: linear-gradient(-45deg, #3E0703, #660E0A, #230403, #8B1515);
+  background: linear-gradient(-45deg, #3e0703, #660e0a, #230403, #8b1515);
   background-size: 400% 400%;
   animation: registerGradient 15s ease infinite;
 }
@@ -25,153 +26,140 @@
 }
 
 /* ===============================
-   CONTAINER / CARD 
+   CARD
 ================================ */
-.register-wrapper .auth-card {
+.auth-card {
   background: rgba(20, 2, 2, 0.75);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
   padding: 3rem 2.5rem;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 241, 199, 0.1);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  border-radius: 22px;
+  border: 1px solid rgba(255, 241, 199, 0.12);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
 
   width: 100%;
   max-width: 400px;
   text-align: center;
   color: var(--cream-bg);
+  animation: fadeUp 0.8s ease;
 }
 
-/* Title */
-.register-wrapper h2 {
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
   font-size: 2rem;
   margin-bottom: 2rem;
-  color: var(--cream-bg);
 }
 
 /* ===============================
    INPUT & SELECT
 ================================ */
-.register-wrapper input,
-.register-wrapper select {
+input,
+select {
   width: 100%;
-  padding: 12px;
+  padding: 12px 14px;
   margin-bottom: 1rem;
-  border-radius: 10px;
+  border-radius: 12px;
   border: 2px solid var(--red-accent);
-  background: #3E0703;
+  background: #3e0703;
   color: var(--cream-bg);
   outline: none;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
 }
 
-.register-wrapper select {
-  appearance: none;
-  cursor: pointer;
+input:focus,
+select:focus {
+  box-shadow: 0 0 12px rgba(255, 241, 199, 0.3);
+}
+
+/* ===============================
+   ROLE SELECT
+================================ */
+.role-select {
+  position: relative;
+  margin-bottom: 1.2rem;
+}
+
+.role-badge {
+  position: absolute;
+  top: -9px;
+  right: 14px;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+/* ADMIN */
+.role-select.admin select {
+  border-color: #ff3b30;
+  box-shadow: 0 0 12px rgba(255, 59, 48, 0.35);
+}
+
+.role-select.admin .role-badge {
+  background: linear-gradient(135deg, #ff3b30, #8b1c15);
+}
+
+/* USER */
+.role-select.user .role-badge {
+  background: rgba(255, 241, 199, 0.15);
 }
 
 /* ===============================
    BUTTON
 ================================ */
-.register-wrapper button {
+button {
   width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #B32820, #8B1C15);
+  padding: 13px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #b32820, #8b1c15);
   color: var(--cream-bg);
-  border: none;
   font-weight: 600;
+  border: none;
   cursor: pointer;
-  margin-top: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(179, 40, 32, 0.4);
 }
 
 /* ===============================
    LINK
 ================================ */
-.register-wrapper a {
+a {
   color: var(--cream-bg);
-  font-weight: bold;
-  text-decoration: none;
+  font-weight: 600;
 }
 
 /* ===============================
-   POPUP (SAMA LOGIN)
+   POPUP
 ================================ */
-.register-wrapper .popup-box {
+.popup-box {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.65);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
-.register-wrapper .card {
+.card {
   background: var(--cream-bg);
-  padding: 20px;
-  border-radius: 12px;
-  text-align: center;
+  padding: 20px 25px;
+  border-radius: 14px;
   color: var(--maroon-dark);
-  min-width: 250px;
   font-weight: 600;
-}
-/* ===============================
-   ROLE SELECT STYLE
-================================ */
-
-.role-select {
-  position: relative;
-  margin-bottom: 1.2rem;
+  animation: pop 0.4s ease;
 }
 
-/* SELECT DASAR */
-.role-select select {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: 2px solid var(--red-accent);
-  background: #3E0703;
-  color: var(--cream-bg);
-  font-weight: 600;
-  cursor: pointer;
-}
-
-/* BADGE */
-.role-select .role-badge {
-  position: absolute;
-  top: -10px;
-  right: 12px;
-  background: rgba(0, 0, 0, 0.6);
-  color: var(--cream-bg);
-  font-size: 0.7rem;
-  padding: 3px 10px;
-  border-radius: 20px;
-  letter-spacing: 0.5px;
-}
-
-/* ===============================
-   ADMIN MODE (LEBIH TEGAS)
-================================ */
-
-.role-select.admin select {
-  border-color: #ff3b30;
-  box-shadow: 0 0 10px rgba(255, 59, 48, 0.4);
-}
-
-.role-select.admin .role-badge {
-  background: linear-gradient(135deg, #ff3b30, #8b1c15);
-  color: #fff1c7;
-}
-
-/* ===============================
-   USER MODE (LEBIH SOFT)
-================================ */
-
-.role-select.user select {
-  border-color: #8b1c15;
-}
-
-.role-select.user .role-badge {
-  background: rgba(255, 241, 199, 0.15);
+@keyframes pop {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }

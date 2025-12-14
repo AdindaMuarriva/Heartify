@@ -6,7 +6,6 @@ import Link from "next/link";
 import "./register.css";
 
 type Role = "user" | "admin";
-const [role, setRole] = useState<Role>("user");
 
 export default function Register() {
   const router = useRouter();
@@ -31,14 +30,9 @@ export default function Register() {
       return;
     }
 
-    const newUser = {
-      name,
-      email,
-      password,
-      role,
-    };
-
+    const newUser = { name, email, password, role };
     localStorage.setItem("registeredUser", JSON.stringify(newUser));
+
     setPopupMessage("Registrasi berhasil");
 
     setTimeout(() => {
@@ -56,49 +50,45 @@ export default function Register() {
             type="text"
             placeholder="Nama Lengkap"
             value={name}
-            onChange={(event) => setName(event.target.value)}
+            onChange={(e) => setName(e.target.value)}
           />
 
           <input
             type="email"
             placeholder="Email"
             value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
           <input
             type="password"
             placeholder="Password"
             value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
 
-          {/* PILIH ROLE */}
+          {/* ROLE SELECT */}
           <div className={`role-select ${role}`}>
             <select
               value={role}
-              onChange={(event) =>
-                setRole(event.target.value as Role)
-              }
-              
+              onChange={(e) => setRole(e.target.value as Role)}
             >
               <option value="user">👤 User</option>
               <option value="admin">🛡️ Admin</option>
             </select>
 
-            {/* LABEL AKTIF */}
             <span className="role-badge">
-              {role === "admin" ? "ADMIN MODE" : "USER MODE"}
+              {role === "admin" ? "ADMIN" : "USER"}
             </span>
           </div>
 
-          {/* INPUT KODE ADMIN */}
+          {/* ADMIN CODE */}
           {role === "admin" && (
             <input
               type="password"
               placeholder="Kode Admin"
               value={adminCode}
-              onChange={(event) => setAdminCode(event.target.value)}
+              onChange={(e) => setAdminCode(e.target.value)}
             />
           )}
 
