@@ -1,74 +1,85 @@
-.admin-container {
-  min-height: 100vh;
+.admin-dashboard-layout {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  min-height: 100vh;
+  background: #f4f6f8;
+}
+
+.admin-sidebar {
+  width: 260px;
+  background: #3e0703;
+  color: #fff1c7;
+  padding: 1.5rem;
+}
+
+.admin-profile-mini {
+  display: flex;
+  gap: 10px;
+  margin: 1.5rem 0;
+}
+
+.avatar-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff1c7;
+  color: #3e0703;
+  display: flex;
   align-items: center;
-  background-color: #f5f7fa;
-  font-family: Arial, sans-serif;
-}
-
-.admin-title {
-  margin-bottom: 20px;
-  color: #1e293b;
-}
-
-.admin-form {
-  background-color: white;
-  padding: 30px;
-  border-radius: 12px;
-  width: 320px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.admin-form label {
-  display: block;
-  margin-bottom: 6px;
-  margin-top: 12px;
+  justify-content: center;
   font-weight: bold;
 }
 
-.admin-form input {
+.sidebar-nav button {
   width: 100%;
   padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #cbd5e1;
-}
-
-.admin-form button {
-  margin-top: 20px;
-  width: 100%;
-  padding: 12px;
-  background-color: #2563eb;
-  color: white;
+  margin-bottom: 8px;
+  background: transparent;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
+  color: #fff1c7;
   cursor: pointer;
 }
 
-.admin-form button:hover {
-  background-color: #1e40af;
+.sidebar-nav button:hover {
+  background: #8b1c15;
 }
 
-.dashboard-card {
-  background-color: white;
-  padding: 30px;
+.admin-main {
+  flex: 1;
+  padding: 2rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 1.5rem;
   border-radius: 12px;
-  width: 400px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
-.dashboard-card ul {
-  margin-top: 15px;
-  margin-bottom: 20px;
+.card {
+  background: white;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 12px;
 }
 
-.dashboard-card li {
-  margin-bottom: 8px;
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.error-text {
-  color: red;
-  margin-top: 10px;
+.modal-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 14px;
+  width: 320px;
 }
