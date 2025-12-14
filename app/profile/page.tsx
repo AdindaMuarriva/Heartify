@@ -1,305 +1,216 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation"; 
-import Link from "next/link"; 
+import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import "./profile.css";
 
-interface User {
-  name: string;
-  email: string;
-  password: string;
-}
-
 export default function Profile() {
-  const router = useRouter(); // Inisialisasi router Next.js
-  const [user, setUser] = useState<User | null>(null);
+  const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [user, setUser] = useState<any>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [editData, setEditData] = useState({
+  const [popup, setPopup] = useState<string | null>(null);
+
+  const [form, setForm] = useState({
     name: "",
     email: "",
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: ""
+    photo: "",
+    oldPass: "",
+    newPass: "",
+    confirmPass: "",
   });
-  const [popupMessage, setPopupMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    // Cek localStorage hanya saat komponen sudah dimuat di client
-    const registeredUser = localStorage.getItem("registeredUser");
-    if (!registeredUser) {
-      router.push("/login"); // Redirect jika tidak ada user
+    const data = localStorage.getItem("registeredUser");
+    if (!data) {
+      router.push("/login");
       return;
     }
-    
-    const userData = JSON.parse(registeredUser);
-    setUser(userData);
-    setEditData(prev => ({
-      ...prev,
-      name: userData.name,
-      email: userData.email
-    }));
+    const parsed = JSON.parse(data);
+    setUser(parsed);
+    setForm((p) => ({ ...p, name: parsed.name, email: parsed.email, photo: parsed.photo || "" }));
   }, [router]);
 
   const handleLogout = () => {
     localStorage.removeItem("registeredUser");
-    setPopupMessage("Logout berhasil!");
-    setTimeout(() => {
-      router.push("/login"); // Redirect menggunakan router.push
-    }, 1500);
-  };
-
-  const handleEdit = () => {
-    setIsEditing(true);
-    setEditData(prev => ({
-      ...prev,
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: ""
-    }));
-  };
-
-  const handleCancel = () => {
-    setIsEditing(false);
-    if (user) {
-      setEditData(prev => ({
-        ...prev,
-        name: user.name,
-        email: user.email,
-        currentPassword: "",
-        newPassword: "",
-        confirmPassword: ""
-      }));
-    }
+    router.push("/login");
   };
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!user) return;
 
-    // Validasi untuk perubahan password
-    if (editData.newPassword || editData.confirmPassword || editData.currentPassword) {
-      if (!editData.currentPassword) {
-        setPopupMessage("Harap masukkan password saat ini untuk mengubah password!");
-        return;
-      }
+    let finalPass = user.password;
 
-      if (editData.currentPassword !== user.password) {
-        setPopupMessage("Password saat ini salah!");
-        return;
-      }
-
-      if (editData.newPassword.length < 6) {
-        setPopupMessage("Password baru harus minimal 6 karakter!");
-        return;
-      }
-
-      if (editData.newPassword !== editData.confirmPassword) {
-        setPopupMessage("Password baru dan konfirmasi password tidak cocok!");
-        return;
-      }
+    // Validasi sederhana
+    if (form.newPass && (form.newPass !== form.confirmPass || form.oldPass !== user.password)) {
+      setPopup("Cek kembali password!");
+      setTimeout(() => setPopup(null), 2000);
+      return;
     }
 
-    // Update user data
-    const updatedUser = {
-      name: editData.name,
-      email: editData.email,
-      password: editData.newPassword || user.password
+    if (form.newPass) finalPass = form.newPass;
+
+    const newUser = {
+      ...user,
+      name: form.name,
+      email: form.email,
+      password: finalPass,
+      photo: form.photo,
     };
 
-    // Simpan ke localStorage
-    localStorage.setItem("registeredUser", JSON.stringify(updatedUser));
-    setUser(updatedUser);
+    localStorage.setItem("registeredUser", JSON.stringify(newUser));
+    setUser(newUser);
     setIsEditing(false);
-    
-    setPopupMessage("Profil berhasil diperbarui!");
-    setTimeout(() => setPopupMessage(null), 2000);
+    setPopup("Berhasil disimpan!");
+    setTimeout(() => setPopup(null), 2000);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.[0]) {
+      const reader = new FileReader();
+      reader.onloadend = () => setForm((p) => ({ ...p, photo: reader.result as string }));
+      reader.readAsDataURL(e.target.files[0]);
+    }
   };
 
-  if (!user) {
-    return (
-      <div className="profile-page">
-        <div className="loading">Memuat...</div>
-      </div>
-    );
-  }
+  if (!user) return <div className="loading-screen">Loading...</div>;
 
   return (
     <div className="profile-page">
-      {/* Navbar */}
-      <header className="profile-navbar">
-        <div className="navbar-container">
-          {/* Ubah 'to' menjadi 'href' */}
+      {/* Navbar Konsisten */}
+      <div className="navbar-container">
+        <div className="navbar">
           <Link href="/beranda" className="navbar-logo">
             Heartify
           </Link>
+
           <div className="navbar-links">
             <Link href="/beranda">Beranda</Link>
-            <Link href="/AboutPage">Tentang Kami</Link>
-            <Link href="/profile" className="active">Profil</Link>
+            <Link href="/about">Tentang Kami</Link>
+            <Link href="/ajukankampanye">Ajukan Kampanye</Link>
+            <Link href="/profile" className="active">
+              Profile
+            </Link>
           </div>
-          <button onClick={handleLogout} className="navbar-logout-btn">
+
+          <button onClick={handleLogout} className="navbar-login-button">
             Keluar
           </button>
         </div>
-      </header>
+      </div>
 
       <div className="profile-container">
-        <div className="profile-header">
-          <h1>Profil Saya</h1>
-          <p>Kelola informasi profil Anda untuk mengontrol dan mengamankan akun</p>
-        </div>
+        <h1>Informasi Pribadi</h1>
 
-        <div className="profile-content">
-          <div className="profile-card">
-            <div className="card-header">
-              <h2>Informasi Pribadi</h2>
+        <div className="profile-dashboard">
+          {/* SIDEBAR */}
+          <aside className="profile-sidebar">
+            <div className="photo-wrapper" onClick={() => isEditing && fileInputRef.current?.click()}>
+              <img
+                src={
+                  form.photo ||
+                  'https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=8b1c15&color=fff'
+                }
+                className="avatar"
+                alt="avatar"
+              />
+              {isEditing && <div className="photo-overlay">📸</div>}
+            </div>
+
+            <input type="file" ref={fileInputRef} hidden onChange={handleFile} />
+
+            <div className="user-info">
+              <h2>{user.name}</h2>
+              <p>Donatur Aktif</p>
+            </div>
+
+            <button className="btn-logout-side" onClick={handleLogout}>
+              Log Out
+            </button>
+          </aside>
+
+          {/* MAIN CONTENT */}
+          <main className="profile-main">
+            <div className="main-header">
+              <h3>Detail Profile</h3>
+              <h3>Informasi Pribadi</h3>
               {!isEditing && (
-                <button onClick={handleEdit} className="edit-btn">
+                <button className="btn-edit" onClick={() => setIsEditing(true)}>
                   Edit Profil
                 </button>
               )}
             </div>
 
-            {!isEditing ? (
-              <div className="profile-info">
-                <div className="info-item">
-                  <label>Nama Lengkap</label>
-                  <p>{user.name}</p>
-                </div>
-                <div className="info-item">
-                  <label>Email</label>
-                  <p>{user.email}</p>
-                </div>
-                <div className="info-item">
-                  <label>Status</label>
-                  <p className="status-active">Aktif</p>
-                </div>
+            <form className="profile-form" onSubmit={handleSave}>
+              <div className="form-group">
+                <label>Nama Lengkap</label>
+                <input
+                  type="text"
+                  value={form.name}
+                  disabled={!isEditing}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                />
               </div>
-            ) : (
-              <form onSubmit={handleSave} className="edit-form">
-                <div className="form-group">
-                  <label htmlFor="name">Nama Lengkap</label>
+
+              <div className="form-group">
+                <label>Email</label>
+                <input
+                  type="email"
+                  value={form.email}
+                  disabled={!isEditing}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                />
+              </div>
+
+              {isEditing && (
+                <div className="password-zone">
+                  <h4>Ubah Password (Opsional)</h4>
                   <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={editData.name}
-                    onChange={handleInputChange}
-                    className="form-input"
-                    required
+                    type="password"
+                    placeholder="Password Lama"
+                    onChange={(e) => setForm({ ...form, oldPass: e.target.value })}
                   />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={editData.email}
-                    onChange={handleInputChange}
-                    className="form-input"
-                    required
-                  />
-                </div>
-
-                <div className="password-section">
-                  <h3>Ubah Password</h3>
-                  
-                  <div className="form-group">
-                    <label htmlFor="currentPassword">Password Saat Ini</label>
+                  <div className="row">
                     <input
                       type="password"
-                      id="currentPassword"
-                      name="currentPassword"
-                      value={editData.currentPassword}
-                      onChange={handleInputChange}
-                      className="form-input"
-                      placeholder="Masukkan password saat ini"
+                      placeholder="Password Baru"
+                      onChange={(e) => setForm({ ...form, newPass: e.target.value })}
                     />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="newPassword">Password Baru</label>
                     <input
                       type="password"
-                      id="newPassword"
-                      name="newPassword"
-                      value={editData.newPassword}
-                      onChange={handleInputChange}
-                      className="form-input"
-                      placeholder="Minimal 6 karakter"
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="confirmPassword">Konfirmasi Password Baru</label>
-                    <input
-                      type="password"
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      value={editData.confirmPassword}
-                      onChange={handleInputChange}
-                      className="form-input"
-                      placeholder="Ulangi password baru"
+                      placeholder="Konfirmasi"
+                      onChange={(e) => setForm({ ...form, confirmPass: e.target.value })}
                     />
                   </div>
                 </div>
+              )}
 
+              {isEditing && (
                 <div className="form-actions">
-                  <button type="submit" className="save-btn">
+                  <button type="submit" className="btn-save">
                     Simpan Perubahan
                   </button>
-                  <button type="button" onClick={handleCancel} className="cancel-btn">
+                  <button
+                    type="button"
+                    className="btn-cancel"
+                    onClick={() => {
+                      setIsEditing(false);
+                      setForm((prev) => ({ ...prev, name: user.name, photo: user.photo || "" }));
+                    }}
+                  >
                     Batal
                   </button>
                 </div>
-              </form>
-            )}
-          </div>
-
-          <div className="stats-card">
-            <h2>Statistik Donasi</h2>
-            <div className="stats-grid"> 
-              <div className="stat-item">
-                <div className="stat-icon">⭐</div>
-                <div className="stat-content">
-                  <h3>Member Sejak</h3>
-                  <p>{new Date().toLocaleDateString('id-ID', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
-                  })}</p>
-                </div>
-              </div>
-            </div>
-          </div>
+              )}
+            </form>
+          </main>
         </div>
       </div>
 
-      {/* Popup */}
-      {popupMessage && (
-        <div className="popup-overlay">
-          <div className="popup-card">
-            <p>{popupMessage}</p>
-            <button 
-              className="popup-ok-btn" 
-              onClick={() => setPopupMessage(null)}
-            >
-              OK
-            </button>
-          </div>
-        </div>
-      )}
+      {popup && <div className="toast">{popup}</div>}
     </div>
   );
 }

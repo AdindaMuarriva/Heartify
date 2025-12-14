@@ -1,0 +1,131 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
+
+.about-page {
+  --maroon: #3e0703;
+  --red: #8b1c15;
+  --cream: #fff9e6;
+  --white: #ffffff;
+
+  background-color: var(--cream);
+  font-family: "Poppins", sans-serif;
+  color: var(--maroon);
+  padding-bottom: 4rem;
+}
+
+/* === NAVBAR REQUESTED === */
+.navbar-container {
+  background: var(--white);
+
+}
+
+/* === NAVBAR REQUESTED === */
+.navbar-container {
+  background: var(--white);
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.navbar {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--maroon);
+  text-decoration: none;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: var(--maroon);
+  font-weight: 600;
+  position: relative;
+  padding: 5px 0;
+  transition: 0.3s;
+}
+
+.navbar-links a:hover,
+.navbar-links a.active {
+  color: var(--red);
+}
+
+.navbar-links a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background: var(--red);
+  transition: 0.3s;
+}
+
+.navbar-links a:hover::after,
+.navbar-links a.active::after {
+  width: 100%;
+}
+
+.navbar-login-button {
+  border: 2px solid var(--maroon);
+  padding: 0.5rem 1.8rem;
+  border-radius: 50px;
+  text-decoration: none;
+  color: var(--maroon);
+  font-weight: 700;
+  transition: 0.3s;
+}
+
+.navbar-login-button:hover {
+  background: var(--maroon);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* === PAGE CONTENT === */
+.about-page .hero-section {
+  padding: 4rem 2rem; text-align: center;
+  background: linear-gradient(to bottom, var(--maroon-mid), var(--maroon-red));
+  color: var(--white); border-radius: 0 0 30px 30px; margin-bottom: 3rem;
+}
+.about-page .hero-title { font-size: 2.5rem; margin-bottom: 1rem; }
+.about-page .section-title { text-align: center; font-size: 2rem; margin: 2rem 0; position: relative; }
+.about-page .section-title::after { content:''; display:block; width:80px; height:4px; background: var(--maroon-bright); margin: 0.5rem auto; }
+
+/* MISI VERTIKAL */
+.about-page .mission-section { padding: 0 2rem; max-width: 900px; margin: 0 auto; }
+.about-page .mission-content { display: flex; flex-direction: column; gap: 2rem; }
+.about-page .vision-box, .about-page .mission-box {
+  background: var(--white); padding: 2rem; border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08); text-align: center; border-top: 5px solid var(--maroon-bright);
+}
+.about-page .mission-box ul { display: inline-block; text-align: left; }
+
+/* TIM ZIGZAG */
+.about-page .team-section { padding: 3rem 2rem; max-width: 1000px; margin: 0 auto; }
+.about-page .team-horizontal-layout { display: flex; flex-direction: column; gap: 3rem; }
+.about-page .team-member-left { display: flex; justify-content: flex-start; }
+.about-page .team-member-right { display: flex; justify-content: flex-end; }
+.about-page .team-card-horizontal {
+  display: flex; background: var(--white); border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 700px; align-items: center; overflow: hidden;
+}
+.about-page .team-member-left .team-card-horizontal { flex-direction: row; }
+.about-page .team-member-right .team-card-horizontal { flex-direction: row-reverse; }
+.about-page .team-photo-container { padding: 2rem; display: flex; justify-content: center; }
+.about-page .team-photo { width: 150px; height: 150px; object-fit: cover; border-radius: 50%; border: 4px solid var(--maroon-bright); }
+.about-page .team-content { flex: 1; padding: 2rem; }

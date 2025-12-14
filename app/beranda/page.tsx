@@ -236,8 +236,9 @@ const Beranda: React.FC = () => {
           </a>
           <div className="navbar-links">
             <a href="/beranda">Beranda</a>
-            <a href="/AboutPage">Tentang Kami</a>
-            <a href="/profile">Profil</a>
+            <a href="/about">Tentang Kami</a>
+            <Link href="/ajukankampanye">Ajukan Kampanye</Link>
+            <a href="/Profile">Profile</a>
           </div>
           <a href="/login" className="navbar-login-button">
             Keluar

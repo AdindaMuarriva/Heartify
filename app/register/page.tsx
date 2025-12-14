@@ -10,14 +10,12 @@ export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [popupMessage, setPopupMessage] = useState<string | null>(null);
+  const [popup, setPopup] = useState<string | null>(null);
 
   const handleRegister = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (!name || !email || !password) {
-      setPopupMessage("Harap isi semua field!");
-      return;
+      setPopup("Harap isi semua kolom!"); return;
     }
 
     const user = { name, email, password };
@@ -73,6 +71,25 @@ export default function Register() {
           </div>
         </div>
       )}
+    const user = { name, email, password };
+    localStorage.setItem("registeredUser", JSON.stringify(user));
+    setPopup("Registrasi Berhasil!");
+    setTimeout(() => router.push("/login"), 1500);
+  };
+
+  return (
+    <div className="register-wrapper">
+      <div className="auth-card">
+        <h2>Buat Akun</h2>
+        <form onSubmit={handleRegister}>
+          <input type="text" placeholder="Nama Lengkap" value={name} onChange={e=>setName(e.target.value)} />
+          <input type="email" placeholder="Email" value={email} onChange={e=>setEmail(e.target.value)} />
+          <input type="password" placeholder="Password" value={password} onChange={e=>setPassword(e.target.value)} />
+          <button type="submit" disabled={!name || !email || !password}>Daftar</button>
+        </form>
+        <p>Sudah punya akun? <Link href="/login">Masuk</Link></p>
+      </div>
+      {popup && <div className="popup-box"><div className="card"><p>{popup}</p></div></div>}
     </div>
   );
 }
