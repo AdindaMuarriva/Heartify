@@ -78,7 +78,7 @@ export default function AjukanKampanye() {
       setIsSubmitting(false);
       setPopup("Kampanye berhasil diajukan! Menunggu verifikasi Admin.");
 
-      setTimeout(() => router.push("/profile"), 2000);
+      setTimeout(() => router.push("/beranda"), 2000);
     }, 1500);
   };
 

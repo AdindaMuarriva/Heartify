@@ -133,10 +133,12 @@
 .stats-row-1 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 2rem; /* Saya perbesar sedikit jaraknya agar lebih lega */
   margin-bottom: 3rem;
 }
 
+/* Tambahan opsional: Agar kartu terlihat lebih tinggi/kotak (tidak gepeng) */
 .stat-card-solid {
   border-radius: 15px;
   color: var(--white);
@@ -146,6 +148,16 @@
   flex-direction: column;
   box-shadow: 0 10px 25px rgba(62, 7, 3, 0.2);
   transition: transform 0.3s, box-shadow 0.3s;
+  min-height: 220px; /* Tambahkan tinggi minimal agar terlihat lebih "petak" */
+}
+
+/* Pastikan konten di dalam kartu berada di tengah secara vertikal */
+.stat-body {
+  padding: 30px 25px; /* Tambah padding agar isi lebih ketengah */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1; /* Agar body mengisi ruang kosong */
 }
 
 .stat-card-solid:hover {
