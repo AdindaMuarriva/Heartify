@@ -106,7 +106,7 @@ export default function AjukanKampanye() {
             >
               Ajukan Kampanye
             </Link>
-            <Link href="/profile">Profile</Link>
+            <Link href="/Profile">Profile</Link>
           </div>
 
           <button
