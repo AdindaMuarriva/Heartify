@@ -6,6 +6,7 @@ import Link from "next/link";
 import "./register.css";
 
 type Role = "user" | "admin";
+const [role, setRole] = useState<Role>("user");
 
 export default function Register() {
   const router = useRouter();
@@ -79,6 +80,7 @@ export default function Register() {
               onChange={(event) =>
                 setRole(event.target.value as Role)
               }
+              
             >
               <option value="user">👤 User</option>
               <option value="admin">🛡️ Admin</option>
