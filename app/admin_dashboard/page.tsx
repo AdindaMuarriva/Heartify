@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import "./admin-dashboard.css";
+import "./admin.css";
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -10,9 +10,9 @@ export default function AdminDashboard() {
   const [adminName, setAdminName] = useState("Admin");
 
   // === DATA STATES ===
-  const [campaignApplications, setCampaignApplications] = useState<any[]>([]); // Master History Pengajuan
+  const [campaignApplications, setCampaignApplications] = useState<any[]>([]); // History Pengajuan
   const [donationHistory, setDonationHistory] = useState<any[]>([]);
-  const [activeCampaigns, setActiveCampaigns] = useState<any[]>([]); // Kampanye yang TAYANG di Beranda
+  const [activeCampaigns, setActiveCampaigns] = useState<any[]>([]); // Kampanye Aktif
   
   // Statistik
   const [stats, setStats] = useState({
@@ -37,7 +37,7 @@ export default function AdminDashboard() {
   }, [router]);
 
   const loadData = () => {
-    // Ambil semua database
+    // Ambil database
     const apps = JSON.parse(localStorage.getItem("campaignApplications") || "[]");
     const donations = JSON.parse(localStorage.getItem("donationHistory") || "[]");
     const active = JSON.parse(localStorage.getItem("campaignsData") || "[]");
@@ -53,19 +53,16 @@ export default function AdminDashboard() {
     setDonationHistory(donations);
     setActiveCampaigns(sanitizedActive);
 
-    // HITUNG STATISTIK (Real-time Calculation)
+    // HITUNG STATISTIK
     const uniqueDonors = new Set(donations.map((d: any) => d.email || "anon")).size;
-    
-    // Hitung total dana dari kampanye aktif
+    const totalUsers = uniqueDonors + 1; // +1 Admin
     const totalCollected = sanitizedActive.reduce((sum: number, c: any) => sum + c.collected, 0);
     const totalDistributed = sanitizedActive.reduce((sum: number, c: any) => sum + c.distributed, 0);
-    
-    // Hitung pending tasks (Donasi pending + Pengajuan pending)
     const pendingAppsCount = apps.filter((a: any) => a.status === "Pending").length;
     const pendingDonationsCount = donations.filter((d: any) => d.status === "pending").length;
 
     setStats({
-      members: uniqueDonors + 1, // +1 Admin
+      members: totalUsers,
       totalMoney: totalCollected,
       activePrograms: sanitizedActive.length,
       pendingTasks: pendingAppsCount + pendingDonationsCount,
@@ -85,26 +82,22 @@ export default function AdminDashboard() {
   const handleApproveCampaign = (app: any) => {
     if(!confirm(`Setujui pengajuan "${app.title}" dari ${app.admin}?`)) return;
 
-    // 1. Update Status di Master List Pengajuan (History)
+    // Update History
     const updatedApps = campaignApplications.map(item => 
       item.id === app.id ? { ...item, status: "Approved" } : item
     );
     localStorage.setItem("campaignApplications", JSON.stringify(updatedApps));
 
-    // 2. Masukkan ke Active Campaigns (Agar muncul di Beranda User)
-    // Buat ID baru untuk public display atau gunakan ID pengajuan
+    // Masukkan ke Active Campaigns
     const newActiveCampaign = { 
       ...app, 
-      id: `camp-${Date.now()}`, // ID baru untuk sistem donasi
+      id: `camp-${Date.now()}`,
       status: "active", 
       collected: 0, 
       distributed: 0 
     };
     const newActiveList = [...activeCampaigns, newActiveCampaign];
     localStorage.setItem("campaignsData", JSON.stringify(newActiveList));
-
-    // 3. Notifikasi ke User (Opsional, simpan ke localStorage notifikasi)
-    // createNotification(app.email, "Disetujui", ...)
 
     alert("Kampanye Disetujui & Ditayangkan!");
     loadData();
@@ -113,24 +106,19 @@ export default function AdminDashboard() {
   // === LOGIC BARU: REJECT KAMPANYE ===
   const handleRejectCampaign = (appId: string) => {
     if(!confirm("Tolak pengajuan ini?")) return;
-
-    // Hanya update status di History, JANGAN DIHAPUS
     const updatedApps = campaignApplications.map(item => 
       item.id === appId ? { ...item, status: "Rejected" } : item
     );
     localStorage.setItem("campaignApplications", JSON.stringify(updatedApps));
-
     alert("Kampanye Ditolak.");
     loadData();
   };
 
   // === LOGIC: VERIFIKASI DONASI ===
   const handleVerifyDonation = (donation: any) => {
-    // Update status donasi
     const updatedHistory = donationHistory.map(d => d.id === donation.id ? { ...d, status: "success" } : d);
     localStorage.setItem("donationHistory", JSON.stringify(updatedHistory));
     
-    // Tambah saldo ke kampanye yang sesuai
     const updatedActive = activeCampaigns.map(c => {
       if (c.title === donation.campaignTitle || c.id === donation.campaignId) {
         return { ...c, collected: (c.collected || 0) + donation.amount };
@@ -138,9 +126,19 @@ export default function AdminDashboard() {
       return c;
     });
     localStorage.setItem("campaignsData", JSON.stringify(updatedActive));
-    
     alert("Donasi Diverifikasi!"); 
     loadData();
+  };
+
+  // === LOGIC BARU: HAPUS KAMPANYE AKTIF ===
+  const handleDeleteActiveCampaign = (id: string) => {
+    if(!confirm("⚠️ PERINGATAN: Apakah Anda yakin ingin menghapus data kampanye ini secara permanen? Data yang dihapus tidak dapat dikembalikan.")) return;
+
+    const updatedActive = activeCampaigns.filter(c => c.id !== id);
+    localStorage.setItem("campaignsData", JSON.stringify(updatedActive));
+    
+    alert("Data kampanye berhasil dihapus.");
+    loadData(); 
   };
 
   // Tab Handler dengan Scroll Top
@@ -172,7 +170,6 @@ export default function AdminDashboard() {
           </li>
           <li className={`menu-item ${activeTab === 'verifikasi' ? 'active' : ''}`} onClick={() => setActiveTab('verifikasi')}>
             <span className="menu-icon">📝</span> Riwayat Pengajuan
-            {/* Hitung yang statusnya Pending saja untuk badge */}
             {campaignApplications.filter(a => a.status === 'Pending').length > 0 && <span className="badge-count">{campaignApplications.filter(a => a.status === 'Pending').length}</span>}
           </li>
           <li className={`menu-item ${activeTab === 'laporan' ? 'active' : ''}`} onClick={() => setActiveTab('laporan')}>
@@ -185,7 +182,7 @@ export default function AdminDashboard() {
       <div className="main-content">
         <div className="top-navbar">
           <div className="page-title">{activeTab.replace('-', ' ')}</div>
-          <div className="nav-right">
+          <div className="nav-right" style={{ display: 'flex', gap: '20px', fontSize: '0.9rem', fontWeight: 'bold' }}>
             <span>🔔 {stats.pendingTasks} Pemberitahuan</span>
             <span onClick={handleLogout} style={{color: '#b32820', cursor:'pointer'}}>👤 {adminName} (Logout)</span>
           </div>
@@ -197,9 +194,8 @@ export default function AdminDashboard() {
           {activeTab === 'dashboard' && (
             <>
               <h2 className="section-title">Ringkasan Sistem</h2>
-              {/* Grid 2x2 Sesuai Permintaan */}
+              {/* Grid 2x2 */}
               <div className="stats-row-1">
-                {/* 1. Anggota */}
                 <div className="stat-card-solid bg-gradient-1">
                   <div className="stat-body">
                     <div className="stat-icon">👥</div>
@@ -211,7 +207,6 @@ export default function AdminDashboard() {
                   <div className="stat-footer" onClick={() => handleCardClick('users')}>Lihat Detail Data Pengguna ➔</div>
                 </div>
 
-                {/* 2. Kampanye Aktif */}
                 <div className="stat-card-solid bg-gradient-2">
                   <div className="stat-body">
                     <div className="stat-icon">🎁</div>
@@ -223,7 +218,6 @@ export default function AdminDashboard() {
                   <div className="stat-footer" onClick={() => handleCardClick('galang-dana')}>Lihat Detail Kampanye ➔</div>
                 </div>
 
-                {/* 3. Menunggu Aksi */}
                 <div className="stat-card-solid bg-gradient-3">
                   <div className="stat-body">
                     <div className="stat-icon">⏳</div>
@@ -235,7 +229,6 @@ export default function AdminDashboard() {
                   <div className="stat-footer" onClick={() => handleCardClick('verifikasi')}>Cek Pengajuan & Donasi ➔</div>
                 </div>
 
-                {/* 4. Total Dana */}
                 <div className="stat-card-solid bg-gradient-4">
                   <div className="stat-body">
                     <div className="stat-icon">💰</div>
@@ -284,40 +277,74 @@ export default function AdminDashboard() {
             </>
           )}
 
-          {/* === VERIFIKASI (HISTORY PENGAJUAN) VIEW === */}
+          {/* === VIEW: DATA GALANG DANA (Ada Tombol Hapus) === */}
+          {activeTab === 'galang-dana' && (
+            <div className="table-panel">
+              <div className="panel-heading">Data Kampanye Aktif</div>
+              <div className="table-responsive">
+                <table className="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Judul Kampanye</th>
+                      <th>Terkumpul</th>
+                      <th>Tersalurkan</th>
+                      <th>Sisa Saldo</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {activeCampaigns.length === 0 ? (
+                      <tr><td colSpan={5} style={{textAlign:'center', padding:'20px'}}>Tidak ada data kampanye aktif.</td></tr>
+                    ) : (
+                      activeCampaigns.map(c => (
+                        <tr key={c.id}>
+                          <td><strong>{c.title}</strong><br/><small style={{color:'#666'}}>{c.admin}</small></td>
+                          <td style={{color:'green', fontWeight:'bold'}}>{formatRupiah(c.collected)}</td>
+                          <td style={{color:'#d35400'}}>{formatRupiah(c.distributed)}</td>
+                          <td style={{fontWeight:'bold'}}>{formatRupiah(c.collected - c.distributed)}</td>
+                          <td>
+                            <button 
+                              className="btn-delete" 
+                              onClick={() => handleDeleteActiveCampaign(c.id)}
+                              title="Hapus Kampanye Ini"
+                            >
+                              🗑️ Hapus
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* === VIEW: RIWAYAT PENGAJUAN (History Lengkap) === */}
           {activeTab === 'verifikasi' && (
             <div className="table-panel">
-              <div className="panel-heading">Riwayat Pengajuan Kampanye (History Lengkap)</div>
+              <div className="panel-heading">Riwayat Pengajuan Kampanye</div>
               <div className="table-responsive">
                 <table className="admin-table">
                   <thead><tr><th>Judul Kampanye</th><th>Target</th><th>Pengaju</th><th>Status</th><th>Aksi</th></tr></thead>
                   <tbody>
-                    {/* Urutkan yang Pending di paling atas */}
-                    {campaignApplications
-                      .sort((a, b) => (a.status === 'Pending' ? -1 : 1))
-                      .map(app => (
+                    {campaignApplications.sort((a, b) => (a.status === 'Pending' ? -1 : 1)).map(app => (
                       <tr key={app.id}>
-                        <td>
-                          <strong>{app.title}</strong><br/>
-                          <small>{app.category}</small>
-                        </td>
+                        <td><strong>{app.title}</strong><br/><small>{app.category}</small></td>
                         <td>{formatRupiah(app.target)}</td>
                         <td>{app.admin}<br/><small>{app.email}</small></td>
                         <td>
-                          {app.status === 'Pending' && <span className="status-pill pending">Menunggu</span>}
-                          {app.status === 'Approved' && <span className="status-pill success">Disetujui</span>}
-                          {app.status === 'Rejected' && <span className="status-pill rejected" style={{background:'#e74c3c', color:'white'}}>Ditolak</span>}
+                          {app.status === 'Pending' && <span style={{background:'#fef3c7', color:'#d97706', padding:'4px 10px', borderRadius:'10px', fontSize:'0.75rem', fontWeight:'bold'}}>Menunggu</span>}
+                          {app.status === 'Approved' && <span style={{background:'#d1fae5', color:'#059669', padding:'4px 10px', borderRadius:'10px', fontSize:'0.75rem', fontWeight:'bold'}}>Disetujui</span>}
+                          {app.status === 'Rejected' && <span style={{background:'#fee2e2', color:'#ef4444', padding:'4px 10px', borderRadius:'10px', fontSize:'0.75rem', fontWeight:'bold'}}>Ditolak</span>}
                         </td>
                         <td>
-                          {/* Tombol hanya muncul jika status masih Pending */}
                           {app.status === 'Pending' ? (
                             <>
                               <button className="btn-action btn-approve" onClick={() => handleApproveCampaign(app)}>Setuju</button>
                               <button className="btn-action btn-reject" onClick={() => handleRejectCampaign(app.id)}>Tolak</button>
                             </>
-                          ) : (
-                            <span style={{color: '#888', fontSize: '0.8rem'}}>Selesai</span>
-                          )}
+                          ) : <span style={{color: '#888', fontSize: '0.8rem'}}>Selesai</span>}
                         </td>
                       </tr>
                     ))}
@@ -328,7 +355,7 @@ export default function AdminDashboard() {
             </div>
           )}
 
-          {/* === KONFIRMASI DONASI VIEW === */}
+          {/* === VIEW: KONFIRMASI DONASI === */}
           {activeTab === 'konfirmasi' && (
             <div className="table-panel">
               <div className="panel-heading">Daftar Donasi Masuk</div>
@@ -342,7 +369,11 @@ export default function AdminDashboard() {
                         <td>{d.campaignTitle}</td>
                         <td><strong>{formatRupiah(d.amount)}</strong></td>
                         <td>
-                          <span className={`status-pill ${d.status === 'pending' ? 'pending' : 'success'}`}>
+                          <span style={{
+                            padding:'4px 10px', borderRadius:'10px', fontSize:'0.75rem', fontWeight:'bold',
+                            background: d.status === 'pending' ? '#fef3c7' : '#d1fae5',
+                            color: d.status === 'pending' ? '#d97706' : '#059669'
+                          }}>
                             {d.status === 'pending' ? 'Menunggu' : 'Berhasil'}
                           </span>
                         </td>
@@ -359,7 +390,7 @@ export default function AdminDashboard() {
             </div>
           )}
 
-          {/* === DATA USER VIEW === */}
+          {/* === VIEW: DATA PENGGUNA === */}
           {activeTab === 'users' && (
             <div className="table-panel">
               <div className="panel-heading">Data Pengguna Terdaftar</div>
@@ -367,39 +398,12 @@ export default function AdminDashboard() {
                 <table className="admin-table">
                   <thead><tr><th>No</th><th>Nama/Email</th><th>Role</th></tr></thead>
                   <tbody>
-                    <tr><td>1</td><td>{adminName} (Anda)</td><td><span className="badge-count">Admin Utama</span></td></tr>
-                    {/* List user unik dari history donasi atau pengajuan */}
+                    <tr><td>1</td><td>{adminName} (Anda)</td><td><span className="badge-count">Administrator</span></td></tr>
                     {Array.from(new Set([
                         ...donationHistory.map((d:any) => d.email).filter(e => e),
                         ...campaignApplications.map((c:any) => c.email).filter(e => e)
                     ])).map((email, idx) => (
-                      <tr key={idx}>
-                        <td>{idx + 2}</td>
-                        <td>{email as string}</td>
-                        <td>User / Donatur</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-
-          {/* === GALANG DANA VIEW (ACTIVE) === */}
-          {activeTab === 'galang-dana' && (
-            <div className="table-panel">
-              <div className="panel-heading">Data Kampanye Aktif</div>
-              <div className="table-responsive">
-                <table className="admin-table">
-                  <thead><tr><th>Kampanye</th><th>Terkumpul</th><th>Tersalurkan</th><th>Sisa Saldo</th></tr></thead>
-                  <tbody>
-                    {activeCampaigns.map(c => (
-                      <tr key={c.id}>
-                        <td><strong>{c.title}</strong><br/><small>{c.admin}</small></td>
-                        <td style={{color:'green'}}>{formatRupiah(c.collected)}</td>
-                        <td style={{color:'#d35400'}}>{formatRupiah(c.distributed)}</td>
-                        <td style={{fontWeight:'bold'}}>{formatRupiah(c.collected - c.distributed)}</td>
-                      </tr>
+                      <tr key={idx}><td>{idx + 2}</td><td>{email as string}</td><td>User / Donatur</td></tr>
                     ))}
                   </tbody>
                 </table>
