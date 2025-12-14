@@ -1,0 +1,74 @@
+.admin-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f5f7fa;
+  font-family: Arial, sans-serif;
+}
+
+.admin-title {
+  margin-bottom: 20px;
+  color: #1e293b;
+}
+
+.admin-form {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 320px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.admin-form label {
+  display: block;
+  margin-bottom: 6px;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+.admin-form input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+}
+
+.admin-form button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.admin-form button:hover {
+  background-color: #1e40af;
+}
+
+.dashboard-card {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 400px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-card ul {
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.dashboard-card li {
+  margin-bottom: 8px;
+}
+
+.error-text {
+  color: red;
+  margin-top: 10px;
+}
