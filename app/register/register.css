@@ -116,3 +116,62 @@
   min-width: 250px;
   font-weight: 600;
 }
+/* ===============================
+   ROLE SELECT STYLE
+================================ */
+
+.role-select {
+  position: relative;
+  margin-bottom: 1.2rem;
+}
+
+/* SELECT DASAR */
+.role-select select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 2px solid var(--red-accent);
+  background: #3E0703;
+  color: var(--cream-bg);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* BADGE */
+.role-select .role-badge {
+  position: absolute;
+  top: -10px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--cream-bg);
+  font-size: 0.7rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+/* ===============================
+   ADMIN MODE (LEBIH TEGAS)
+================================ */
+
+.role-select.admin select {
+  border-color: #ff3b30;
+  box-shadow: 0 0 10px rgba(255, 59, 48, 0.4);
+}
+
+.role-select.admin .role-badge {
+  background: linear-gradient(135deg, #ff3b30, #8b1c15);
+  color: #fff1c7;
+}
+
+/* ===============================
+   USER MODE (LEBIH SOFT)
+================================ */
+
+.role-select.user select {
+  border-color: #8b1c15;
+}
+
+.role-select.user .role-badge {
+  background: rgba(255, 241, 199, 0.15);
+}

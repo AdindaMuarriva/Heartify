@@ -73,15 +73,22 @@ export default function Register() {
           />
 
           {/* PILIH ROLE */}
-          <select
-            value={role}
-            onChange={(event) =>
-              setRole(event.target.value as Role)
-            }
-          >
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-          </select>
+          <div className={`role-select ${role}`}>
+            <select
+              value={role}
+              onChange={(event) =>
+                setRole(event.target.value as Role)
+              }
+            >
+              <option value="user">👤 User</option>
+              <option value="admin">🛡️ Admin</option>
+            </select>
+
+            {/* LABEL AKTIF */}
+            <span className="role-badge">
+              {role === "admin" ? "ADMIN MODE" : "USER MODE"}
+            </span>
+          </div>
 
           {/* INPUT KODE ADMIN */}
           {role === "admin" && (
