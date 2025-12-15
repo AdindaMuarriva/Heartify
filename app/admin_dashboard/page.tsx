@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import "./admin.css";
+import "./admin-dashboard.css"; // Menggunakan CSS baru di bawah
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -13,6 +13,15 @@ export default function AdminDashboard() {
   const [campaignApplications, setCampaignApplications] = useState<any[]>([]); // History Pengajuan
   const [donationHistory, setDonationHistory] = useState<any[]>([]);
   const [activeCampaigns, setActiveCampaigns] = useState<any[]>([]); // Kampanye Aktif
+  const [reports, setReports] = useState<any[]>([]); // Data Laporan PDF
+
+  // === MODAL STATES (Untuk Laporan) ===
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportForm, setReportForm] = useState({
+    title: "", category: "Kemanusiaan", amount: "", location: "", completionDate: "",
+    beneficiary: "", duration: "", description: "", details: "", impact: "",
+    admin: "Yayasan Heartify", contactPerson: "", image: ""
+  });
   
   // Statistik
   const [stats, setStats] = useState({
@@ -41,6 +50,7 @@ export default function AdminDashboard() {
     const apps = JSON.parse(localStorage.getItem("campaignApplications") || "[]");
     const donations = JSON.parse(localStorage.getItem("donationHistory") || "[]");
     const active = JSON.parse(localStorage.getItem("campaignsData") || "[]");
+    const savedReports = JSON.parse(localStorage.getItem("reportsData") || "[]");
     
     // Sanitasi data active campaigns
     const sanitizedActive = active.map((c: any) => ({
@@ -52,6 +62,7 @@ export default function AdminDashboard() {
     setCampaignApplications(apps);
     setDonationHistory(donations);
     setActiveCampaigns(sanitizedActive);
+    setReports(savedReports);
 
     // HITUNG STATISTIK
     const uniqueDonors = new Set(donations.map((d: any) => d.email || "anon")).size;
@@ -139,6 +150,32 @@ export default function AdminDashboard() {
     
     alert("Data kampanye berhasil dihapus.");
     loadData(); 
+  };
+
+  // === LOGIC LAPORAN BARU ===
+  const handleCreateReport = (e: React.FormEvent) => {
+    e.preventDefault();
+    const newReport = {
+      id: `rep-${Date.now()}`,
+      ...reportForm,
+      amount: Number(reportForm.amount),
+      details: reportForm.details.split("\n").filter(item => item.trim() !== ""),
+      impact: reportForm.impact.split("\n").filter(item => item.trim() !== ""),
+      dateCreated: new Date().toISOString()
+    };
+    const updatedReports = [newReport, ...reports];
+    localStorage.setItem("reportsData", JSON.stringify(updatedReports));
+    setReports(updatedReports);
+    setShowReportModal(false);
+    setReportForm({ title: "", category: "Kemanusiaan", amount: "", location: "", completionDate: "", beneficiary: "", duration: "", description: "", details: "", impact: "", admin: "Yayasan Heartify", contactPerson: "", image: "" });
+    alert("Laporan berhasil diterbitkan ke Halaman User!");
+  };
+
+  const handleDeleteReport = (id: string) => {
+    if(!confirm("Hapus laporan ini?")) return;
+    const updated = reports.filter(r => r.id !== id);
+    localStorage.setItem("reportsData", JSON.stringify(updated));
+    setReports(updated);
   };
 
   // Tab Handler dengan Scroll Top
@@ -303,13 +340,7 @@ export default function AdminDashboard() {
                           <td style={{color:'#d35400'}}>{formatRupiah(c.distributed)}</td>
                           <td style={{fontWeight:'bold'}}>{formatRupiah(c.collected - c.distributed)}</td>
                           <td>
-                            <button 
-                              className="btn-delete" 
-                              onClick={() => handleDeleteActiveCampaign(c.id)}
-                              title="Hapus Kampanye Ini"
-                            >
-                              🗑️ Hapus
-                            </button>
+                            <button className="btn-delete" onClick={() => handleDeleteActiveCampaign(c.id)} title="Hapus Kampanye Ini">🗑️ Hapus</button>
                           </td>
                         </tr>
                       ))
@@ -390,6 +421,36 @@ export default function AdminDashboard() {
             </div>
           )}
 
+          {/* === VIEW: LAPORAN PENYALURAN === */}
+          {activeTab === 'laporan' && (
+            <div className="table-panel">
+              <div className="panel-heading" style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
+                <span>Manajemen Laporan Donasi (User View)</span>
+                <button className="btn-action" style={{background: '#fff', color: '#3e0703'}} onClick={() => setShowReportModal(true)}>+ Buat Laporan Baru</button>
+              </div>
+              <div className="table-responsive">
+                <table className="admin-table">
+                  <thead><tr><th>Judul Program</th><th>Kategori</th><th>Total Dana</th><th>Tgl Selesai</th><th>Aksi</th></tr></thead>
+                  <tbody>
+                    {reports.length === 0 ? (
+                      <tr><td colSpan={5} style={{textAlign:'center', padding:'20px'}}>Belum ada laporan yang diterbitkan.</td></tr>
+                    ) : (
+                      reports.map((r) => (
+                        <tr key={r.id}>
+                          <td><strong>{r.title}</strong><br/><small>{r.location}</small></td>
+                          <td>{r.category}</td>
+                          <td>{formatRupiah(r.amount)}</td>
+                          <td>{r.completionDate}</td>
+                          <td><button className="btn-delete" onClick={() => handleDeleteReport(r.id)}>Hapus</button></td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
           {/* === VIEW: DATA PENGGUNA === */}
           {activeTab === 'users' && (
             <div className="table-panel">
@@ -413,6 +474,36 @@ export default function AdminDashboard() {
 
         </div>
       </div>
+
+      {/* === MODAL BUAT LAPORAN BARU === */}
+      {showReportModal && (
+        <div className="modal-overlay">
+          <div className="modal-content" style={{width: '700px', maxHeight: '90vh', overflowY: 'auto'}}>
+            <h3>Buat Laporan Penyaluran</h3>
+            <p style={{color:'#666', fontSize:'0.9rem', marginBottom:'1rem'}}>Laporan ini akan tampil di halaman "Lihat Laporan" User.</p>
+            <form onSubmit={handleCreateReport}>
+              <div style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:'15px'}}>
+                <div className="input-group"><label>Judul Program</label><input type="text" required value={reportForm.title} onChange={e=>setReportForm({...reportForm, title: e.target.value})} /></div>
+                <div className="input-group"><label>Kategori</label><select style={{width:'100%', padding:'10px', border:'1px solid #ddd', borderRadius:'6px', marginTop:'5px'}} value={reportForm.category} onChange={e=>setReportForm({...reportForm, category: e.target.value})}><option>Kemanusiaan</option><option>Pendidikan</option><option>Kesehatan</option><option>Bencana Alam</option></select></div>
+                <div className="input-group"><label>Total Dana Disalurkan (Rp)</label><input type="number" required value={reportForm.amount} onChange={e=>setReportForm({...reportForm, amount: e.target.value})} /></div>
+                <div className="input-group"><label>Lokasi</label><input type="text" required value={reportForm.location} onChange={e=>setReportForm({...reportForm, location: e.target.value})} /></div>
+                <div className="input-group"><label>Tanggal Selesai</label><input type="date" required value={reportForm.completionDate} onChange={e=>setReportForm({...reportForm, completionDate: e.target.value})} /></div>
+                <div className="input-group"><label>Penerima Manfaat</label><input type="text" required value={reportForm.beneficiary} onChange={e=>setReportForm({...reportForm, beneficiary: e.target.value})} /></div>
+                <div className="input-group"><label>Durasi Program</label><input type="text" required value={reportForm.duration} onChange={e=>setReportForm({...reportForm, duration: e.target.value})} /></div>
+                <div className="input-group"><label>Contact Person</label><input type="text" required value={reportForm.contactPerson} onChange={e=>setReportForm({...reportForm, contactPerson: e.target.value})} /></div>
+              </div>
+              <div className="input-group"><label>URL Gambar</label><input type="url" required value={reportForm.image} onChange={e=>setReportForm({...reportForm, image: e.target.value})} /></div>
+              <div className="input-group"><label>Deskripsi</label><textarea rows={3} required value={reportForm.description} onChange={e=>setReportForm({...reportForm, description: e.target.value})}></textarea></div>
+              <div className="input-group"><label>Rincian (Pisahkan Enter)</label><textarea rows={4} required value={reportForm.details} onChange={e=>setReportForm({...reportForm, details: e.target.value})}></textarea></div>
+              <div className="input-group"><label>Dampak (Pisahkan Enter)</label><textarea rows={4} required value={reportForm.impact} onChange={e=>setReportForm({...reportForm, impact: e.target.value})}></textarea></div>
+              <div className="modal-actions">
+                <button type="button" className="btn-action" style={{background:'#eee', color:'#333'}} onClick={() => setShowReportModal(false)}>Batal</button>
+                <button type="submit" className="btn-action btn-approve">Terbitkan</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
