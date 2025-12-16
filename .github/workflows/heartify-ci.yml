@@ -1,4 +1,4 @@
-name: Heartify CI/CD Pipeline
+name: Heartify CI Pipeline
 
 on:
   push:
@@ -7,33 +7,24 @@ on:
     branches: ["main"]
 
 jobs:
-  build-lint-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Ambil source code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Setup Node.js (Next.js 16 aman pakai Node 18)
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'npm'
+          cache: npm
 
-      # 3. Install dependency
       - name: Install dependencies
         run: npm install
 
-      # 4. Build Next.js
-      - name: Build application
+      - name: Build Next.js
         run: npm run build
 
-      # 5. Lint (sebagai testing)
       - name: Run ESLint
         run: npm run lint
-
-      # 6. Deploy (contoh dummy)
-      - name: Deploy application
-        run: echo "Deploy Heartify sukses 🚀"
