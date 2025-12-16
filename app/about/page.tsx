@@ -6,52 +6,48 @@ import "./about.css";
 export default function About() {
   return (
     <div className="about-page">
-      {/* NAVBAR REQUESTED */}
-      <div className="navbar-container">
-        <div className="navbar">
+      {/* NAVBAR */}
+      <header className="navbar-container">
+        <nav className="navbar">
           <Link href="/beranda" className="navbar-logo">
             Heartify
           </Link>
-
           <div className="navbar-links">
             <Link href="/beranda">Beranda</Link>
             <Link href="/aboutpage">Tentang Kami</Link>
             <Link href="/ajukankampanye">Ajukan Kampanye</Link>
-            <Link href="/Profile">Profile</Link>
+            <Link href="/profile">Profile</Link>
           </div>
-
           <Link href="/login" className="navbar-login-button">
             Keluar
           </Link>
-        </div>
-      </div>
+        </nav>
+      </header>
 
       {/* HERO SECTION */}
       <section className="hero-section">
         <div className="hero-content">
-          <h1>Mewujudkan Kebaikan Bersama</h1>
-          <p>
+          <h1 className="hero-title">Mewujudkan Kebaikan Bersama</h1>
+          <p className="hero-subtitle">
             Platform donasi terpercaya yang menghubungkan niat baik Anda dengan mereka yang
             membutuhkan secara transparan.
           </p>
         </div>
       </section>
 
-      {/* VISI MISI (Vertikal Rapi) */}
+      {/* VISI MISI */}
       <section className="mission-section">
         <h2 className="section-title">Visi & Misi</h2>
-
-        <div className="mission-cards">
-          <div className="mission-card visi">
-            <div className="icon">🤝🏻</div>
+        <div className="mission-content">
+          <div className="mission-box vision-box">
+            <div className="mission-icon">🤝🏻</div>
             <h3>Visi Kami</h3>
             <p>
               Menjadi jembatan kebaikan digital yang memupuk semangat gotong royong di era modern.
             </p>
           </div>
-
-          <div className="mission-card misi">
-            <div className="icon">🚀</div>
+          <div className="mission-box mission-box-list">
+            <div className="mission-icon">🚀</div>
             <h3>Misi Kami</h3>
             <ul>
               <li>Mempermudah akses donasi secara digital dan aman.</li>
@@ -62,85 +58,33 @@ export default function About() {
         </div>
       </section>
 
-      {/* CARA KERJA (Grid) */}
+      {/* CARA KERJA */}
       <section className="work-section">
         <h2 className="section-title">Cara Kerja</h2>
-
         <div className="work-grid">
           <div className="work-card">
-            <div className="num">1</div>
+            <div className="work-number">1</div>
             <h3>Pilih Program</h3>
             <p>Cari kampanye donasi yang menyentuh hati Anda.</p>
           </div>
-
           <div className="work-card">
-            <div className="num">2</div>
+            <div className="work-number">2</div>
             <h3>Donasi Mudah</h3>
             <p>Lakukan pembayaran dengan metode yang aman.</p>
           </div>
-
           <div className="work-card">
-            <div className="num">3</div>
+            <div className="work-number">3</div>
             <h3>Transparan</h3>
             <p>Pantau laporan penyaluran dana secara berkala.</p>
           </div>
         </div>
       </section>
 
-      {/* TIM KAMI (ZigZag Style sesuai gambar) */}
+      {/* TIM KAMI */}
       <section className="team-section">
         <h2 className="section-title">Tim Hebat Kami</h2>
-
-        {/* Member 1: Maulizar */}
-        <div className="team-card left">
-          <div className="img-box">
-            <img src="/maulizar.jpg" alt="Maulizar" />
-          </div>
-
-          <div className="text-box">
-            <h3>Maulizar</h3>
-            <span className="role">UI/UX Designer</span>
-            <p className="desc">
-              Mahasiswi Informatika USK. Berfokus pada desain antarmuka yang intuitif dan
-              pengalaman pengguna yang nyaman.
-            </p>
-          </div>
-        </div>
-
-        {/* Member 2: Adinda */}
-        <div className="team-card right">
-          <div className="img-box">
-            <img src="/adinda.jpg" alt="Adinda" />
-          </div>
-
-          <div className="text-box">
-            <h3>Adinda Muarriva</h3>
-            <span className="role">Frontend Developer</span>
-            <p className="desc">
-              Mahasiswi Informatika USK. Pengembang yang berdedikasi menciptakan kode yang
-              bersih, efisien, dan responsif.
-            </p>
-          </div>
-
-          <div className="work-card">
-            <div className="num">2</div>
-            <h3>Donasi Mudah</h3>
-            <p>Lakukan pembayaran dengan metode yang aman.</p>
-          </div>
-
-          <div className="work-card">
-            <div className="num">3</div>
-            <h3>Transparan</h3>
-            <p>Pantau laporan penyaluran dana secara berkala.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Tim */}
-      <section className="team-section">
-        <h2 className="section-title">Tim Kami</h2>
         <div className="team-horizontal-layout">
-          {/* Maulizar - Kiri */}
+          {/* Maulizar */}
           <div className="team-member-left">
             <div className="team-card-horizontal">
               <div className="team-photo-container">
@@ -154,7 +98,8 @@ export default function About() {
                   Mahasiswi Informatika, Universitas Syiah Kuala
                 </div>
                 <div className="team-bio">
-                  <p>Mendesain pengalaman pengguna yang intuitif dan antarmuka yang menarik. Fokus pada desain yang accessible dan user-centered untuk memastikan platform mudah digunakan semua kalangan. Berpengalaman dalam menciptakan solusi desain yang tidak hanya indah secara visual tetapi juga fungsional dan mudah dipahami.</p>
+                  <p>Mahasiswi Informatika USK. Berfokus pada desain antarmuka yang intuitif dan
+                  pengalaman pengguna yang nyaman.</p>
                 </div>
                 <div className="team-details">
                   <div className="detail-item">
@@ -177,7 +122,7 @@ export default function About() {
             </div>
           </div>
 
-          {/* Adinda Muarriva - Kanan */}
+          {/* Adinda Muarriva */}
           <div className="team-member-right">
             <div className="team-card-horizontal">
               <div className="team-photo-container">
@@ -191,7 +136,8 @@ export default function About() {
                   Mahasiswi Informatika, Universitas Syiah Kuala
                 </div>
                 <div className="team-bio">
-                  <p>Bertanggung jawab dalam pengembangan antarmuka pengguna yang responsif dan interaktif. Memastikan pengalaman donasi yang seamless dan mudah digunakan oleh semua pengguna. Memiliki passion dalam menciptakan kode yang bersih, efisien, dan maintainable untuk aplikasi web modern.</p>
+                  <p>Mahasiswi Informatika USK. Pengembang yang berdedikasi menciptakan kode yang
+                  bersih, efisien, dan responsif.</p>
                 </div>
                 <div className="team-details">
                   <div className="detail-item">

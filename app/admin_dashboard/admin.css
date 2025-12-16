@@ -316,6 +316,195 @@
 }
 .btn-delete:hover { background-color: #a93226; }
 
+/* 1. Overlay dengan Efek Blur (Glassmorphism) */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(62, 7, 3, 0.6); /* Maroon gelap transparan */
+  backdrop-filter: blur(8px); /* Efek blur mahal */
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+
+/* 2. Box Modal Utama */
+.modal-content {
+  background: var(--white);
+  width: 750px; /* Lebar ideal */
+  max-width: 95%;
+  max-height: 90vh; /* Agar tidak melebihi layar */
+  overflow-y: auto; /* Scroll jika panjang */
+  border-radius: 16px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); /* Shadow lembut & dalam */
+  border-top: 6px solid var(--maroon-red); /* Aksen di atas */
+  padding: 0; /* Reset padding */
+  display: flex;
+  flex-direction: column;
+}
+
+/* 3. Header Modal */
+.modal-header {
+  padding: 25px 30px;
+  border-bottom: 1px solid #eee;
+  background: #fcfbf5; /* Cream sangat muda */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--maroon-dark);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.modal-header p {
+  margin: 5px 0 0;
+  color: var(--text-gray);
+  font-size: 0.9rem;
+}
+
+/* 4. Body Form (Grid Layout) */
+.modal-body {
+  padding: 30px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 Kolom */
+  gap: 20px; /* Jarak antar input */
+}
+
+/* Input yang butuh lebar penuh (seperti Deskripsi) */
+.full-width {
+  grid-column: span 2;
+}
+
+/* 5. Styling Input & Label */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--maroon-mid);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.input-group input, 
+.input-group select, 
+.input-group textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background-color: #fcfbf5; /* Warna input sedikit berbeda dari putih */
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  transition: all 0.3s ease;
+  box-sizing: border-box; /* Penting agar padding tidak merusak lebar */
+}
+
+.input-group textarea {
+  resize: vertical; /* User bisa tarik ke bawah */
+  min-height: 80px;
+}
+
+/* Efek Focus Mewah */
+.input-group input:focus, 
+.input-group select:focus, 
+.input-group textarea:focus {
+  outline: none;
+  border-color: var(--maroon-red);
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(139, 28, 21, 0.1); /* Glow effect maroon */
+}
+
+/* 6. Footer & Buttons */
+.modal-footer {
+  padding: 20px 30px;
+  background: #fff;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  position: sticky;
+  bottom: 0;
+}
+
+.btn-cancel {
+  padding: 12px 24px;
+  background: #f1f5f9;
+  color: #64748b;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-cancel:hover {
+  background: #e2e8f0;
+  color: #333;
+}
+
+.btn-submit {
+  padding: 12px 30px;
+  background: linear-gradient(135deg, var(--maroon-red), var(--maroon-dark));
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(139, 28, 21, 0.3); /* Shadow tombol */
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 28, 21, 0.4);
+}
+
+/* 7. Custom Scrollbar untuk Modal */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+.modal-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.modal-content::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: var(--maroon-mid);
+}
+
+/* Animasi Masuk */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Responsif untuk HP */
+@media (max-width: 768px) {
+  .form-grid { grid-template-columns: 1fr; } /* Jadi 1 kolom di HP */
+  .full-width { grid-column: span 1; }
+  .modal-content { width: 100%; height: 100vh; border-radius: 0; max-height: 100vh; }
+}
+
 /* RESPONSIVE */
 @media (max-width: 1024px) {
   .sidebar { width: 70px; overflow: hidden; }
