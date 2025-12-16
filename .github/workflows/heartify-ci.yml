@@ -7,7 +7,7 @@ on:
     branches: ["main"]
 
 jobs:
-  build:
+  build-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,10 +23,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build Next.js (CI mode)
-        run: |
-          echo "Skipping DB-dependent build for CI"
-          npm run build || true
+      - name: Build Next.js (CI)
+        run: npm run build || true
+
+      - name: Run Test
+        run: npm run test
 
       - name: Run ESLint
         run: npm run lint
