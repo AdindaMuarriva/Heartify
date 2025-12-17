@@ -1,52 +1,39 @@
 import mongoose from "mongoose";
 
-// Ambil URI
-const MONGODB_URI = process.env.MONGODB_URI; 
+const MONGODB_URI = process.env.MONGODB_URI;
 
-// 1. Validasi Ketat
-if (!MONGODB_URI && process.env.NODE_ENV === "production" && typeof window === "undefined") {
-    // Jika sedang build (production) dan di sisi server, hanya log saja
-    console.warn("⚠️ Warning: MONGODB_URI is not defined during build time.");
-} else if (!MONGODB_URI) {
-    // Jika running biasa dan kosong, baru throw error
-    throw new Error("MONGODB_URI is not defined. Please check your .env file.");
+// Validasi sederhana: Jika kosong, langsung stop.
+if (!MONGODB_URI) {
+    console.error("❌ ERROR: MONGODB_URI is missing in environment variables!");
+    // Jangan throw error di sini agar build tidak gagal, 
+    // tapi kita beri log yang sangat jelas.
 }
 
-// 2. Definisi Cache yang Lebih Aman untuk TypeScript
 interface MongooseCache {
   conn: any | null;
   promise: Promise<any> | null;
 }
 
-let cached: MongooseCache = (global as any).mongoose;
-
-if (!cached) {
-    cached = (global as any).mongoose = {
-        conn: null,
-        promise: null,
-    };
-}
+let cached: MongooseCache = (global as any).mongoose || { conn: null, promise: null };
+(global as any).mongoose = cached;
 
 export default async function connectDB() {
-    if (cached.conn) {
-        console.log("✅ MongoDB: Connection reused (cached).");
-        return cached.conn;
-    }
+    if (cached.conn) return cached.conn;
 
     if (!cached.promise) {
-        console.log("⏳ MongoDB: Starting initial connection...");
-        
-        // 3. Gunakan asersi 'as string' agar TypeScript yakin variabel ini tidak undefined
-        cached.promise = mongoose.connect(MONGODB_URI as string).then((mongooseInstance) => {
-            console.log("🎉 MongoDB: Initial connection successful!");
-            return mongooseInstance;
-        }).catch((error) => {
-            console.error("❌ MongoDB: Connection FAILED!", error.message);
-            cached.promise = null; 
-            throw error;
-        });
+        // Jika MONGODB_URI masih undefined saat fungsi dipanggil, ini akan melempar error yang jelas
+        if (!MONGODB_URI) {
+            throw new Error("MONGODB_URI is not defined. Please add it to Vercel Environment Variables.");
+        }
+
+        cached.promise = mongoose.connect(MONGODB_URI).then((m) => m);
     }
 
-    cached.conn = await cached.promise;
+    try {
+        cached.conn = await cached.promise;
+    } catch (e) {
+        cached.promise = null;
+        throw e;
+    }
     return cached.conn;
 }
