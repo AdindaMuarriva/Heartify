@@ -242,3 +242,29 @@
   .form-grid-layout { grid-template-columns: 1fr; }
   .full-width { grid-column: span 1; }
 }
+
+@media screen and (max-width: 768px) {
+  .profile-dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-sidebar {
+    position: static;
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  .profile-main {
+    padding: 1.5rem;
+  }
+
+  .main-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .btn-edit {
+    width: 100%;
+  }
+}

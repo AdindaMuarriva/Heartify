@@ -548,3 +548,22 @@
   .stats-row-1, .stats-row-2 { grid-template-columns: 1fr; }
   .nav-right { display: none; }
 }
+
+@media screen and (max-width: 768px) {
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-sidebar {
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  .admin-content {
+    padding: 1.5rem;
+  }
+
+  .admin-cards {
+    grid-template-columns: 1fr;
+  }
+}
