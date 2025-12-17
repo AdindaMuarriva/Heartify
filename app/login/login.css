@@ -8,7 +8,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center; /* Tetap center, jangan flex-start */
+  align-items: center; /* Tetap center */
   font-family: "Poppins", sans-serif;
   padding: 20px;
   background: linear-gradient(-45deg, #3E0703, #660E0A, #230403, #8B1515);
@@ -181,46 +181,49 @@
   }
 }
 
-/* Responsive */
+/* Responsive - UTAMA DIPERBAIKI DI SINI */
 @media (max-width: 480px) {
   .login-scope-wrapper {
-    padding: 15px;
-    align-items: center; /* TETAP CENTER, jangan flex-start */
+    padding: 20px 15px;
+    padding-top: 40px; /* TAMBAHAN: Space atas lebih banyak */
+    align-items: flex-start; /* Biar bisa scroll kalau tinggi */
+    min-height: calc(100vh - 40px);
   }
   
   .login-scope-wrapper .auth-card {
-    padding: 1.5rem;
-    margin: 0;
+    padding: 1.8rem 1.5rem; /* Sedikit lebih besar */
+    margin: 0 auto;
+    margin-top: 20px; /* TAMBAHAN: Margin atas */
     max-width: 100%;
-    border-radius: 16px;
-    max-height: auto; /* Biarkan natural height */
+    border-radius: 18px;
+    max-height: auto;
   }
   
   .login-scope-wrapper h2 {
-    font-size: 1.5rem; /* Diperkecil */
-    margin-bottom: 1.5rem; /* Diperkecil */
+    font-size: 1.6rem;
+    margin-bottom: 1.8rem;
   }
   
   .login-scope-wrapper input {
-    padding: 12px 14px; /* Jangan terlalu kecil */
-    margin-bottom: 0.9rem;
-    font-size: 0.95rem;
+    padding: 13px 15px;
+    margin-bottom: 1rem;
+    font-size: 1rem;
   }
   
   .login-scope-wrapper button {
-    padding: 12px;
-    font-size: 0.95rem;
-    margin-top: 5px;
-  }
-  
-  .login-scope-wrapper .popup-card {
-    padding: 20px;
-    min-width: 250px;
+    padding: 13px;
+    font-size: 1rem;
+    margin-top: 8px;
   }
   
   .login-scope-wrapper p {
-    font-size: 0.85rem;
-    margin-top: 1rem;
+    font-size: 0.9rem;
+    margin-top: 1.5rem;
+  }
+  
+  .login-scope-wrapper .popup-card {
+    padding: 22px;
+    min-width: 260px;
   }
 }
 
@@ -228,6 +231,19 @@
 @media (min-width: 481px) and (max-width: 768px) {
   .login-scope-wrapper .auth-card {
     max-width: 380px;
-    padding: 1.8rem;
+    padding: 2rem;
+    margin-top: 40px; /* Tambah margin atas untuk tablet */
+  }
+  
+  .login-scope-wrapper {
+    padding-top: 40px;
+  }
+}
+
+/* Untuk desktop kecil */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .login-scope-wrapper .auth-card {
+    max-width: 380px;
+    margin-top: 50px;
   }
 }
