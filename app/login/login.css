@@ -343,6 +343,16 @@
   transform: translateY(-2px);
 }
 
+.login-container {
+  width: 100%;
+  max-width: 480px; 
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+}
+
 /* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -360,33 +370,49 @@
   }
 }
 
-/* RESPONSIVE DESIGN - MOBILE FIRST */
+/* RESPONSIVE DESIGN */
 @media (max-width: 480px) {
   .login-scope-wrapper {
-    padding: 25px 20px;
+    padding: 25px 16px; /* 16px untuk kiri-kanan, lebih dari 20px */
     justify-content: flex-start;
-    padding-top: 60px; /* Ample top space */
+    padding-top: 40px; /* Lebih reasonable */
     min-height: 100vh;
+    box-sizing: border-box;
+  }
+  
+    .login-container {
+    max-width: 100%;
+    padding: 0 8px; /* Memberikan breathing room */
+  }
+  
+  .register-link {
+    text-align: center;
+    padding: 0 10px;
   }
   
   .login-header {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
+    padding: 0 10px; /* Tambah padding kiri-kanan */
   }
   
   .login-logo {
     font-size: 2rem;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
   
   .login-subtitle {
     font-size: 0.9rem;
+    padding: 0 5px;
   }
   
   .login-scope-wrapper .auth-card {
-    padding: 1.8rem 1.5rem;
+    padding: 1.8rem 1.6rem; /* Lebih dari 1.5rem */
     border-radius: 20px;
     max-width: 100%;
+    width: calc(100% - 8px); /* Sedikit lebih kecil dari container */
+    margin: 0 auto;
     margin-top: 0;
+    box-sizing: border-box;
     box-shadow: 
       0 15px 30px rgba(0, 0, 0, 0.3),
       0 0 0 1px rgba(255, 241, 199, 0.05),
@@ -401,6 +427,58 @@
     font-size: 1.6rem;
     margin-bottom: 1.6rem;
     padding-bottom: 10px;
+    padding: 0 5px; /* Tambah padding untuk text */
+  }
+  
+  .login-scope-wrapper input {
+    padding: 16px 18px; /* Sedikit lebih besar */
+    padding-left: 52px; /* Lebih dari 48px */
+    font-size: 1rem;
+    border-radius: 14px; /* Lebih rounded */
+  }
+  
+  .input-group::before {
+    left: 20px; /* Geser icon sedikit ke kanan */
+  }
+  
+  .login-scope-wrapper button {
+    padding: 16px;
+    font-size: 1rem;
+    margin-top: 10px;
+    border-radius: 14px; /* Match input */
+  }
+  
+  .login-scope-wrapper p {
+    font-size: 0.95rem;
+    margin-top: 1.8rem;
+    padding: 0 5px;
+  }
+  
+  .login-footer {
+    margin-top: 30px;
+    font-size: 0.8rem;
+    padding: 0 15px;
+    text-align: center;
+    color: rgba(255, 241, 199, 0.7);
+  }
+  
+  .popup-card {
+    padding: 24px 20px;
+    max-width: 85%; /* Lebih kecil dari 90% */
+    margin: 0 20px;
+  }
+}
+
+/* Untuk HP sangat kecil (iPhone SE dkk) */
+@media (max-width: 375px) {
+  .login-scope-wrapper {
+    padding: 20px 14px;
+    padding-top: 30px;
+  }
+  
+  .login-scope-wrapper .auth-card {
+    padding: 1.6rem 1.4rem;
+    border-radius: 18px;
   }
   
   .login-scope-wrapper input {
@@ -411,23 +489,14 @@
   
   .login-scope-wrapper button {
     padding: 15px;
-    font-size: 0.95rem;
-    margin-top: 8px;
   }
   
-  .login-scope-wrapper p {
-    font-size: 0.9rem;
-    margin-top: 1.5rem;
+  .login-logo {
+    font-size: 1.8rem;
   }
   
-  .login-footer {
-    margin-top: 25px;
-    font-size: 0.8rem;
-  }
-  
-  .popup-card {
-    padding: 24px;
-    max-width: 90%;
+  .login-scope-wrapper h2 {
+    font-size: 1.5rem;
   }
 }
 
@@ -435,12 +504,13 @@
 @media (min-width: 481px) and (max-width: 768px) {
   .login-scope-wrapper {
     padding: 40px 30px;
-    padding-top: 80px;
+    padding-top: 60px;
   }
   
   .login-scope-wrapper .auth-card {
     max-width: 420px;
     padding: 2.2rem 2rem;
+    margin: 0 auto;
   }
   
   .login-logo {
@@ -452,12 +522,13 @@
 @media (min-width: 769px) {
   .login-scope-wrapper {
     padding: 40px;
-    padding-top: 60px;
+    padding-top: 50px;
   }
   
   .login-scope-wrapper .auth-card {
     max-width: 420px;
     padding: 2.5rem 2.2rem;
+    margin: 0 auto;
   }
   
   .login-header {

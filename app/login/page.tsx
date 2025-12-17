@@ -54,11 +54,12 @@ export default function Login() {
   };
 
   return (
-    <div className="login-scope-wrapper">
+  <div className="login-scope-wrapper">
+    <div className="login-container">
       {/* HEADER/LOGO SECTION */}
       <div className="login-header">
         <div className="login-logo">Heartify</div>
-        <p className="login-subtitle">Raise Your Hand for Humanity</p>
+        <p className="login-subtitle">Where Kindness Meets Action</p>
       </div>
 
       {/* LOGIN CARD */}
@@ -69,7 +70,7 @@ export default function Login() {
           <div className="input-group">
             <input
               type="email"
-              placeholder="Email"
+              placeholder="Alamat Email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               required
@@ -80,7 +81,7 @@ export default function Login() {
           <div className="input-group">
             <input
               type="password"
-              placeholder="Password"
+              placeholder="Kata Sandi"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               required
@@ -93,14 +94,14 @@ export default function Login() {
           </button>
         </form>
 
-        <p>
+        <p className="register-link">
           Belum punya akun? <Link href="/register">Daftar Sekarang</Link>
         </p>
       </div>
 
       {/* FOOTER INFO */}
       <div className="login-footer">
-        © 2024 Heartify. Seluruh hak cipta dilindungi.
+        © 2025 Heartify. Seluruh hak cipta dilindungi.
       </div>
 
       {/* POPUP */}
@@ -113,5 +114,6 @@ export default function Login() {
         </div>
       )}
     </div>
-  );
+  </div>
+);
 }
