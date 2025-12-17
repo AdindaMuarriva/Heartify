@@ -12,10 +12,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
+/* ✅ METADATA TANPA VIEWPORT */
+export const metadata: Metadata = {
   title: "Heartify",
   description: "Platform Donasi",
-  viewport: "width=device-width, initial-scale=1",
+};
+
+/* ✅ VIEWPORT DIPISAH (INI YANG DIMINTA NEXT.JS) */
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
