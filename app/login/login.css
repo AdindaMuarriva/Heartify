@@ -10,7 +10,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   font-family: "Poppins", sans-serif;
   background: linear-gradient(135deg, #230403 0%, #3E0703 25%, #660E0A 50%, #8B1515 75%, #b32820 100%);
@@ -45,11 +45,38 @@
 
 /* HEADER/LOGO AREA */
 .login-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
   margin-bottom: 30px;
   width: 100%;
   max-width: 400px;
   z-index: 1;
+}
+
+.auth-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: var(--dark-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  padding: 2rem 1.8rem;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 241, 199, 0.12);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 241, 199, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  z-index: 1;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .login-logo {
@@ -70,6 +97,9 @@
 
 /* CARD REDESIGN */
 .login-scope-wrapper .auth-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: var(--dark-bg);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -108,6 +138,13 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
+.auth-card form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .login-scope-wrapper h2 {
   font-size: 1.8rem;
   margin-bottom: 1.8rem;
@@ -115,6 +152,9 @@
   font-weight: 700;
   position: relative;
   padding-bottom: 12px;
+  text-align: center;
+  display: block;
+  width: 100%;
 }
 
 .login-scope-wrapper h2::after {
@@ -130,9 +170,16 @@
 
 /* INPUT STYLES */
 .input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
   margin-bottom: 1.5rem;
   width: 100%;
+}
+
+.input-group input {
+  text-align: left;
 }
 
 .login-scope-wrapper input {
@@ -206,6 +253,7 @@
   margin-top: 10px;
   font-size: 1rem;
   font-family: "Poppins", sans-serif;
+  text-align: center;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -244,18 +292,32 @@
   background: linear-gradient(135deg, #8a5a57, #6b4a48);
 }
 
+* {
+  box-sizing: border-box;
+}
+
+.login-scope-wrapper * {
+  max-width: 100%;
+}
+
 /* LINK STYLES */
 .login-scope-wrapper p {
   margin-top: 1.8rem;
   color: var(--cream-bg);
   font-size: 0.95rem;
   font-weight: 400;
+  text-align: center;
+  display: block;
+  width: 100%;
 }
 
 .login-scope-wrapper a {
   color: var(--cream-bg);
   font-weight: 600;
   text-decoration: none;
+  text-align: center;
+  display: block;
+  width: 100%;
   transition: all 0.3s ease;
   position: relative;
   padding: 2px 4px;
@@ -283,6 +345,9 @@
 
 /* FOOTER/EXTRA INFO */
 .login-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 30px;
   text-align: center;
   color: rgba(255, 241, 199, 0.6);
@@ -389,7 +454,7 @@
     text-align: center;
     padding: 0 10px;
   }
-  
+
   .login-header {
     margin-bottom: 30px;
     padding: 0 10px; /* Tambah padding kiri-kanan */
@@ -493,10 +558,6 @@
   
   .login-logo {
     font-size: 1.8rem;
-  }
-  
-  .login-scope-wrapper h2 {
-    font-size: 1.5rem;
   }
 }
 
