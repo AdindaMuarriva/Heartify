@@ -4,7 +4,11 @@ import mongoose from "mongoose";
 const MONGODB_URI = process.env.MONGODB_URI; 
 
 // 1. Validasi Ketat
-if (!MONGODB_URI) {
+if (!MONGODB_URI && process.env.NODE_ENV === "production" && typeof window === "undefined") {
+    // Jika sedang build (production) dan di sisi server, hanya log saja
+    console.warn("⚠️ Warning: MONGODB_URI is not defined during build time.");
+} else if (!MONGODB_URI) {
+    // Jika running biasa dan kosong, baru throw error
     throw new Error("MONGODB_URI is not defined. Please check your .env file.");
 }
 
