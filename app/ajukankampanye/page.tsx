@@ -24,7 +24,7 @@ export default function AjukanKampanye() {
   });
 
   useEffect(() => {
-    const data = localStorage.getItem("registeredUser");
+    const data = localStorage.getItem("user");
 
     if (!data) {
       router.push("/login");
@@ -48,39 +48,35 @@ export default function AjukanKampanye() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("registeredUser");
+    localStorage.removeItem("user");
     router.push("/login");
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsSubmitting(true);
 
-    setTimeout(() => {
-      const pending = JSON.parse(
-        localStorage.getItem("pendingCampaigns") || "[]"
-      );
-
-      const newCampaign = {
-        id: 'campaign-${Date.now()}',
+  try {
+    const res = await fetch("/api/campaign", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
         ...form,
         target: Number(form.target),
-        collected: 0,
-        admin: user.name,
-        email: user.email,
-        status: "pending",
-        submittedDate: new Date().toLocaleDateString("id-ID"),
-      };
+      }),
+    });
 
-      pending.push(newCampaign);
-      localStorage.setItem("pendingCampaigns", JSON.stringify(pending));
+    if (!res.ok) throw new Error("Gagal submit");
 
-      setIsSubmitting(false);
-      setPopup("Kampanye berhasil diajukan! Menunggu verifikasi Admin.");
+    setPopup("Kampanye berhasil diajukan! Menunggu verifikasi Admin.");
+    setTimeout(() => router.push("/beranda"), 2000);
+  } catch (error) {
+    alert("Gagal mengajukan kampanye");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
-      setTimeout(() => router.push("/profile"), 2000);
-    }, 1500);
-  };
 
   if (!user) return null;
 

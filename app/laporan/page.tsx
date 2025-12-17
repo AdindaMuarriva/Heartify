@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import "./laporan.css";
-import jsPDF from 'jspdf';
+import jsPDF from "jspdf";
 
-// Dalam component Laporan
+// Fungsi generate PDF (sama seperti di React)
 const generatePDF = (report: any) => {
   const doc = new jsPDF();
   
@@ -41,11 +41,11 @@ const generatePDF = (report: any) => {
   currentY += 6;
   doc.text(`Lokasi: ${report.location}`, 20, currentY);
   currentY += 6;
-  doc.text(`Jumlah Donasi: ${formatAmount(report.amount)}`, 20, currentY);
+  doc.text(`Jumlah Donasi: ${formatAmount(report.target)}`, 20, currentY);
   currentY += 6;
-  doc.text(`Tanggal Selesai: ${report.completionDate}`, 20, currentY);
+  doc.text(`Tanggal Selesai: ${new Date(report.completionDate).toLocaleDateString('id-ID')}`, 20, currentY);
   currentY += 6;
-  doc.text(`Penerima Manfaat: ${report.beneficiaries}`, 20, currentY);
+  doc.text(`Penerima Manfaat: ${report.beneficiary}`, 20, currentY);
   currentY += 6;
   doc.text(`Durasi Program: ${report.duration}`, 20, currentY);
   currentY += 15;
@@ -108,171 +108,30 @@ const generatePDF = (report: any) => {
   doc.save(`Laporan_Donasi_${report.title.replace(/\s+/g, '_')}.pdf`);
 };
 
-// Data dummy untuk laporan donasi - HANYA YANG SUDAH SELESAI
-const reportData = [
-  {
-    id: 1,
-    title: "Bantuan Korban Bencana Gempa",
-    category: "Kemanusiaan",
-    amount: 8500000,
-    date: "25 Juli 2025",
-    image: "https://plus.unsplash.com/premium_photo-1695566086196-1cdadbaa1988?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    description: "Bantuan darurat telah disalurkan kepada korban gempa di Kabupaten Cianjur. Dana digunakan untuk memenuhi kebutuhan pokok, tempat tinggal sementara, dan layanan medis darurat bagi para korban.",
-    details: [
-      "Paket sembako untuk 200 keluarga terdampak",
-      "Pendirian 15 tenda pengungsian darurat",
-      "Layanan kesehatan dan obat-obatan dasar",
-      "Air bersih dan fasilitas sanitasi"
-    ],
-    location: "Kabupaten Cianjur, Jawa Barat",
-    beneficiaries: "500+ penerima manfaat",
-    duration: "2 minggu",
-    admin: "Palang Merah Indonesia",
-    contactPerson: "Budi Santoso - 0812-3456-7890",
-    impact: [
-      "500 orang mendapatkan bantuan pokok",
-      "15 keluarga mendapatkan tempat tinggal sementara",
-      "200 anak mendapatkan akses pendidikan darurat"
-    ],
-    completionDate: "25 Juli 2025"
-  },
-  {
-    id: 2,
-    title: "Donasi Perlengkapan Sekolah",
-    category: "Pendidikan",
-    amount: 3000000,
-    date: "18 Juli 2025",
-    image: "https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-    description: "Program bantuan perlengkapan sekolah untuk anak-anak di daerah terpencil Papua. Donasi digunakan untuk membeli alat tulis, seragam, dan tas sekolah.",
-    details: [
-      "150 set alat tulis lengkap",
-      "75 seragam sekolah baru",
-      "50 tas sekolah dan sepatu",
-      "Buku bacaan dan edukasi"
-    ],
-    location: "Kabupaten Jayawijaya, Papua",
-    beneficiaries: "150 siswa",
-    duration: "1 bulan",
-    admin: "Yayasan Peduli Pendidikan Indonesia",
-    contactPerson: "Sari Dewi - 0813-9876-5432",
-    impact: [
-      "150 siswa mendapatkan perlengkapan sekolah lengkap",
-      "75 siswa mendapatkan seragam baru",
-      "50 siswa mendapatkan tas dan sepatu"
-    ],
-    completionDate: "18 Juli 2025"
-  },
-  {
-    id: 3,
-    title: "Bantuan Medis dan Operasi",
-    category: "Kesehatan",
-    amount: 12000000,
-    date: "10 Juli 2025",
-    image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    description: "Bantuan medis komprehensif untuk pasien tidak mampu yang membutuhkan operasi dan perawatan intensif. Program bekerjasama dengan rumah sakit mitra.",
-    details: [
-      "Biaya operasi jantung untuk 2 pasien",
-      "Pengobatan kanker untuk 5 pasien",
-      "Alat bantu medis dan prostetik",
-      "Rehabilitasi dan terapi pasca-operasi"
-    ],
-    location: "Rumah Sakit Umum Pusat, Jakarta",
-    beneficiaries: "15 pasien",
-    duration: "3 bulan",
-    admin: "Yayasan Peduli Kesehatan Nasional",
-    contactPerson: "dr. Maya Sari - 0811-2233-4455",
-    impact: [
-      "15 pasien mendapatkan perawatan medis gratis",
-      "2 operasi jantung berhasil dilakukan",
-      "5 pasien kanker menjalani kemoterapi"
-    ],
-    completionDate: "10 Juli 2025"
-  },
-  {
-    id: 4,
-    title: "Program Pangan Darurat",
-    category: "Kemanusiaan",
-    amount: 9500000,
-    date: "1 Juli 2025",
-    image: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    description: "Program bantuan pangan darurat untuk keluarga prasejahtera di daerah rawan pangan dengan pendekatan pemberdayaan masyarakat.",
-    details: [
-      "Paket sembako untuk 300 keluarga",
-      "Edukasi gizi dan kesehatan keluarga",
-      "Program kebun gizi masyarakat",
-      "Pelatihan pengolahan pangan sehat"
-    ],
-    location: "Desa Tertinggal, Nusa Tenggara Timur",
-    beneficiaries: "300 keluarga",
-    duration: "2 bulan",
-    admin: "Yayasan Pangan untuk Negeri",
-    contactPerson: "Bambang Sutrisno - 0838-4455-6677",
-    impact: [
-      "1.500 orang mendapatkan akses pangan stabil",
-      "300 keluarga teredukasi gizi seimbang",
-      "50 kebun gizi masyarakat terbentuk"
-    ],
-    completionDate: "1 Juli 2025"
-  },
-  {
-    id: 5,
-    title: "Renovasi Sekolah Darurat",
-    category: "Pendidikan",
-    amount: 6500000,
-    date: "28 Juni 2025",
-    image: "https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=2070&auto=format&fit=crop",
-    description: "Renovasi dan perbaikan fasilitas sekolah darurat di daerah bencana untuk memastikan kelancaran proses belajar mengajar.",
-    details: [
-      "Perbaikan 5 ruang kelas",
-      "Penyediaan meja dan kursi belajar",
-      "Perpustakaan mini dengan 500 buku",
-      "Fasilitas sanitasi dan air bersih"
-    ],
-    location: "Pidie Jaya, Aceh",
-    beneficiaries: "200 siswa",
-    duration: "1.5 bulan",
-    admin: "Yayasan Pendidikan Indonesia",
-    contactPerson: "Rina Marlina - 0821-9988-7766",
-    impact: [
-      "200 siswa kembali mendapatkan akses pendidikan",
-      "5 ruang kelas layak pakai",
-      "Fasilitas belajar yang memadai"
-    ],
-    completionDate: "28 Juni 2025"
-  },
-  {
-    id: 6,
-    title: "Santunan Anak Yatim",
-    category: "Sosial",
-    amount: 5200000,
-    date: "15 Juni 2025",
-    image: "https://images.unsplash.com/photo-1617878227827-8360231f7f03?q=80&w=1256&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    description: "Program santunan untuk anak yatim dan dhuafa berupa bantuan pendidikan, kesehatan, dan kebutuhan sehari-hari.",
-    details: [
-      "Bantuan pendidikan untuk 50 anak",
-      "Paket kesehatan dan nutrisi",
-      "Bantuan tunai untuk kebutuhan pokok",
-      "Kegiatan psikososial dan edukasi"
-    ],
-    location: "Jakarta Selatan, DKI Jakarta",
-    beneficiaries: "50 anak",
-    duration: "1 bulan",
-    admin: "Yayasan Sayang Anak Indonesia",
-    contactPerson: "Ahmad Fauzi - 0858-1234-5678",
-    impact: [
-      "50 anak mendapatkan bantuan pendidikan",
-      "Kesehatan dan nutrisi anak terjaga",
-      "Kebutuhan pokok terpenuhi"
-    ],
-    completionDate: "15 Juni 2025"
-  }
-];
-
-const Laporan: React.FC = () => {
+const Laporan = () => {
+  const [data, setData] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Semua");
   const [sortBy, setSortBy] = useState("terbaru");
-  const [searchResults, setSearchResults] = useState(reportData);
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const res = await fetch("/api/laporan");
+      const result = await res.json();
+      setData(result);
+      setSearchResults(result);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setLoading(false);
+    }
+  };
 
   // Format currency function
   const formatCurrency = (amount: number) => {
@@ -285,11 +144,13 @@ const Laporan: React.FC = () => {
   };
 
   // Get unique categories
-  const categories = ["Semua", ...new Set(reportData.map(report => report.category))];
+  const categories = ["Semua", ...new Set(data.map(report => report.category))];
 
   // Handle search and filter
   useEffect(() => {
-    let filtered = reportData;
+    if (data.length === 0) return;
+
+    let filtered = [...data];
 
     // Filter by search term
     if (searchTerm.trim() !== "") {
@@ -308,17 +169,17 @@ const Laporan: React.FC = () => {
 
     // Sort results
     if (sortBy === "terbaru") {
-      filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      filtered.sort((a, b) => new Date(b.completionDate).getTime() - new Date(a.completionDate).getTime());
     } else if (sortBy === "terlama") {
-      filtered.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      filtered.sort((a, b) => new Date(a.completionDate).getTime() - new Date(b.completionDate).getTime());
     } else if (sortBy === "jumlah-tertinggi") {
-      filtered.sort((a, b) => b.amount - a.amount);
+      filtered.sort((a, b) => b.target - a.target);
     } else if (sortBy === "jumlah-terendah") {
-      filtered.sort((a, b) => a.amount - b.amount);
+      filtered.sort((a, b) => a.target - b.target);
     }
 
     setSearchResults(filtered);
-  }, [searchTerm, selectedCategory, sortBy]);
+  }, [searchTerm, selectedCategory, sortBy, data]);
 
   // Handle search input
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -342,6 +203,33 @@ const Laporan: React.FC = () => {
     setSortBy("terbaru");
   };
 
+  if (loading) {
+    return (
+      <div className="laporan-body">
+        <header className="navbar-container">
+          <nav className="navbar">
+            <Link href="/" className="navbar-logo">
+              Heartify
+            </Link>
+            <div className="navbar-links">
+              <Link href="/beranda">Beranda</Link>
+              <Link href="/about">Tentang Kami</Link>
+              <Link href="/ajukankampanye">Ajukan Kampanye</Link>
+              <Link href="/Profile">Profil</Link>
+            </div>
+            <Link href="/login" className="navbar-login-button">
+              Keluar
+            </Link>
+          </nav>
+        </header>
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p>Memuat laporan...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="laporan-body">
       {/* Navbar */}
@@ -352,8 +240,9 @@ const Laporan: React.FC = () => {
           </Link>
           <div className="navbar-links">
             <Link href="/beranda">Beranda</Link>
-            <Link href="/AboutPage">Tentang Kami</Link>
-            <Link href="/profile">Profil</Link>
+            <Link href="/about">Tentang Kami</Link>
+            <Link href="/ajukankampanye">Ajukan Kampanye</Link>
+            <Link href="/Profile">Profil</Link>
           </div>
           <Link href="/login" className="navbar-login-button">
             Keluar
@@ -439,8 +328,8 @@ const Laporan: React.FC = () => {
           <div className="filter-info">
             <p>
               {searchTerm || selectedCategory !== "Semua" ? 
-                `Ditemukan ${searchResults.length} laporan dari ${reportData.length} program terselesaikan` : 
-                `Menampilkan semua ${reportData.length} laporan program terselesaikan`
+                `Ditemukan ${searchResults.length} laporan dari ${data.length} program terselesaikan` : 
+                `Menampilkan semua ${data.length} laporan program terselesaikan`
               }
             </p>
           </div>
@@ -453,7 +342,7 @@ const Laporan: React.FC = () => {
           {searchResults.length > 0 ? (
             <div className="laporan-detailed-grid">
               {searchResults.map((report) => (
-                <div key={report.id} className="laporan-detailed-card">
+                <div key={report._id} className="laporan-detailed-card">
                   <div className="laporan-image-container">
                     <img
                       src={report.image}
@@ -476,17 +365,19 @@ const Laporan: React.FC = () => {
                         <h3 className="laporan-title">{report.title}</h3>
                         <p className="laporan-location">📍 {report.location}</p>
                       </div>
-                      <p className="laporan-amount">{formatCurrency(report.amount)}</p>
+                      <p className="laporan-amount">{formatCurrency(report.target)}</p>
                     </div>
                     
                     <div className="laporan-meta">
                       <div className="meta-item">
                         <span className="meta-label">Tanggal Selesai:</span>
-                        <span className="meta-value">{report.completionDate}</span>
+                        <span className="meta-value">
+                          {new Date(report.completionDate).toLocaleDateString("id-ID")}
+                        </span>
                       </div>
                       <div className="meta-item">
                         <span className="meta-label">Penerima Manfaat:</span>
-                        <span className="meta-value">{report.beneficiaries}</span>
+                        <span className="meta-value">{report.beneficiary}</span>
                       </div>
                       <div className="meta-item">
                         <span className="meta-label">Durasi Program:</span>
@@ -502,7 +393,7 @@ const Laporan: React.FC = () => {
                       <div className="detail-column">
                         <h4>Detail Penyaluran</h4>
                         <ul>
-                          {report.details.map((detail, index) => (
+                          {report.details.map((detail: string, index: number) => (
                             <li key={index}>{detail}</li>
                           ))}
                         </ul>
@@ -511,7 +402,7 @@ const Laporan: React.FC = () => {
                       <div className="detail-column">
                         <h4>Dampak yang Dicapai</h4>
                         <ul>
-                          {report.impact.map((impact, index) => (
+                          {report.impact.map((impact: string, index: number) => (
                             <li key={index}>{impact}</li>
                           ))}
                         </ul>
@@ -528,10 +419,10 @@ const Laporan: React.FC = () => {
 
                     <div className="laporan-actions">
                       <button 
-                            className="button button-dark-full"
-                            onClick={() => generatePDF(report)}
-                        >
-                            📥 Unduh Laporan Lengkap
+                        className="button button-dark-full"
+                        onClick={() => generatePDF(report)}
+                      >
+                        📥 Unduh Laporan Lengkap
                       </button>
                     </div>
                   </div>

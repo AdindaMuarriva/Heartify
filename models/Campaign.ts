@@ -1,43 +1,38 @@
-import mongoose, { Schema, models } from "mongoose";
+// models/Campaign.ts
+import mongoose from "mongoose";
 
-const CampaignSchema = new Schema(
+const CampaignSchema = new mongoose.Schema(
   {
-    title: {
+    title: { type: String, required: true },
+    category: { type: String, required: true },
+    target: { type: Number, required: true },
+ 
+    collected: { type: Number, default: 0 }, // Jumlah yang sudah terkumpul
+    deadline: { type: String, default: "" }, // Batas waktu campaign
+    
+    image: { type: String, required: true },
+    description: { type: String, required: true },
+
+    location: { type: String, default: "-" },
+    beneficiary: { type: String, required: true },
+    duration: { type: String, default: "-" },
+
+    details: { type: [String], default: [] },
+    impact: { type: [String], default: [] },
+
+    admin: { type: String, default: "Heartify" },
+    contactPerson: { type: String, default: "-" },
+
+    status: {
       type: String,
-      required: true,
+      enum: ["pending", "approved", "completed"],
+      default: "pending",
     },
-    category: {
-      type: String,
-      required: true,
-    },
-    target: {
-      type: Number,
-      required: true,
-    },
-    collected: {
-      type: Number,
-      default: 0,
-    },
-    beneficiary: {
-      type: String,
-      required: true,
-    },
-    deadline: {
-      type: Date,
-      required: true,
-    },
-    image: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
+
+    completionDate: { type: Date },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
-export default models.Campaign || mongoose.model("Campaign", CampaignSchema);
+export default mongoose.models.Campaign ||
+  mongoose.model("Campaign", CampaignSchema);

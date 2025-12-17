@@ -23,7 +23,7 @@ export default function Profile() {
   });
 
   useEffect(() => {
-    const data = localStorage.getItem("registeredUser");
+    const data = localStorage.getItem("user");
     if (!data) {
       router.push("/login");
       return;
@@ -34,7 +34,7 @@ export default function Profile() {
   }, [router]);
 
   const handleLogout = () => {
-    localStorage.removeItem("registeredUser");
+    localStorage.removeItem("user");
     router.push("/login");
   };
 
@@ -42,26 +42,16 @@ export default function Profile() {
     e.preventDefault();
     if (!user) return;
 
-    let finalPass = user.password;
-
-    // Validasi sederhana
-    if (form.newPass && (form.newPass !== form.confirmPass || form.oldPass !== user.password)) {
-      setPopup("Cek kembali password!");
-      setTimeout(() => setPopup(null), 2000);
-      return;
-    }
-
-    if (form.newPass) finalPass = form.newPass;
-
+    // For now only update non-sensitive fields locally (name, email, photo).
     const newUser = {
       ...user,
       name: form.name,
       email: form.email,
-      password: finalPass,
       photo: form.photo,
     };
 
-    localStorage.setItem("registeredUser", JSON.stringify(newUser));
+    // Save updated public user info
+    localStorage.setItem("user", JSON.stringify(newUser));
     setUser(newUser);
     setIsEditing(false);
     setPopup("Berhasil disimpan!");
@@ -103,7 +93,6 @@ export default function Profile() {
       </div>
 
       <div className="profile-container">
-        <h1>Informasi Pribadi</h1>
 
         <div className="profile-dashboard">
           {/* SIDEBAR */}
@@ -135,7 +124,6 @@ export default function Profile() {
           {/* MAIN CONTENT */}
           <main className="profile-main">
             <div className="main-header">
-              <h3>Detail Profile</h3>
               <h3>Informasi Pribadi</h3>
               {!isEditing && (
                 <button className="btn-edit" onClick={() => setIsEditing(true)}>

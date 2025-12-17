@@ -1,0 +1,36 @@
+// app/api/admin/approve/route.ts
+import { NextRequest, NextResponse } from "next/server";
+import connectDB from "@/lib/mongo";
+import Campaign from "@/models/Campaign";
+import { Types } from 'mongoose';
+
+export async function POST(request: NextRequest) {
+    try {
+        const { id } = await request.json();
+
+        if (!id || !Types.ObjectId.isValid(id)) {
+            return NextResponse.json({ success: false, error: "ID campaign tidak valid." }, { status: 400 });
+        }
+
+        await connectDB();
+        
+        const result = await Campaign.findByIdAndUpdate(
+            id,
+            { status: 'approved' },
+            { new: true } 
+        );
+
+        if (!result) {
+            return NextResponse.json({ success: false, error: "Campaign tidak ditemukan." }, { status: 404 });
+        }
+
+        return NextResponse.json({ success: true, message: "Campaign berhasil disetujui." });
+
+    } catch (error: any) {
+        console.error("❌ Error approving campaign:", error);
+        return NextResponse.json(
+            { success: false, error: "Server error saat menyetujui kampanye." },
+            { status: 500 }
+        );
+    }
+}

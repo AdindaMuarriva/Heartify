@@ -766,6 +766,87 @@
   color: #333;
 }
 
+/* detailkampanye.css - tambahkan ini */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  text-align: center;
+}
+
+.loading-spinner {
+  border: 4px solid rgba(139, 28, 21, 0.2);
+  border-top: 4px solid var(--maroon-red);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-id {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+.error-container {
+  text-align: center;
+  padding: 4rem 2rem;
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-container h2 {
+  color: #dc2626;
+  margin-bottom: 1rem;
+}
+
+.error-container p {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.error-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.amount-info {
+  margin-bottom: 1.5rem;
+}
+
+.amount-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.collected {
+  color: var(--maroon-bright);
+}
+
+.progress-container {
+  margin-bottom: 1.5rem;
+}
+
+.progress-text {
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .detail-container {

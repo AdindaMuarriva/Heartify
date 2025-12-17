@@ -37,34 +37,167 @@
 }
 
 .login-scope-wrapper h2 {
-  font-size: 2rem; margin-bottom: 2rem; color: var(--cream-bg);
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: var(--cream-bg);
+  font-weight: 700;
 }
 
 .login-scope-wrapper input {
-  width: 100%; padding: 12px; margin-bottom: 1rem; border-radius: 10px;
-  border: 2px solid var(--red-accent); background: #3E0703;
-  color: var(--cream-bg); outline: none; box-sizing: border-box;
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 1.2rem;
+  border-radius: 10px;
+  border: 2px solid var(--red-accent);
+  background: rgba(62, 7, 3, 0.8);
+  color: var(--cream-bg);
+  outline: none;
+  box-sizing: border-box;
+  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+  transition: all 0.3s ease;
+}
+
+.login-scope-wrapper input:focus {
+  border-color: #b32820;
+  box-shadow: 0 0 0 3px rgba(179, 40, 32, 0.2);
+  background: rgba(62, 7, 3, 0.9);
+}
+
+.login-scope-wrapper input::placeholder {
+  color: rgba(255, 241, 199, 0.6);
+}
+
+.login-scope-wrapper input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .login-scope-wrapper button {
-  width: 100%; padding: 12px; border-radius: 10px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
   background: linear-gradient(135deg, #B32820, #8B1C15);
-  color: var(--cream-bg); border: none; font-weight: 600; cursor: pointer; margin-top: 10px;
+  color: var(--cream-bg);
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+  transition: all 0.3s ease;
+}
+
+.login-scope-wrapper button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(139, 28, 21, 0.4);
+  background: linear-gradient(135deg, #c92e25, #a0211a);
+}
+
+.login-scope-wrapper button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.login-scope-wrapper p {
+  margin-top: 1.5rem;
+  color: var(--cream-bg);
+  font-size: 0.95rem;
 }
 
 .login-scope-wrapper a {
-  color: var(--cream-bg); font-weight: bold; text-decoration: none;
+  color: var(--cream-bg);
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.login-scope-wrapper a:hover {
+  color: #ffd166;
+  text-decoration: underline;
 }
 
 /* Popup Styles */
 .login-scope-wrapper .popup-overlay {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
 }
+
 .login-scope-wrapper .popup-card {
-  background: var(--cream-bg); padding: 20px; border-radius: 12px;
-  text-align: center; color: var(--maroon-dark); min-width: 250px;
+  background: var(--cream-bg);
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  color: var(--maroon-dark);
+  min-width: 300px;
+  max-width: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
 }
-.login-scope-wrapper .popup-ok-btn {
-  background: var(--red-accent); width: auto; padding: 5px 20px; margin-top: 10px;
+
+.login-scope-wrapper .popup-card p {
+  color: var(--maroon-dark);
+  margin-bottom: 20px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.login-scope-wrapper .popup-card button {
+  width: auto;
+  padding: 10px 30px;
+  margin-top: 10px;
+  background: var(--red-accent);
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.login-scope-wrapper .popup-card button:hover {
+  background: #a0211a;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-scope-wrapper .auth-card {
+    padding: 2rem 1.5rem;
+    margin: 0 1rem;
+    border-radius: 16px;
+  }
+  
+  .login-scope-wrapper h2 {
+    font-size: 1.7rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .login-scope-wrapper input,
+  .login-scope-wrapper button {
+    padding: 12px;
+    font-size: 0.95rem;
+  }
 }

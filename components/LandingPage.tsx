@@ -18,7 +18,7 @@ const LandingPage: React.FC = () => {
           <div className="navbar-links">
             <a href={isLoggedIn ? "/" : "/register"}>Beranda</a>
             <a href={isLoggedIn ? "/AboutPage" : "/register"}>Tentang</a>
-            <a href="/ajukankampanye">Ajukan Kampanye</a>
+            <a href={isLoggedIn ?"/ajukankampanye" : "/register"}>Ajukan Kampanye</a>
             <a href={isLoggedIn ? "/profile" : "/register"}>Profil</a>
           </div>
           <div className="navbar-buttons">

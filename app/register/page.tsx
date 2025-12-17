@@ -1,9 +1,12 @@
+// app/register/page.tsx - UPDATED
 "use client";
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import "./register.css"; // CSS Khusus Register
+import "./register.css";
+
+type Role = "user" | "admin";
 
 export default function Register() {
   const router = useRouter();
@@ -11,157 +14,292 @@ export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const [role, setRole] = useState<"user" | "admin">("user");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState<Role>("user");
   const [adminCode, setAdminCode] = useState("");
+  const [popupMessage, setPopupMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [errorDetails, setErrorDetails] = useState<string | null>(null);
 
-  const [popup, setPopup] = useState<string | null>(null);
-
-  const handleRegister = (event: FormEvent<HTMLFormElement>) => {
+  const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
+    setErrorDetails(null);
 
-    if (!name || !email || !password) {
-      setPopup("Semua kolom wajib diisi");
+    // Validasi client-side
+    if (!name || !email || !password || !confirmPassword) {
+      setPopupMessage("Semua kolom wajib diisi");
+      setLoading(false);
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setPopupMessage("Password dan konfirmasi password tidak cocok");
+      setLoading(false);
+      return;
+    }
+
+    if (password.length < 6) {
+      setPopupMessage("Password minimal 6 karakter");
+      setLoading(false);
       return;
     }
 
     if (role === "admin" && adminCode !== "ADMIN123") {
-      setPopup("Kode admin salah");
+      setPopupMessage("Kode admin salah");
+      setLoading(false);
       return;
     }
 
-    const newUser = {
-      name,
-      email,
-      password,
-      role,
-    };
+    try {
+      console.log("Sending register request...");
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          role,
+          adminCode: role === "admin" ? adminCode : undefined
+        })
+      });
 
-    localStorage.setItem("registeredUser", JSON.stringify(newUser));
-    setPopup("Registrasi berhasil");
+      const data = await response.json();
+      console.log("Register response:", data);
 
-    setTimeout(() => {
-      router.push("/login");
-    }, 1500);
-    const user = { name, email, password };
-    localStorage.setItem("registeredUser", JSON.stringify(user));
+      if (data.success) {
+        // Simpan user data untuk auto-login atau reference (tanpa password)
+        const userData = {
+          _id: data.user._id,
+          name: data.user.name,
+          email: data.user.email,
+          role: data.user.role
+        };
 
-    setPopupMessage("Register berhasil!");
-    setTimeout(() => {
-      router.push("/login");
-    }, 1500);
+        localStorage.setItem("user", JSON.stringify(userData));
+        
+        setPopupMessage("🎉 Registrasi berhasil! Anda akan dialihkan ke login.");
+        setErrorDetails(null);
+
+        setTimeout(() => {
+          router.push("/login");
+        }, 2000);
+      } else {
+        setPopupMessage(`❌ ${data.message}`);
+        setErrorDetails(data.error || null);
+      }
+    } catch (error: any) {
+      console.error("Register error:", error);
+      setPopupMessage("⚠️ Terjadi kesalahan. Silakan coba lagi.");
+      setErrorDetails(error.message);
+      
+      // Fallback registration via localStorage removed for security
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Removed insecure fallback registration that stored plain password in localStorage
+
+  // Clear form
+  const clearForm = () => {
+    setName("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+    setAdminCode("");
+    setRole("user");
+  };
+
+  // Test dengan data dummy
+  const fillTestData = (type: "user" | "admin") => {
+    if (type === "user") {
+      setName("User Test");
+      setEmail("user.test@example.com");
+      setPassword("password123");
+      setConfirmPassword("password123");
+      setRole("user");
+    } else {
+      setName("Admin Test");
+      setEmail("admin.test@example.com");
+      setPassword("admin123");
+      setConfirmPassword("admin123");
+      setRole("admin");
+      setAdminCode("ADMIN123");
+    }
   };
 
   return (
-    <div className="register-scope-wrapper">
-      <div className="auth-card">
-        <h2>Create Account</h2>
-        <form onSubmit={handleRegister}>
-          <input
-            type="text"
-            placeholder="Full Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            type="email"
-            placeholder="Email Address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Create Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-
-          <button type="submit" disabled={!name || !email || !password}>
-            Register
-          </button>
-        </form>
-
-        <p>
-          Already have an account? <Link href="/login">Login</Link>
-        </p>
-      </div>
-
-      {popupMessage && (
-        <div className="popup-overlay">
-          <div className="popup-card">
-            <p>{popupMessage}</p>
-            <button className="popup-ok-btn" onClick={() => setPopupMessage(null)}>
-              OK
-            </button>
-          </div>
-        </div>
-      )}
-    const user = { name, email, password };
-    localStorage.setItem("registeredUser", JSON.stringify(user));
-    setPopup("Registrasi Berhasil!");
-    setTimeout(() => router.push("/login"), 1500);
-  };
-
-  return (
-    <div className="login-scope-wrapper">
+    <div className="register-wrapper">
       <div className="auth-card">
         <h2>Register</h2>
+
+        {/* Test buttons */}
+        <div style={{ 
+          display: "flex", 
+          gap: "10px", 
+          marginBottom: "15px",
+          justifyContent: "center" 
+        }}>
+          <button
+            type="button"
+            onClick={() => fillTestData("user")}
+            style={{
+              padding: "5px 10px",
+              background: "#3e0703",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              fontSize: "12px",
+              cursor: "pointer"
+            }}
+          >
+            Fill User Test
+          </button>
+          <button
+            type="button"
+            onClick={() => fillTestData("admin")}
+            style={{
+              padding: "5px 10px",
+              background: "#8b1c15",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              fontSize: "12px",
+              cursor: "pointer"
+            }}
+          >
+            Fill Admin Test
+          </button>
+        </div>
 
         <form onSubmit={handleRegister}>
           <input
             type="text"
             placeholder="Nama Lengkap"
             value={name}
-            onChange={(event) => setName(event.target.value)}
+            onChange={(e) => setName(e.target.value)}
+            required
+            disabled={loading}
           />
 
           <input
             type="email"
             placeholder="Email"
             value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            disabled={loading}
           />
 
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Password (minimal 6 karakter)"
             value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            minLength={6}
+            disabled={loading}
           />
 
-          {/* PILIH ROLE */}
-          <select
-            value={role}
-            onChange={(event) =>
-              setRole(event.target.value as "user" | "admin")
-            }
-          >
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-          </select>
+          <input
+            type="password"
+            placeholder="Konfirmasi Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            minLength={6}
+            disabled={loading}
+          />
 
-          {/* KODE ADMIN */}
+          {/* ROLE SELECT */}
+          <div className={`role-select ${role}`}>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value as Role)}
+              disabled={loading}
+            >
+              <option value="user">👤 User</option>
+              <option value="admin">👑 Admin</option>
+            </select>
+
+            <span className="role-badge">
+              {role === "admin" ? "ADMIN" : "USER"}
+            </span>
+          </div>
+
+          {/* ADMIN CODE */}
           {role === "admin" && (
             <input
               type="password"
-              placeholder="Kode Admin"
+              placeholder="Kode Admin (ADMIN123)"
               value={adminCode}
-              onChange={(event) => setAdminCode(event.target.value)}
+              onChange={(e) => setAdminCode(e.target.value)}
+              disabled={loading}
             />
           )}
 
-          <button type="submit">Daftar</button>
+          <button 
+            type="submit" 
+            disabled={loading}
+            style={{ 
+              background: loading ? "#ccc" : "#3e0703",
+              cursor: loading ? "not-allowed" : "pointer"
+            }}
+          >
+            {loading ? "⏳ Mendaftarkan..." : "📝 Daftar"}
+          </button>
         </form>
-
+            <br></br>
         <p>
-          Sudah punya akun? <Link href="/login">Login</Link>
+          Sudah punya akun?
+          <Link href="/login"> Login</Link>
         </p>
+        
+        <div style={{ 
+          fontSize: "12px", 
+          color: "#666", 
+          marginTop: "10px",
+          textAlign: "center",
+          padding: "10px",
+          borderRadius: "8px"
+        }}>
+        </div>
       </div>
 
-      {popup && (
-        <div className="popup-overlay">
-          <div className="popup-card">
-            <p>{popup}</p>
+      {/* POPUP */}
+      {popupMessage && (
+        <div className="popup-box">
+          <div className="card" style={{ maxWidth: "400px" }}>
+            <p>{popupMessage}</p>
+            {errorDetails && (
+              <div style={{ 
+                fontSize: "11px", 
+                color: "#666", 
+                marginTop: "10px",
+                padding: "10px",
+                backgroundColor: "#f5f5f5",
+                borderRadius: "5px",
+                fontFamily: "monospace",
+                textAlign: "left"
+              }}>
+                <strong>Error details:</strong><br/>
+                {errorDetails}
+              </div>
+            )}
+            <div style={{ display: "flex", gap: "10px", marginTop: "15px" }}>
+              <button onClick={() => setPopupMessage(null)}>
+                OK
+              </button>
+              {popupMessage.includes("berhasil") && (
+                <button onClick={clearForm} style={{ background: "#6b7280" }}>
+                  Clear Form
+                </button>
+              )}
+            </div>
           </div>
         </div>
       )}

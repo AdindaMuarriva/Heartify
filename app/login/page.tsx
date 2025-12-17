@@ -1,3 +1,4 @@
+// app/login/page.tsx
 "use client";
 
 import { useState, type FormEvent } from "react";
@@ -11,40 +12,55 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
 
-    const storedUser = localStorage.getItem("registeredUser");
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+      });
 
-    if (!storedUser) {
-      setPopupMessage("Akun belum terdaftar");
-      return;
-    }
+      const data = await response.json();
 
-    const user = JSON.parse(storedUser);
+      if (data.success) {
+        // Simpan user data (tanpa password)
+        localStorage.setItem("user", JSON.stringify(data.user));
 
-    if (user.email === email && user.password === password) {
-      localStorage.setItem("loggedInUser", JSON.stringify(user));
+        setPopupMessage("Login berhasil");
 
-      setPopupMessage("Login berhasil");
-
-      setTimeout(() => {
-        if (user.role === "admin") {
-          router.push("/admin_dashboard");
-        } else {
-          router.push("/beranda");
-        }
-      }, 1500);
-    } else {
-      setPopupMessage("Email atau password salah");
+        setTimeout(() => {
+          if (data.user.role === "admin") {
+            router.push("/admin/dashboard");
+          } else {
+            router.push("/beranda");
+          }
+        }, 1500);
+      } else {
+        setPopupMessage(data.message || "Email atau password salah");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setPopupMessage("Terjadi kesalahan. Silakan coba lagi.");
+      
+      // Fallback to local auth was removed for security; show error only
+    } finally {
+      setLoading(false);
     }
   };
+
+  // Removed insecure localStorage fallback authentication
 
   return (
     <div className="login-scope-wrapper">
       <div className="auth-card">
-        <h2>Login</h2>
+        <h2>Masuk ke Heartify</h2>
 
         <form onSubmit={handleSubmit}>
           <input
@@ -52,6 +68,8 @@ export default function Login() {
             placeholder="Email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
+            required
+            disabled={loading}
           />
 
           <input
@@ -59,9 +77,13 @@ export default function Login() {
             placeholder="Password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
+            required
+            disabled={loading}
           />
 
-          <button type="submit">Login</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Memproses..." : "Login"}
+          </button>
         </form>
 
         <p>
