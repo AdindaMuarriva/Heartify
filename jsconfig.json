@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    // Mendefinisikan alias: setiap kali kita menggunakan @/utils, 
+    // itu merujuk ke folder 'utils' di root proyek.
+    "paths": {
+      "@/utils/*": ["utils/*"] 
+    }
+  },
+  "include": ["**/*.js", "**/*.jsx", "**/*.ts", "**/*.tsx"]
+}

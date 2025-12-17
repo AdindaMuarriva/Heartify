@@ -79,23 +79,8 @@
   display: inline-block; 
 }
 
-.navbar-links a::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  left: 0;
-  bottom: 0;
-  background-color: var(--maroon-red);
-  transition: width 0.3s ease;
-}
-
-.navbar-links a:hover {
+.navbar-links a:hover, .navbar-links .active-link {
   color: var(--maroon-red);
-}
-
-.navbar-links a:hover::after {
-  width: 100%; 
 }
 
 .navbar-login-button {
@@ -217,23 +202,16 @@
   color: var(--cream);
 }
 
-/* === Section Wrapper === */
-.section-wrapper {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
 /* === Campaign Section === */
 .campaign-section {
-  padding: 100px 0;
+  padding: 80px 0;
   background: var(--cream);
   width: 100%;
 }
 
 .campaign-section .section-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
@@ -247,37 +225,28 @@
   border-radius: 25px;
   font-weight: 600;
   font-size: 0.95rem;
-  display: inline-block;
-  margin-bottom: 1.5rem;
+  display: block;          
+  width: fit-content;      
+  margin: 0 auto 1.5rem;  
   letter-spacing: 0.5px;
+  text-align: center;      
 }
+
+
 
 .section-title-dark {
   font-size: 2.3rem;
   color: var(--maroon-dark);
   font-weight: 700;
   margin: 0;
+  text-align: center;
   line-height: 1.2;
 }
-/* === Campaign Section === */
-.campaign-section {
-  padding: 80px 0;
-  background: var(--cream);
-  width: 100%;
-}
 
-.campaign-section .section-header {
-  text-align: center;
-  margin-bottom: 3rem;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 20px;
-}
-
+/* === GRID KAMPANYE === */
 .campaign-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 cards per baris */
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
@@ -286,104 +255,108 @@
 
 .campaign-card {
   background-color: var(--white);
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
   transition: all 0.3s ease;
   height: 100%;
-}
-
-.campaign-card .progress-bar {
-  background: #eee;
-  border-radius: 4px;
-  height: 8px;
-  margin: 10px 0;
-  overflow: hidden;
-}
-
-.campaign-card .progress {
-  background: var(--maroon-dark);
-  height: 100%;
-  border-radius: 4px;
-  transition: width 0.3s ease;
+  border: 1px solid rgba(0,0,0,0.03);
 }
 
 .campaign-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(62, 7, 3, 0.15);
 }
 
 .campaign-image {
   width: 100%;
-  height: 150px; /* Diperkecil lagi */
+  height: 200px;
   object-fit: cover;
+  background-color: #eee;
 }
 
 .campaign-card-content {
-  padding: 1.25rem; /* Diperkecil lagi */
+  padding: 1.5rem;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
 }
 
-.campaign-category-pendidikan,
-.campaign-category-kemanusiaan,
-.campaign-category-kesehatan,
-.campaign-category-edukasi {
+/* === BADGE KATEGORI (SATU CLASS UNTUK SEMUA) === */
+.campaign-category-badge {
   display: inline-block;
   align-self: flex-start;
-  padding: 4px 10px; /* Diperkecil lagi */
-  border-radius: 5px;
-  font-size: 0.75rem; /* Diperkecil lagi */
-  font-weight: 600;
-  margin-bottom: 0.75rem;
-  background-color: var(--maroon-red);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background-color: var(--maroon-red); /* Merah Hati */
   color: var(--white);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  box-shadow: 0 2px 5px rgba(139, 28, 21, 0.2);
 }
 
 .campaign-title {
-  font-size: 1.1rem; /* Diperkecil lagi */
+  font-size: 1.2rem;
   font-weight: 700;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
   color: var(--maroon-dark);
-  line-height: 1.3;
-  flex-grow: 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .campaign-details {
-  margin-bottom: 1rem; /* Diperkecil lagi */
-  font-size: 0.85rem; /* Diperkecil lagi */
+  margin-bottom: 1.2rem;
+  font-size: 0.9rem;
   color: var(--gray);
   flex-grow: 1;
 }
 
 .campaign-details p {
-  margin: 4px 0; /* Diperkecil lagi */
+  margin: 8px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1px 0;
 }
 
 .campaign-details span {
   font-weight: 700;
   color: var(--maroon-dark);
-  font-size: 0.85rem; /* Diperkecil lagi */
+}
+
+/* Progress Bar */
+.progress-container {
+  background: #eee;
+  border-radius: 10px;
+  height: 10px;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.progress-fill {
+  background: var(--maroon-dark);
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s ease-in-out;
 }
 
 .campaign-see-more {
   text-align: center;
   color: var(--maroon-red);
   text-decoration: none;
-  font-weight: 600;
-  font-size: 0.85rem; /* Diperkecil lagi */
-  margin-top: 0.75rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-top: auto;
+  padding: 10px 0;
+  border-top: 1px solid #eee;
   transition: color 0.3s ease;
-  padding: 4px 0;
 }
 
 .campaign-see-more:hover {
@@ -391,125 +364,16 @@
   text-decoration: underline;
 }
 
-/* === Search Bar Styles === */
-.search-bar-container {
-  max-width: 700px;
-  margin: 0 auto 3rem auto;
-  padding: 0 20px;
-}
-
-.search-wrapper {
-  position: relative;
-  width: 100%;
-}
-
-.search-bar {
-  width: 100%;
-  padding: 16px 50px 16px 20px;
-  border-radius: 12px;
-  border: 2px solid var(--maroon-mid);
-  font-size: 1rem;
-  font-family: "Poppins", sans-serif;
-  transition: all 0.3s ease;
-  background: var(--white);
-  color: black;
-}
-
-.search-bar:focus {
-  outline: none;
-  border-color: var(--maroon-red);
-  box-shadow: 0 0 0 4px rgba(139, 28, 21, 0.1);
-  transform: translateY(-2px);
-  color: black;
-}
-
-.search-bar::placeholder {
-  color: var(--gray);
-  opacity: 0.7;
-}
-
-.clear-search-btn {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(139, 28, 21, 0.1);
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  color: var(--maroon-red);
-  padding: 6px;
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  font-weight: bold;
-}
-
-.clear-search-btn:hover {
-  background-color: var(--maroon-red);
-  color: var(--white);
-  transform: translateY(-50%) scale(1.1);
-}
-
-.search-info {
-  text-align: center;
-  margin-top: 1rem;
-  color: var(--maroon-dark);
-  font-weight: 500;
-}
-
-.search-info p {
-  margin: 0;
-  font-size: 0.95rem;
-  opacity: 0.8;
-}
-
-/* === No Results Styles === */
-.no-results {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 4rem 2rem;
-  background: var(--white);
-  border-radius: 16px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-}
-
-.no-results h3 {
-  font-size: 1.5rem;
-  color: var(--maroon-dark);
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-
-.no-results p {
-  color: var(--gray);
-  margin-bottom: 2rem;
-  font-size: 1rem;
-}
-
-/* === Laporan Donasi Section === */
+/* === Laporan Grid (Mirip Campaign) === */
 .report-section {
   padding: 80px 0;
   background-color: #fdf8e9;
   width: 100%;
 }
 
-.report-section .section-header {
-  text-align: center;
-  margin-bottom: 3rem;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 20px;
-}
-
 .report-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 cards per baris */
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   max-width: 1200px;
   margin: 0 auto;
@@ -523,136 +387,83 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
-  transition: all 0.3s ease;
   height: 100%;
-}
-
-.report-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
 .report-image {
   width: 100%;
-  height: 150px; /* Diperkecil */
+  height: 150px;
   object-fit: cover;
 }
 
 .report-card-content {
-  padding: 1.25rem; /* Diperkecil */
-  flex-grow: 1;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
-}
-
-.report-category-lainnya,
-.report-category-pendidikan,
-.report-category-kemanusiaan,
-.report-category-kesehatan {
-  display: inline-block;
-  align-self: flex-start;
-  padding: 4px 10px; /* Diperkecil */
-  border-radius: 5px;
-  font-size: 0.75rem; /* Diperkecil */
-  font-weight: 600;
-  margin-bottom: 0.75rem;
-  color: var(--white);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  flex-grow: 1;
 }
 
 .report-title {
-  font-size: 1.1rem; /* Diperkecil */
+  font-size: 1.1rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
   color: var(--maroon-dark);
-  line-height: 1.3;
 }
 
 .report-info {
-  font-size: 1rem; /* Diperkecil */
+  font-size: 0.9rem;
   font-weight: 700;
   color: var(--maroon-dark);
   margin-bottom: 0.25rem;
 }
 
 .report-date {
-  font-size: 0.8rem; /* Diperkecil */
+  font-size: 0.8rem;
   color: var(--gray);
   margin-bottom: 1rem;
-  opacity: 0.8;
 }
 
-/* === Responsive Design === */
-@media (max-width: 1024px) {
-  .hero-title-beranda {
-    font-size: 2.8rem;
-  }
+/* Search Bar */
+.search-bar-container {
+  max-width: 700px;
+  margin: 0 auto 3rem auto;
+  padding: 0 20px;
+}
 
-  .campaign-grid,
-  .report-grid {
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 1.25rem;
-  }
-  
-  .section-title-dark {
-    font-size: 2.4rem;
-  }
+.search-wrapper { position: relative; width: 100%; }
+
+.search-bar {
+  width: 100%;
+  padding: 16px 50px 16px 20px;
+  border-radius: 12px;
+  border: 2px solid var(--maroon-mid);
+  font-size: 1rem;
+  background: var(--white);
+  color: black;
+}
+
+.search-bar:focus { outline: none; border-color: var(--maroon-red); }
+
+.clear-search-btn {
+  position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
+  background: rgba(139, 28, 21, 0.1); border: none; cursor: pointer; color: var(--maroon-red);
+  padding: 6px; border-radius: 50%; width: 28px; height: 28px; font-weight: bold;
+}
+
+.search-info { text-align: center; margin-top: 1rem; color: var(--maroon-dark); }
+.no-results { grid-column: 1/-1; text-align: center; padding: 4rem; background: white; border-radius: 16px; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .hero-title-beranda { font-size: 2.8rem; }
+  .campaign-grid, .report-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
-  .navbar {
-    padding: 1rem;
-    flex-wrap: wrap;
-  }
-  
-  .navbar-links {
-    order: 3;
-    width: 100%;
-    justify-content: center;
-    margin-top: 1rem;
-    gap: 1.5rem;
-  }
-  
-  .hero-section-beranda {
-    padding: 120px 20px;
-    min-height: 70vh;
-  }
-  
-  .hero-title-beranda {
-    font-size: 2.2rem;
-  }
-  
-  .hero-subtitle-beranda {
-    font-size: 1.1rem;
-  }
-  
-  .section-title-dark {
-    font-size: 2rem;
-  }
-
-  .campaign-section,
-  .report-section {
-    padding: 60px 0;
-  }
-  
-  .campaign-grid,
-  .report-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    padding: 0 15px;
-  }
-  
-  .campaign-card-content,
-  .report-card-content {
-    padding: 1.5rem;
-  }
-  
-  .button {
-    padding: 12px 24px;
-    font-size: 1rem;
-    min-width: 160px;
-  }
+  .navbar { flex-wrap: wrap; padding: 1rem; }
+  .navbar-links { width: 100%; justify-content: center; margin-top: 1rem; }
+  .campaign-grid, .report-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
 }
 
 /* Footer */

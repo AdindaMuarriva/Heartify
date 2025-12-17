@@ -1,4 +1,4 @@
-// app/admin/dashboard/page.tsx - Fully Styled and Integrated
+// app/admin/dashboard/page.tsx 
 "use client";
 
 import { useState, useEffect } from "react";
@@ -69,7 +69,7 @@ export default function AdminDashboard() {
     setLoading(true);
     
     try {
-      // Fetch data dari 5 API sekaligus
+      // Fetch data dari 5 API 
       const [campaignsRes, donationsRes, pendingRes, usersCountRes, allUsersRes] = await Promise.all([
         fetch("/api/campaign/all"), 
         fetch("/api/donations"),    

@@ -1,3 +1,4 @@
+// app/Profile/page.tsx
 "use client";
 
 import { useState, useEffect, useRef } from "react";
@@ -5,17 +6,38 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import "./profile.css";
 
+interface UserData {
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
+  phone: string | null;
+  bio: string | null;
+  photo: string | null;
+}
+
 export default function Profile() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<UserData | null>(null);
+  const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
-  const [popup, setPopup] = useState<string | null>(null);
+  const [notifications, setNotifications] = useState<any[]>([]);
+  const [activeTab, setActiveTab] = useState("info");
+
+  // State untuk menampung data statistik dari database
+  const [stats, setStats] = useState({
+    totalDonated: 0,
+    campaignCount: 0,
+    points: 0
+  });
 
   const [form, setForm] = useState({
     name: "",
     email: "",
+    phone: "",
+    bio: "",
     photo: "",
     oldPass: "",
     newPass: "",
@@ -23,182 +45,178 @@ export default function Profile() {
   });
 
   useEffect(() => {
-    const data = localStorage.getItem("user");
-    if (!data) {
+    const storedData = localStorage.getItem("user");
+    if (!storedData) {
       router.push("/login");
       return;
     }
-    const parsed = JSON.parse(data);
-    setUser(parsed);
-    setForm((p) => ({ ...p, name: parsed.name, email: parsed.email, photo: parsed.photo || "" }));
+    
+    const { _id, role } = JSON.parse(storedData);
+
+    if (role === "admin") {
+      router.push("/admin");
+      return;
+    }
+
+    const fetchProfile = async () => {
+        try {
+            // 1. Ambil Data Dasar Profil
+            const res = await fetch("/api/profile/me", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userId: _id }),
+            });
+            const result = await res.json();
+
+            if (res.ok && result.success) {
+                const fetchedUser: UserData = result.user;
+                setUser(fetchedUser);
+                setForm({
+                    name: fetchedUser.name,
+                    email: fetchedUser.email,
+                    phone: fetchedUser.phone || "",
+                    bio: fetchedUser.bio || "",
+                    photo: fetchedUser.photo || "",
+                    oldPass: "", newPass: "", confirmPass: ""
+                });
+
+                // 2. Ambil Statistik Donasi yang sudah VERIFIED
+                const statsRes = await fetch("/api/profile/stats", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ userId: _id }),
+                });
+                const statsData = await statsRes.json();
+                
+                if (statsData.success) {
+                    setStats({
+                        totalDonated: statsData.totalDonated,
+                        campaignCount: statsData.campaignCount,
+                        points: statsData.points
+                    });
+                }
+            }
+
+            const allNotifs = JSON.parse(localStorage.getItem("userNotifications") || "[]");
+            setNotifications(allNotifs.filter((n: any) => n.email === result.user?.email));
+
+        } catch (error) {
+            console.error("Error loading profile data:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+    
+    fetchProfile();
   }, [router]);
 
+  // Handler Logout
   const handleLogout = () => {
     localStorage.removeItem("user");
     router.push("/login");
   };
 
-  const handleSave = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!user) return;
-
-    // For now only update non-sensitive fields locally (name, email, photo).
-    const newUser = {
-      ...user,
-      name: form.name,
-      email: form.email,
-      photo: form.photo,
-    };
-
-    // Save updated public user info
-    localStorage.setItem("user", JSON.stringify(newUser));
-    setUser(newUser);
-    setIsEditing(false);
-    setPopup("Berhasil disimpan!");
-    setTimeout(() => setPopup(null), 2000);
-  };
-
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.[0]) {
-      const reader = new FileReader();
-      reader.onloadend = () => setForm((p) => ({ ...p, photo: reader.result as string }));
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
-
-  if (!user) return <div className="loading-screen">Loading...</div>;
+  if (loading || !user) return <div className="loading-screen">Memuat Profil...</div>;
+  
+  const avatarUrl = form.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=8b1c15&color=fff`;
 
   return (
     <div className="profile-page">
-      {/* Navbar Konsisten */}
       <div className="navbar-container">
         <div className="navbar">
-          <Link href="/beranda" className="navbar-logo">
-            Heartify
-          </Link>
-
+          <Link href="/beranda" className="navbar-logo">Heartify</Link>
           <div className="navbar-links">
             <Link href="/beranda">Beranda</Link>
             <Link href="/about">Tentang Kami</Link>
             <Link href="/ajukankampanye">Ajukan Kampanye</Link>
-            <Link href="/profile" className="active">
-              Profile
-            </Link>
+            <Link href="/Profile" className="active">Profile</Link>
           </div>
-
-          <button onClick={handleLogout} className="navbar-login-button">
-            Keluar
-          </button>
+          <button onClick={handleLogout} className="navbar-login-button">Keluar</button>
         </div>
       </div>
 
-      <div className="profile-container">
-
-        <div className="profile-dashboard">
-          {/* SIDEBAR */}
-          <aside className="profile-sidebar">
-            <div className="photo-wrapper" onClick={() => isEditing && fileInputRef.current?.click()}>
-              <img
-                src={
-                  form.photo ||
-                  'https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=8b1c15&color=fff'
-                }
-                className="avatar"
-                alt="avatar"
-              />
-              {isEditing && <div className="photo-overlay">📸</div>}
-            </div>
-
-            <input type="file" ref={fileInputRef} hidden onChange={handleFile} />
-
-            <div className="user-info">
-              <h2>{user.name}</h2>
-              <p>Donatur Aktif</p>
-            </div>
-
-            <button className="btn-logout-side" onClick={handleLogout}>
-              Log Out
-            </button>
-          </aside>
-
-          {/* MAIN CONTENT */}
-          <main className="profile-main">
-            <div className="main-header">
-              <h3>Informasi Pribadi</h3>
-              {!isEditing && (
-                <button className="btn-edit" onClick={() => setIsEditing(true)}>
-                  Edit Profil
-                </button>
-              )}
-            </div>
-
-            <form className="profile-form" onSubmit={handleSave}>
-              <div className="form-group">
-                <label>Nama Lengkap</label>
-                <input
-                  type="text"
-                  value={form.name}
-                  disabled={!isEditing}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                />
+      <div className="profile-wrapper">
+        <div className="profile-card">
+          {/* Sidebar */}
+          <div className="profile-sidebar-panel">
+            <div className="profile-identity">
+              <div className="photo-container">
+                <img src={avatarUrl} className="avatar-img" alt="avatar"/>
               </div>
+              <h2 className="user-name">{user.name}</h2>
+              <p className="user-role">Donatur Heartify</p>
+            </div>
 
-              <div className="form-group">
-                <label>Email</label>
-                <input
-                  type="email"
-                  value={form.email}
-                  disabled={!isEditing}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                />
-              </div>
+            <nav className="profile-nav">
+              <button className={`nav-btn ${activeTab === "info" ? "active" : ""}`} onClick={() => setActiveTab("info")}>
+                <span className="icon">👤</span> Dashboard
+              </button>
+              <button className={`nav-btn ${activeTab === "notifications" ? "active" : ""}`} onClick={() => setActiveTab("notifications")}>
+                <span className="icon">🔔</span> Notifikasi
+              </button>
+            </nav>
+            <div className="sidebar-footer">
+              <button className="btn-logout-link" onClick={handleLogout}>Keluar Akun</button>
+            </div>
+          </div>
+          
+          {/* Main Content */}
+          <main className="profile-content-panel"> 
+            {activeTab === "info" && (
+                <div className="stats-row">
+                    <div className="stat-card">
+                      <div className="stat-icon gold">🤲</div>
+                      <div className="stat-info">
+                        <span>KAMPANYE DIDUKUNG</span>
+                        <strong>{stats.campaignCount} Program</strong>
+                      </div>
+                    </div>
+                    <div className="stat-card">
+                      <div className="stat-icon blue">✨</div>
+                      <div className="stat-info">
+                        <span>POIN KEBAIKAN</span>
+                        <strong>{stats.points} Poin</strong>
+                      </div>
+                    </div>
+                     <div className="stat-card">
+                      <div className="stat-icon red">💸</div>
+                      <div className="stat-info">
+                        <span>JUMLAH DONASI</span>
+                        <strong>
+                            {new Intl.NumberFormat("id-ID", {
+                                style: "currency",
+                                currency: "IDR",
+                                minimumFractionDigits: 0
+                            }).format(stats.totalDonated)}
+                        </strong>
+                      </div>
+                    </div>
+                </div>
+            )}
 
-              {isEditing && (
-                <div className="password-zone">
-                  <h4>Ubah Password (Opsional)</h4>
-                  <input
-                    type="password"
-                    placeholder="Password Lama"
-                    onChange={(e) => setForm({ ...form, oldPass: e.target.value })}
-                  />
-                  <div className="row">
-                    <input
-                      type="password"
-                      placeholder="Password Baru"
-                      onChange={(e) => setForm({ ...form, newPass: e.target.value })}
-                    />
-                    <input
-                      type="password"
-                      placeholder="Konfirmasi"
-                      onChange={(e) => setForm({ ...form, confirmPass: e.target.value })}
-                    />
+            {/* Form Informasi Pribadi */}
+            {activeTab === "info" && (
+              <div className="content-fade-in">
+                <div className="content-header">
+                  <h3>Informasi Pribadi</h3>
+                </div>
+                <div className="profile-form">
+                  <div className="form-grid-layout">
+                    <div className="form-group">
+                      <label>Nama Lengkap</label>
+                      <input type="text" className="form-input" value={user.name} disabled />
+                    </div>
+                    <div className="form-group">
+                      <label>Email Address</label>
+                      <input type="email" className="form-input" value={user.email} disabled />
+                    </div>
                   </div>
                 </div>
-              )}
-
-              {isEditing && (
-                <div className="form-actions">
-                  <button type="submit" className="btn-save">
-                    Simpan Perubahan
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-cancel"
-                    onClick={() => {
-                      setIsEditing(false);
-                      setForm((prev) => ({ ...prev, name: user.name, photo: user.photo || "" }));
-                    }}
-                  >
-                    Batal
-                  </button>
-                </div>
-              )}
-            </form>
+              </div>
+            )}
           </main>
         </div>
       </div>
-
-      {popup && <div className="toast">{popup}</div>}
     </div>
   );
 }

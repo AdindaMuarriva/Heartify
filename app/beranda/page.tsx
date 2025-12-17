@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import "./beranda.css";
 
 interface Campaign {
@@ -14,9 +15,17 @@ interface Campaign {
 }
 
 const Beranda = () => {
+  const router = useRouter();
+
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [reports, setReports] = useState<Campaign[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+
+  /* ================= HANDLERS ================= */
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    router.push("/login"); 
+  };
 
   /* ================= FETCH DATA ================= */
 useEffect(() => {
@@ -25,7 +34,6 @@ useEffect(() => {
       const res = await fetch("/api/campaign");
       const result = await res.json();
 
-      // Ambil array campaign dari properti `data`
       const campaigns: Campaign[] = Array.isArray(result.data)
         ? result.data
         : [];
@@ -69,35 +77,23 @@ useEffect(() => {
       {/* Navbar */}
       <header className="navbar-container">
         <nav className="navbar">
-          <a href="/" className="navbar-logo">
-            Heartify
-          </a>
+          <Link href="/beranda" className="navbar-logo">Heartify</Link>
           <div className="navbar-links">
             <a href="/beranda">Beranda</a>
             <a href="/about">Tentang Kami</a>
             <a href="/ajukankampanye" >Ajukan Kampanye</a>
             <a href="/Profile">Profile</a>
           </div>
-          <a href="/login" className="navbar-login-button">
-            Keluar
-          </a>
+          <button onClick={handleLogout} className="navbar-login-button">Keluar</button>
         </nav>
       </header>
 
-      {/* Hero Section */}
+      {/* === HERO SECTION === */}
       <section className="hero-section-beranda">
         <div className="hero-content">
-          <h1 className="hero-title-beranda">
-            Extend Your Hand, <br />
-            Ignite Their Hope
-          </h1>
-          <p className="hero-subtitle-beranda">
-            Setiap kebaikan yang Anda bagikan akan menjadi secercah cahaya bagi
-            mereka yang membutuhkan. Mari bersama wujudkan perubahan nyata.
-          </p>
-          <a href="#kampanye" className="button button-cream">
-            Lihat Kampanye
-          </a>
+          <h1 className="hero-title-beranda">Extend Your Hand, <br /> Ignite Their Hope</h1>
+          <p className="hero-subtitle-beranda">Setiap kebaikan yang Anda bagikan akan menjadi secercah cahaya bagi mereka yang membutuhkan. Mari bersama wujudkan perubahan nyata.</p>
+          <a href="#kampanye" className="button button-cream">Mulai Donasi</a>
         </div>
       </section>
 
@@ -175,6 +171,7 @@ useEffect(() => {
           <h2 className="section-title-dark">
             Amanah yang Telah Tersalurkan
           </h2>
+          <br></br>
         </div>
 
         <div className="search-bar-container">
@@ -223,7 +220,7 @@ useEffect(() => {
           ))}
         </div>
       </section>
-
+      
       {/* Footer */}
       <footer className="footer">
         <div className="container">
