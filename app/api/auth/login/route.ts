@@ -1,72 +1,36 @@
-import { NextRequest, NextResponse } from "next/server";
-import connectDB from "@/lib/mongo";
-import User from "@/models/Users";
-import bcrypt from 'bcryptjs'; 
+import { sendLog } from "@/lib/logger";
 
-export async function POST(request: NextRequest) {
-  console.log("🔐 LOGIN API - SIMPLE VERSION (clean)");
+export async function POST(req: Request) {
+  const body = await req.json();
 
-  try {
-    const { email, password } = await request.json();
-    console.log("Login for:", email);
-
-    if (!email || !password) {
-      return NextResponse.json(
-        { success: false, message: "Email dan password harus diisi" },
-        { status: 400 }
-      );
-    }
-
-    await connectDB();
-
-    const user = await User.findOne({ email: email.toLowerCase().trim() });
-
-    if (!user) {
-      console.log("User not found:", email);
-      return NextResponse.json(
-        { success: false, message: "Email belum terdaftar" },
-        { status: 404 }
-      );
-    }
-
-    console.log("User found:", user.email);
-    console.log("Stored hash exists:", !!user.password);
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    console.log("Password match?", isMatch);
-
-    if (!isMatch) {
-      console.log("Password mismatch");
-      return NextResponse.json(
-        { success: false, message: "Password salah" },
-        { status: 401 }
-      );
-    }
-
-    console.log("✅ Login successful!");
-
-    const userResponse = {
-      _id: user._id.toString(),
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      createdAt: user.createdAt
-    };
-
-    return NextResponse.json({
-      success: true,
-      message: "Login berhasil",
-      user: userResponse
+  // WARNING
+  if (!body.email || !body.password) {
+    await sendLog("warning", "Login gagal: field kosong", {
+      email: body.email,
     });
 
-  } catch (error: any) {
-    console.error("Login error:", error);
-    return NextResponse.json(
-      {
-        success: false,
-        message: "Server error: " + error.message
-      },
-      { status: 500 }
+    return Response.json(
+      { error: "Email dan password wajib diisi" },
+      { status: 400 }
     );
   }
+
+  // ERROR
+  if (body.password !== "123456") {
+    await sendLog("error", "Login gagal: password salah", {
+      email: body.email,
+    });
+
+    return Response.json(
+      { error: "Password salah" },
+      { status: 401 }
+    );
+  }
+
+  // INFO
+  await sendLog("info", "Login berhasil", {
+    email: body.email,
+  });
+
+  return Response.json({ success: true });
 }
