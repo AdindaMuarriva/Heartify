@@ -110,7 +110,7 @@ export default function Profile() {
           <div className="navbar-links">
             <Link href="/beranda">Beranda</Link>
             <Link href="/about">Tentang Kami</Link>
-            <Link href="/ajukan-kampanye">Ajukan Kampanye</Link>
+            <Link href="/ajukankampanye">Ajukan Kampanye</Link>
             <Link href="/profile" className="active">Profile</Link>
           </div>
           <button onClick={handleLogout} className="navbar-login-button">Keluar</button>
@@ -143,7 +143,7 @@ export default function Profile() {
               <input type="file" ref={fileInputRef} hidden onChange={handleFile} />
               
               <h2 className="user-name">{user.name}</h2>
-              <p className="user-role">Donatur Heartify • Member sejak 2024</p>
+              <p className="user-role">Donatur Heartify</p>
             </div>
 
             <nav className="profile-nav">
