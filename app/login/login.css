@@ -8,7 +8,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; /* Tetap center, jangan flex-start */
   font-family: "Poppins", sans-serif;
   padding: 20px;
   background: linear-gradient(-45deg, #3E0703, #660E0A, #230403, #8B1515);
@@ -183,35 +183,36 @@
 
 /* Responsive */
 @media (max-width: 480px) {
+  .login-scope-wrapper {
+    padding: 15px;
+    align-items: center; /* TETAP CENTER, jangan flex-start */
+  }
+  
   .login-scope-wrapper .auth-card {
-    padding: 1.2rem;
+    padding: 1.5rem;
     margin: 0;
     max-width: 100%;
-    border-radius: 14px;
+    border-radius: 16px;
+    max-height: auto; /* Biarkan natural height */
   }
-
+  
   .login-scope-wrapper h2 {
-    font-size: 1.4rem;
-    margin-bottom: 1.2rem;
+    font-size: 1.5rem; /* Diperkecil */
+    margin-bottom: 1.5rem; /* Diperkecil */
   }
   
   .login-scope-wrapper input {
-    padding: 10px 12px;
-    margin-bottom: 0.8rem;
-    font-size: 0.9rem;
-  }
-
-  .login-scope-wrapper button {
-    padding: 10px;
-    font-size: 0.9rem;
+    padding: 12px 14px; /* Jangan terlalu kecil */
+    margin-bottom: 0.9rem;
+    font-size: 0.95rem;
   }
   
-  .login-scope-wrapper {
-    padding: 10px;
-    align-items: flex-start;
-    padding-top: 20px;
+  .login-scope-wrapper button {
+    padding: 12px;
+    font-size: 0.95rem;
+    margin-top: 5px;
   }
-
+  
   .login-scope-wrapper .popup-card {
     padding: 20px;
     min-width: 250px;
@@ -225,9 +226,8 @@
 
 /* Untuk tablet kecil */
 @media (min-width: 481px) and (max-width: 768px) {
-  .login-scope-wrapper .auth-card,
-  .auth-card {
-    max-width: 400px;
+  .login-scope-wrapper .auth-card {
+    max-width: 380px;
     padding: 1.8rem;
   }
 }
