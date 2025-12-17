@@ -19,6 +19,22 @@
   animation: registerGradient 15s ease infinite;
 }
 
+.register-wrapper input,
+.register-wrapper select {
+  width: 100%;
+  padding: 14px 16px; 
+  margin-bottom: 1.2rem;
+  border-radius: 12px;
+  border: 2px solid var(--red-accent);
+  background: rgba(62, 7, 3, 0.8); 
+  color: var(--cream-bg);
+  outline: none;
+  font-size: 1rem;
+  font-family: "Poppins", sans-serif;
+  transition: all 0.3s ease;
+  box-sizing: border-box; 
+}
+
 @keyframes registerGradient {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -51,23 +67,6 @@
 h2 {
   font-size: 2rem;
   margin-bottom: 2rem;
-}
-
-/* ===============================
-   INPUT & SELECT
-================================ */
-input,
-select {
-  width: 100%;
-  padding: 12px 14px;
-  margin-bottom: 1rem;
-  border-radius: 12px;
-  border: 2px solid var(--red-accent);
-  background: #3e0703;
-  color: var(--cream-bg);
-  outline: none;
-  font-size: 0.95rem;
-  transition: all 0.3s ease;
 }
 
 input:focus,
@@ -167,9 +166,13 @@ a {
 @media screen and (max-width: 640px) {
   .auth-card {
     width: 100%;
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
+    margin: 15px;
   }
 
+  h2 {
+    font-size: 1.7rem;
+  }
   .role-buttons {
     flex-direction: column;
   }

@@ -539,12 +539,13 @@
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {
-  .sidebar { width: 70px; overflow: hidden; }
+  .sidebar { width: 70px; }
+  .sidebar-menu span, .brand-logo {
+    display: none;
+  }
   .menu-item span, .brand-logo { display: none; }
   .main-content { margin-left: 70px; }
   .stats-row-1, .stats-row-2 { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 768px) {
   .stats-row-1, .stats-row-2 { grid-template-columns: 1fr; }
   .nav-right { display: none; }
 }
@@ -565,5 +566,21 @@
 
   .admin-cards {
     grid-template-columns: 1fr;
+  }
+
+  .content-wrapper {
+    padding: 1rem;
+  }
+
+  .stats-row-1, .stats-row-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .table-panel {
+    overflow-x: auto; 
+  }
+  
+  .admin-table {
+    min-width: 600px; 
   }
 }
