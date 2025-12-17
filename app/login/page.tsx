@@ -1,4 +1,4 @@
-// app/login/page.tsx
+// app/login/page.tsx - MODIFIED
 "use client";
 
 import { useState, type FormEvent } from "react";
@@ -48,49 +48,63 @@ export default function Login() {
     } catch (error) {
       console.error("Login error:", error);
       setPopupMessage("Terjadi kesalahan. Silakan coba lagi.");
-      
-      // Fallback to local auth was removed for security; show error only
     } finally {
       setLoading(false);
     }
   };
 
-  // Removed insecure localStorage fallback authentication
-
   return (
-    <div className="login-scope-wrapper">
+  <div className="login-scope-wrapper">
+    <div className="login-container">
+      {/* HEADER/LOGO SECTION */}
+      <div className="login-header">
+        <div className="login-logo">Heartify</div>
+        <p className="login-subtitle">Where Kindness Meets Action</p>
+      </div>
+
+      {/* LOGIN CARD */}
       <div className="auth-card">
-        <h2>Masuk ke Heartify</h2>
+        <h2>Masuk ke Akun Anda</h2>
 
         <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            required
-            disabled={loading}
-          />
+          <div className="input-group">
+            <input
+              type="email"
+              placeholder="Alamat Email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              required
+              disabled={loading}
+            />
+          </div>
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            required
-            disabled={loading}
-          />
+          <div className="input-group">
+            <input
+              type="password"
+              placeholder="Kata Sandi"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              required
+              disabled={loading}
+            />
+          </div>
 
           <button type="submit" disabled={loading}>
-            {loading ? "Memproses..." : "Login"}
+            {loading ? "Memproses..." : "Masuk"}
           </button>
         </form>
 
-        <p>
-          Belum punya akun? <Link href="/register">Register</Link>
+        <p className="register-link">
+          Belum punya akun? <Link href="/register">Daftar Sekarang</Link>
         </p>
       </div>
 
+      {/* FOOTER INFO */}
+      <div className="login-footer">
+        © 2025 Heartify. Seluruh hak cipta dilindungi.
+      </div>
+
+      {/* POPUP */}
       {popupMessage && (
         <div className="popup-overlay">
           <div className="popup-card">
@@ -100,5 +114,6 @@ export default function Login() {
         </div>
       )}
     </div>
-  );
+  </div>
+);
 }

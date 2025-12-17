@@ -1,20 +1,25 @@
-/* CSS Login Terisolasi */
+/* CSS Login Terisolasi - REDESIGN MOBILE FRIENDLY */
 .login-scope-wrapper {
   --cream-bg: #fff1c7;
   --maroon-dark: #3e0703;
   --red-accent: #8b1c15;
+  --red-light: #b32820;
+  --dark-bg: rgba(20, 2, 2, 0.9);
   
   min-height: 100vh;
   width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   font-family: "Poppins", sans-serif;
-  
-  /* Background Gradient Merah Gelap */
-  background: linear-gradient(-45deg, #3E0703, #660E0A, #230403, #8B1515);
+  background: linear-gradient(135deg, #230403 0%, #3E0703 25%, #660E0A 50%, #8B1515 75%, #b32820 100%);
   background-size: 400% 400%;
   animation: loginGradient 15s ease infinite;
+  position: relative;
+  overflow-x: hidden;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 @keyframes loginGradient {
@@ -23,61 +28,224 @@
   100% { background-position: 0% 50%; }
 }
 
-.login-scope-wrapper .auth-card {
-  background: rgba(20, 2, 2, 0.75);
-  backdrop-filter: blur(12px);
-  padding: 3rem 2.5rem;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 241, 199, 0.1);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+/* Background decorative elements */
+.login-scope-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(179, 40, 32, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(139, 28, 21, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(62, 7, 3, 0.1) 0%, transparent 50%);
+  z-index: 0;
+}
+
+/* HEADER/LOGO AREA */
+.login-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 30px;
+  width: 100%;
+  max-width: 400px;
+  z-index: 1;
+}
+
+.auth-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: var(--dark-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  padding: 2rem 1.8rem;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 241, 199, 0.12);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 241, 199, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
   width: 100%;
   max-width: 400px;
   text-align: center;
+  z-index: 1;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-logo {
+  font-size: 2.2rem;
+  font-weight: 700;
   color: var(--cream-bg);
+  margin-bottom: 8px;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
+}
+
+.login-subtitle {
+  color: rgba(255, 241, 199, 0.8);
+  font-size: 0.95rem;
+  font-weight: 400;
+  margin: 0;
+}
+
+/* CARD REDESIGN */
+.login-scope-wrapper .auth-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--dark-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  padding: 2rem 1.8rem;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 241, 199, 0.12);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 241, 199, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  z-index: 1;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--red-light), var(--red-accent));
+  z-index: 2;
+}
+
+.auth-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 241, 199, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.auth-card form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .login-scope-wrapper h2 {
-  font-size: 2rem;
-  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  margin-bottom: 1.8rem;
   color: var(--cream-bg);
   font-weight: 700;
+  position: relative;
+  padding-bottom: 12px;
+  text-align: center;
+  display: block;
+  width: 100%;
+}
+
+.login-scope-wrapper h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  right: 25%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--red-light), transparent);
+  border-radius: 3px;
+}
+
+/* INPUT STYLES */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.input-group input {
+  text-align: left;
 }
 
 .login-scope-wrapper input {
   width: 100%;
-  padding: 14px 16px;
-  margin-bottom: 1.2rem;
-  border-radius: 10px;
-  border: 2px solid var(--red-accent);
-  background: rgba(62, 7, 3, 0.8);
+  padding: 16px 18px;
+  padding-left: 48px; /* Space for icon */
+  border-radius: 12px;
+  border: 2px solid rgba(139, 28, 21, 0.3);
+  background: rgba(30, 5, 3, 0.7);
   color: var(--cream-bg);
   outline: none;
   box-sizing: border-box;
   font-size: 1rem;
   font-family: "Poppins", sans-serif;
   transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.input-group::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.7;
+  z-index: 2;
+}
+
+/* Email icon */
+.input-group:first-child::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff1c7'%3E%3Cpath d='M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z'/%3E%3C/svg%3E");
+}
+
+/* Password icon */
+.input-group:nth-child(2)::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fff1c7'%3E%3Cpath d='M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z'/%3E%3C/svg%3E");
 }
 
 .login-scope-wrapper input:focus {
-  border-color: #b32820;
-  box-shadow: 0 0 0 3px rgba(179, 40, 32, 0.2);
-  background: rgba(62, 7, 3, 0.9);
+  border-color: var(--red-light);
+  box-shadow: 0 0 0 3px rgba(179, 40, 32, 0.25);
+  background: rgba(30, 5, 3, 0.9);
+  transform: translateY(-2px);
 }
 
 .login-scope-wrapper input::placeholder {
-  color: rgba(255, 241, 199, 0.6);
+  color: rgba(255, 241, 199, 0.5);
+  font-weight: 400;
 }
 
 .login-scope-wrapper input:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
+  transform: none !important;
 }
 
+/* BUTTON STYLES */
 .login-scope-wrapper button {
   width: 100%;
-  padding: 14px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #B32820, #8B1C15);
+  padding: 16px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--red-light), var(--red-accent));
   color: var(--cream-bg);
   border: none;
   font-weight: 600;
@@ -85,37 +253,108 @@
   margin-top: 10px;
   font-size: 1rem;
   font-family: "Poppins", sans-serif;
+  text-align: center;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+}
+
+.login-scope-wrapper button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s;
 }
 
 .login-scope-wrapper button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(139, 28, 21, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(139, 28, 21, 0.4);
   background: linear-gradient(135deg, #c92e25, #a0211a);
 }
 
-.login-scope-wrapper button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-  transform: none !important;
+.login-scope-wrapper button:hover:not(:disabled)::after {
+  left: 100%;
 }
 
+.login-scope-wrapper button:active:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.login-scope-wrapper button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  background: linear-gradient(135deg, #8a5a57, #6b4a48);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.login-scope-wrapper * {
+  max-width: 100%;
+}
+
+/* LINK STYLES */
 .login-scope-wrapper p {
-  margin-top: 1.5rem;
+  margin-top: 1.8rem;
   color: var(--cream-bg);
   font-size: 0.95rem;
+  font-weight: 400;
+  text-align: center;
+  display: block;
+  width: 100%;
 }
 
 .login-scope-wrapper a {
   color: var(--cream-bg);
-  font-weight: bold;
+  font-weight: 600;
   text-decoration: none;
-  transition: color 0.3s ease;
+  text-align: center;
+  display: block;
+  width: 100%;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.login-scope-wrapper a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--red-light);
+  transition: width 0.3s ease;
 }
 
 .login-scope-wrapper a:hover {
   color: #ffd166;
-  text-decoration: underline;
+}
+
+.login-scope-wrapper a:hover::after {
+  width: 100%;
+}
+
+/* FOOTER/EXTRA INFO */
+.login-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+  text-align: center;
+  color: rgba(255, 241, 199, 0.6);
+  font-size: 0.85rem;
+  width: 100%;
+  max-width: 400px;
+  z-index: 1;
 }
 
 /* Popup Styles */
@@ -125,7 +364,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -135,14 +374,15 @@
 
 .login-scope-wrapper .popup-card {
   background: var(--cream-bg);
-  padding: 30px;
-  border-radius: 12px;
+  padding: 28px;
+  border-radius: 16px;
   text-align: center;
   color: var(--maroon-dark);
-  min-width: 300px;
-  max-width: 90%;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  animation: slideUp 0.3s ease;
+  width: 90%;
+  max-width: 320px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.4s ease;
+  border: 1px solid rgba(62, 7, 3, 0.1);
 }
 
 .login-scope-wrapper .popup-card p {
@@ -150,19 +390,32 @@
   margin-bottom: 20px;
   font-size: 1rem;
   font-weight: 500;
+  line-height: 1.5;
 }
 
 .login-scope-wrapper .popup-card button {
   width: auto;
-  padding: 10px 30px;
+  padding: 10px 32px;
   margin-top: 10px;
   background: var(--red-accent);
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 0.95rem;
+  min-width: 100px;
 }
 
 .login-scope-wrapper .popup-card button:hover {
-  background: #a0211a;
+  background: var(--red-light);
+  transform: translateY(-2px);
+}
+
+.login-container {
+  width: 100%;
+  max-width: 480px; 
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
 }
 
 /* Animations */
@@ -174,30 +427,180 @@
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
-/* Responsive */
+/* RESPONSIVE DESIGN */
 @media (max-width: 480px) {
+  .login-scope-wrapper {
+    padding: 25px 16px; /* 16px untuk kiri-kanan, lebih dari 20px */
+    justify-content: flex-start;
+    padding-top: 40px; /* Lebih reasonable */
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+  
+    .login-container {
+    max-width: 100%;
+    padding: 0 8px; /* Memberikan breathing room */
+  }
+  
+  .register-link {
+    text-align: center;
+    padding: 0 10px;
+  }
+
+  .login-header {
+    margin-bottom: 30px;
+    padding: 0 10px; /* Tambah padding kiri-kanan */
+  }
+  
+  .login-logo {
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+  
+  .login-subtitle {
+    font-size: 0.9rem;
+    padding: 0 5px;
+  }
+  
   .login-scope-wrapper .auth-card {
-    padding: 2rem 1.5rem;
-    margin: 0 1rem;
-    border-radius: 16px;
+    padding: 1.8rem 1.6rem; /* Lebih dari 1.5rem */
+    border-radius: 20px;
+    max-width: 100%;
+    width: calc(100% - 8px); /* Sedikit lebih kecil dari container */
+    margin: 0 auto;
+    margin-top: 0;
+    box-sizing: border-box;
+    box-shadow: 
+      0 15px 30px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(255, 241, 199, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+  
+  .auth-card:hover {
+    transform: translateY(-3px);
   }
   
   .login-scope-wrapper h2 {
-    font-size: 1.7rem;
-    margin-bottom: 1.5rem;
+    font-size: 1.6rem;
+    margin-bottom: 1.6rem;
+    padding-bottom: 10px;
+    padding: 0 5px; /* Tambah padding untuk text */
   }
   
-  .login-scope-wrapper input,
+  .login-scope-wrapper input {
+    padding: 16px 18px; /* Sedikit lebih besar */
+    padding-left: 52px; /* Lebih dari 48px */
+    font-size: 1rem;
+    border-radius: 14px; /* Lebih rounded */
+  }
+  
+  .input-group::before {
+    left: 20px; /* Geser icon sedikit ke kanan */
+  }
+  
   .login-scope-wrapper button {
-    padding: 12px;
+    padding: 16px;
+    font-size: 1rem;
+    margin-top: 10px;
+    border-radius: 14px; /* Match input */
+  }
+  
+  .login-scope-wrapper p {
     font-size: 0.95rem;
+    margin-top: 1.8rem;
+    padding: 0 5px;
+  }
+  
+  .login-footer {
+    margin-top: 30px;
+    font-size: 0.8rem;
+    padding: 0 15px;
+    text-align: center;
+    color: rgba(255, 241, 199, 0.7);
+  }
+  
+  .popup-card {
+    padding: 24px 20px;
+    max-width: 85%; /* Lebih kecil dari 90% */
+    margin: 0 20px;
+  }
+}
+
+/* Untuk HP sangat kecil (iPhone SE dkk) */
+@media (max-width: 375px) {
+  .login-scope-wrapper {
+    padding: 20px 14px;
+    padding-top: 30px;
+  }
+  
+  .login-scope-wrapper .auth-card {
+    padding: 1.6rem 1.4rem;
+    border-radius: 18px;
+  }
+  
+  .login-scope-wrapper input {
+    padding: 15px 16px;
+    padding-left: 48px;
+    font-size: 0.95rem;
+  }
+  
+  .login-scope-wrapper button {
+    padding: 15px;
+  }
+  
+  .login-logo {
+    font-size: 1.8rem;
+  }
+}
+
+/* Tablet */
+@media (min-width: 481px) and (max-width: 768px) {
+  .login-scope-wrapper {
+    padding: 40px 30px;
+    padding-top: 60px;
+  }
+  
+  .login-scope-wrapper .auth-card {
+    max-width: 420px;
+    padding: 2.2rem 2rem;
+    margin: 0 auto;
+  }
+  
+  .login-logo {
+    font-size: 2.4rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 769px) {
+  .login-scope-wrapper {
+    padding: 40px;
+    padding-top: 50px;
+  }
+  
+  .login-scope-wrapper .auth-card {
+    max-width: 420px;
+    padding: 2.5rem 2.2rem;
+    margin: 0 auto;
+  }
+  
+  .login-header {
+    margin-bottom: 40px;
+  }
+  
+  .login-logo {
+    font-size: 2.8rem;
+  }
+  
+  .login-subtitle {
+    font-size: 1rem;
   }
 }

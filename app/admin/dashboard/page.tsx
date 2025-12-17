@@ -1,4 +1,4 @@
-// app/admin/dashboard/page.tsx 
+// app/admin/dashboard/page.tsx - MOBILE OPTIMIZED
 "use client";
 
 import { useState, useEffect } from "react";
@@ -21,6 +21,7 @@ export default function AdminDashboard() {
   const [adminName, setAdminName] = useState("Admin");
   const [loading, setLoading] = useState(true);
   const [dataLoadError, setDataLoadError] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // === DATA STATES ===
   const [pendingCampaigns, setPendingCampaigns] = useState<any[]>([]);
@@ -211,6 +212,19 @@ export default function AdminDashboard() {
   const formatRupiah = (num: number) => "Rp " + num.toLocaleString("id-ID");
   const formatDate = (dateString: string | Date) => new Date(dateString).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
 
+  // Mobile menu toggle
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  // Close mobile menu when tab is clicked
+  const handleTabClick = (tab: string) => {
+    setActiveTab(tab);
+    if (window.innerWidth <= 768) {
+      setMobileMenuOpen(false);
+    }
+  };
+
   // === RENDER ===
   if (loading) {
     return (
@@ -224,37 +238,68 @@ export default function AdminDashboard() {
 
   return (
     <div className="admin-layout">
-      {/* SIDEBAR */}
-      <aside className="sidebar">
+      {/* SIDEBAR / MOBILE NAVBAR */}
+      <aside className={`sidebar ${mobileMenuOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
           <div className="brand-logo">HEARTIFY ADMIN</div>
+          <button 
+            className="mobile-menu-toggle"
+            onClick={toggleMobileMenu}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? '✕' : '☰'}
+          </button>
         </div>
         <ul className="sidebar-menu">
-          <li className={`menu-item ${activeTab === "dashboard" ? "active" : ""}`} onClick={() => setActiveTab("dashboard")}>
-            <span className="menu-icon">📊</span> Dashboard
+          <li 
+            className={`menu-item ${activeTab === "dashboard" ? "active" : ""}`} 
+            onClick={() => handleTabClick("dashboard")}
+          >
+            <span className="menu-icon">📊</span>
+            <span className="menu-text">Dashboard</span>
           </li>
-          <li className={`menu-item ${activeTab === "users" ? "active" : ""}`} onClick={() => setActiveTab("users")}>
-            <span className="menu-icon">👥</span> Data Pengguna
+          <li 
+            className={`menu-item ${activeTab === "users" ? "active" : ""}`} 
+            onClick={() => handleTabClick("users")}
+          >
+            <span className="menu-icon">👥</span>
+            <span className="menu-text">Data Pengguna</span>
           </li>
-          <li className={`menu-item ${activeTab === "galang-dana" ? "active" : ""}`} onClick={() => setActiveTab("galang-dana")}>
-            <span className="menu-icon">🎁</span> Data Galang Dana
+          <li 
+            className={`menu-item ${activeTab === "galang-dana" ? "active" : ""}`} 
+            onClick={() => handleTabClick("galang-dana")}
+          >
+            <span className="menu-icon">🎁</span>
+            <span className="menu-text">Data Galang Dana</span>
           </li>
-          <li className={`menu-item ${activeTab === "konfirmasi" ? "active" : ""}`} onClick={() => setActiveTab("konfirmasi")}>
-            <span className="menu-icon">💰</span> Konfirmasi Donasi
+          <li 
+            className={`menu-item ${activeTab === "konfirmasi" ? "active" : ""}`} 
+            onClick={() => handleTabClick("konfirmasi")}
+          >
+            <span className="menu-icon">💰</span>
+            <span className="menu-text">Konfirmasi Donasi</span>
             {donationHistory.filter((d: any) => d.status === "pending").length > 0 && (
               <span className="badge-count">
                 {donationHistory.filter((d: any) => d.status === "pending").length}
               </span>
             )}
           </li>
-          <li className={`menu-item ${activeTab === "verifikasi" ? "active" : ""}`} onClick={() => setActiveTab("verifikasi")}>
-            <span className="menu-icon">📝</span> Verifikasi Kampanye
+          <li 
+            className={`menu-item ${activeTab === "verifikasi" ? "active" : ""}`} 
+            onClick={() => handleTabClick("verifikasi")}
+          >
+            <span className="menu-icon">📝</span>
+            <span className="menu-text">Verifikasi Kampanye</span>
             {pendingCampaigns.length > 0 && (
               <span className="badge-count">{pendingCampaigns.length}</span>
             )}
           </li>
-          <li className={`menu-item ${activeTab === "laporan" ? "active" : ""}`} onClick={() => setActiveTab("laporan")}>
-            <span className="menu-icon">📈</span> Laporan Penyaluran
+          <li 
+            className={`menu-item ${activeTab === "laporan" ? "active" : ""}`} 
+            onClick={() => handleTabClick("laporan")}
+          >
+            <span className="menu-icon">📈</span>
+            <span className="menu-text">Laporan Penyaluran</span>
           </li>
         </ul>
       </aside>
@@ -272,10 +317,13 @@ export default function AdminDashboard() {
           <div className="nav-right">
             <span className="notification-badge">
               <span className="bell-icon">🔔</span> 
-              <span className="notification-count">{stats.pendingTasks}</span> Pemberitahuan
+              <span className="notification-count">{stats.pendingTasks}</span>
+              <span className="notification-text">Pemberitahuan</span>
             </span>
             <span onClick={handleLogout} className="admin-profile">
-              <span className="profile-icon">👤</span> {adminName} <span className="logout-text">(Logout)</span>
+              <span className="profile-icon">👤</span> 
+              <span className="admin-name">{adminName}</span>
+              <span className="logout-text">(Logout)</span>
             </span>
           </div>
         </div>
@@ -301,7 +349,7 @@ export default function AdminDashboard() {
                       <span className="stat-label">Anggota Terdaftar</span>
                     </div>
                   </div>
-                  <div className="stat-footer" onClick={() => setActiveTab('users')}>
+                  <div className="stat-footer" onClick={() => handleTabClick('users')}>
                     Lihat Detail Data Pengguna <span className="arrow">➔</span>
                   </div>
                 </div>
@@ -314,7 +362,7 @@ export default function AdminDashboard() {
                       <span className="stat-label">Kampanye Aktif</span>
                     </div>
                   </div>
-                  <div className="stat-footer" onClick={() => setActiveTab('galang-dana')}>
+                  <div className="stat-footer" onClick={() => handleTabClick('galang-dana')}>
                     Lihat Detail Kampanye <span className="arrow">➔</span>
                   </div>
                 </div>
@@ -327,7 +375,7 @@ export default function AdminDashboard() {
                       <span className="stat-label">Menunggu Aksi</span>
                     </div>
                   </div>
-                  <div className="stat-footer" onClick={() => setActiveTab('verifikasi')}>
+                  <div className="stat-footer" onClick={() => handleTabClick('verifikasi')}>
                     Cek Verifikasi Kampanye <span className="arrow">➔</span>
                   </div>
                 </div>
@@ -342,13 +390,14 @@ export default function AdminDashboard() {
                       <span className="stat-label">Total Dana Masuk</span>
                     </div>
                   </div>
-                  <div className="stat-footer" onClick={() => setActiveTab('laporan')}>
+                  <div className="stat-footer" onClick={() => handleTabClick('laporan')}>
                     Lihat Laporan Keuangan <span className="arrow">➔</span>
                   </div>
                 </div>
               </div>
 
               {/* Stat Cards Row 2 */}
+              <h2 className="section-title">Statistik Lainnya</h2>
               <div className="stats-row-2">
                 <div className="stat-card-light">
                   <div className="light-body">
@@ -360,7 +409,7 @@ export default function AdminDashboard() {
                       <span className="light-label">Total Transaksi</span>
                     </div>
                   </div>
-                  <div className="light-footer" onClick={() => setActiveTab('laporan')}>
+                  <div className="light-footer" onClick={() => handleTabClick('laporan')}>
                     Lihat Transaksi <span className="arrow">➔</span>
                   </div>
                 </div>
@@ -390,7 +439,7 @@ export default function AdminDashboard() {
                       <span className="light-label">Campaign Pending</span>
                     </div>
                   </div>
-                  <div className="light-footer" onClick={() => setActiveTab('verifikasi')}>
+                  <div className="light-footer" onClick={() => handleTabClick('verifikasi')}>
                     Verifikasi Sekarang <span className="arrow">➔</span>
                   </div>
                 </div>
@@ -446,7 +495,7 @@ export default function AdminDashboard() {
           {/* === VIEW: VERIFIKASI KAMPANYE === */}
           {activeTab === 'verifikasi' && (
             <div className="table-panel">
-              <div className="panel-heading">Daftar Pengajuan Kampanye Baru</div>
+              <div className="panel-heading">Daftar Pengajuan Kampanye Baru ({pendingCampaigns.length})</div>
               <div className="table-responsive">
                 <table className="admin-table">
                   <thead>
@@ -547,7 +596,7 @@ export default function AdminDashboard() {
           {/* === VIEW: DATA GALANG DANA === */}
           {activeTab === 'galang-dana' && (
             <div className="table-panel">
-              <div className="panel-heading">Data Kampanye Aktif</div>
+              <div className="panel-heading">Data Kampanye Aktif ({activeCampaigns.length})</div>
               <div className="table-responsive">
                 <table className="admin-table">
                   <thead>
