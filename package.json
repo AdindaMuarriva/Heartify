@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . || true",
-    "test": "echo \"Running CI tests...\" && exit 0"
+    "lint": "next lint",
+    "test": "echo \"No tests specified yet, skipping...\" && exit 0"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
