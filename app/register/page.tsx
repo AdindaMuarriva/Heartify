@@ -138,15 +138,17 @@ export default function Register() {
         <h2>Register</h2>
 
         {/* Test buttons */}
-        <div style={{ 
+        <div className="test-buttons" style={{ 
           display: "flex", 
           gap: "10px", 
           marginBottom: "15px",
-          justifyContent: "center" 
+          justifyContent: "center",
+          flexWrap: "wrap"
         }}>
           <button
             type="button"
             onClick={() => fillTestData("user")}
+            className="test-btn"
             style={{
               padding: "5px 10px",
               background: "#3e0703",
@@ -154,7 +156,9 @@ export default function Register() {
               border: "none",
               borderRadius: "5px",
               fontSize: "12px",
-              cursor: "pointer"
+              cursor: "pointer",
+              flex: "1",
+              minWidth: "100px"
             }}
           >
             Fill User Test
@@ -162,6 +166,7 @@ export default function Register() {
           <button
             type="button"
             onClick={() => fillTestData("admin")}
+            className="test-btn"
             style={{
               padding: "5px 10px",
               background: "#8b1c15",
@@ -169,7 +174,9 @@ export default function Register() {
               border: "none",
               borderRadius: "5px",
               fontSize: "12px",
-              cursor: "pointer"
+              cursor: "pointer",
+              flex: "1",
+              minWidth: "100px"
             }}
           >
             Fill Admin Test

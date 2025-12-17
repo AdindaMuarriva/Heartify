@@ -10,7 +10,7 @@
   justify-content: center;
   align-items: center;
   font-family: "Poppins", sans-serif;
-  padding: 20px; /* Tambahan agar tidak menempel di HP */
+  padding: 20px;
   background: linear-gradient(-45deg, #3E0703, #660E0A, #230403, #8B1515);
   background-size: 400% 400%;
   animation: loginGradient 15s ease infinite;
@@ -22,37 +22,37 @@
   100% { background-position: 0% 50%; }
 }
 
+/* CARD DIKECILKAN */
 .login-scope-wrapper .auth-card {
-  background: rgba(20, 2, 2, 0.75);
-  backdrop-filter: blur(12px);
-  padding: 3rem 2.5rem;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 241, 199, 0.1);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  background: rgba(20, 2, 2, 0.85); 
+  backdrop-filter: blur(15px);
+  padding: 2rem; /* Diperkecil dari 2.5rem */
+  border-radius: 20px; /* Diperkecil dari 24px */
+  border: 1px solid rgba(255, 241, 199, 0.15);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); /* Diperkecil */
   width: 100%;
-  max-width: 420px; /* Lebar ideal desktop */
+  max-width: 360px; /* Diperkecil dari 400px */
   text-align: center;
-  color: var(--cream-bg);
 }
 
 .login-scope-wrapper h2 {
-  font-size: 2rem;
-  margin-bottom: 2rem;
+  font-size: 1.7rem; /* Diperkecil */
+  margin-bottom: 1.8rem; /* Diperkecil */
   color: var(--cream-bg);
   font-weight: 700;
 }
 
 .login-scope-wrapper input {
   width: 100%;
-  padding: 14px 16px;
-  margin-bottom: 1.2rem;
+  padding: 12px 14px; /* Diperkecil */
+  margin-bottom: 1rem;
   border-radius: 10px;
   border: 2px solid var(--red-accent);
   background: rgba(62, 7, 3, 0.8);
   color: var(--cream-bg);
   outline: none;
   box-sizing: border-box;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-family: "Poppins", sans-serif;
   transition: all 0.3s ease;
 }
@@ -74,7 +74,7 @@
 
 .login-scope-wrapper button {
   width: 100%;
-  padding: 14px;
+  padding: 12px; /* Diperkecil */
   border-radius: 10px;
   background: linear-gradient(135deg, #B32820, #8B1C15);
   color: var(--cream-bg);
@@ -82,14 +82,14 @@
   font-weight: 600;
   cursor: pointer;
   margin-top: 10px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-family: "Poppins", sans-serif;
   transition: all 0.3s ease;
 }
 
 .login-scope-wrapper button:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(139, 28, 21, 0.4);
+  box-shadow: 0 6px 12px rgba(139, 28, 21, 0.4); /* Diperkecil */
   background: linear-gradient(135deg, #c92e25, #a0211a);
 }
 
@@ -100,9 +100,9 @@
 }
 
 .login-scope-wrapper p {
-  margin-top: 1.5rem;
+  margin-top: 1.2rem; /* Diperkecil */
   color: var(--cream-bg);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .login-scope-wrapper a {
@@ -134,30 +134,30 @@
 
 .login-scope-wrapper .popup-card {
   background: var(--cream-bg);
-  padding: 30px;
+  padding: 24px; /* Diperkecil */
   border-radius: 12px;
   text-align: center;
   color: var(--maroon-dark);
-  min-width: 300px;
-  max-width: 90%;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  min-width: 280px; /* Diperkecil */
+  max-width: 85%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* Diperkecil */
   animation: slideUp 0.3s ease;
 }
 
 .login-scope-wrapper .popup-card p {
   color: var(--maroon-dark);
-  margin-bottom: 20px;
-  font-size: 1rem;
+  margin-bottom: 18px; /* Diperkecil */
+  font-size: 0.95rem;
   font-weight: 500;
 }
 
 .login-scope-wrapper .popup-card button {
   width: auto;
-  padding: 10px 30px;
+  padding: 8px 24px; /* Diperkecil */
   margin-top: 10px;
   background: var(--red-accent);
   border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .login-scope-wrapper .popup-card button:hover {
@@ -184,30 +184,50 @@
 /* Responsive */
 @media (max-width: 480px) {
   .login-scope-wrapper .auth-card {
-    padding: 2rem 1.5rem;
+    padding: 1.2rem;
     margin: 0;
     max-width: 100%;
-    border-radius: 16px;
+    border-radius: 14px;
   }
 
-  .auth-card {
-    padding: 2rem 1.5rem;
-    margin: 0 15px; 
-    width: calc(100% - 30px);
-  }
-
-  h2 {
-    font-size: 1.5rem;
-  }
-  
   .login-scope-wrapper h2 {
-    font-size: 1.6rem;
-    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+    margin-bottom: 1.2rem;
   }
   
-  .login-scope-wrapper input,
+  .login-scope-wrapper input {
+    padding: 10px 12px;
+    margin-bottom: 0.8rem;
+    font-size: 0.9rem;
+  }
+
   .login-scope-wrapper button {
-    padding: 12px;
-    font-size: 0.95rem;
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+  
+  .login-scope-wrapper {
+    padding: 10px;
+    align-items: flex-start;
+    padding-top: 20px;
+  }
+
+  .login-scope-wrapper .popup-card {
+    padding: 20px;
+    min-width: 250px;
+  }
+  
+  .login-scope-wrapper p {
+    font-size: 0.85rem;
+    margin-top: 1rem;
+  }
+}
+
+/* Untuk tablet kecil */
+@media (min-width: 481px) and (max-width: 768px) {
+  .login-scope-wrapper .auth-card,
+  .auth-card {
+    max-width: 400px;
+    padding: 1.8rem;
   }
 }
