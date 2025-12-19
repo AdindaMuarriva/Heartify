@@ -168,44 +168,45 @@ a {
   to { transform: scale(1); opacity: 1; }
 }
 
+/* RESPONSIVE DESIGN REGISTER */
 @media screen and (max-width: 640px) {
+  .register-wrapper {
+    display: flex;
+    flex-direction: column;
+    /* KUNCI TENGAH: */
+    justify-content: center; 
+    align-items: center;
+    
+    min-height: 100vh;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+
   .auth-card {
-    padding: 1.2rem;
-    margin: 0;
-    max-width: 100%;
+    width: 100%;
+    max-width: 380px;
+    padding: 1.5rem;
+    margin: 0 auto;
     border-radius: 14px;
-    max-height: 90vh;
+    /* Hilangkan max-height jika ingin center sempurna, 
+       atau gunakan overflow jika konten sangat panjang */
+    max-height: 95vh; 
+    overflow-y: auto; 
+  }
+
+  /* Agar form di dalam tidak berantakan */
+  .register-wrapper input,
+  .register-wrapper select {
+    padding: 12px;
+    margin-bottom: 0.8rem;
+    font-size: 0.9rem;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   h2 {
     font-size: 1.4rem;
-    margin-bottom: 1.2rem;
-  }
-
-  .register-wrapper {
-    padding: 15px;
-    align-items: flex-start;
-    padding-top: 20px;
-  }
-
-  .register-wrapper input,
-  .register-wrapper select {
-    padding: 10px 12px;
-    margin-bottom: 0.8rem;
-    font-size: 0.9rem;
-  }
-
-  .role-buttons {
-    flex-direction: column;
-  }
-
-  button {
-    padding: 10px;
-    font-size: 0.9rem;
-  }
-  
-  .card {
-    padding: 16px 20px;
-    max-width: 85%;
+    margin-bottom: 1rem;
+    text-align: center;
   }
 }

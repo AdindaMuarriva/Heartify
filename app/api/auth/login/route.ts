@@ -1,4 +1,4 @@
-import { logger } from "@/lib/logger";
+import { logger as sendLog } from "@/lib/logger";
 
 const USERS = [
   { email: "alsyamaulizar@gmail.com", password: "123456" },
@@ -8,9 +8,9 @@ const USERS = [
 export async function POST(req: Request) {
   const body = await req.json();
 
-  // WARNING
+  // WARNING - Menggunakan sendLog.warning()
   if (!body.email || !body.password) {
-    await sendLog("warning", "Login gagal: field kosong", {
+    await sendLog.warning("Login gagal: field kosong", {
       email: body.email,
     });
 
@@ -20,9 +20,9 @@ export async function POST(req: Request) {
     );
   }
 
-  // ERROR
+  // ERROR - Menggunakan sendLog.error()
   if (body.password !== "123456") {
-    await sendLog("error", "Login gagal: password salah", {
+    await sendLog.error("Login gagal: password salah", {
       email: body.email,
     });
 
@@ -32,8 +32,8 @@ export async function POST(req: Request) {
     );
   }
 
-  // INFO
-  await sendLog("info", "Login berhasil", {
+  // INFO - Menggunakan sendLog.info()
+  await sendLog.info("Login berhasil", {
     email: body.email,
   });
 
