@@ -221,11 +221,6 @@ const Beranda = () => {
                   Terkumpul: {formatCurrency(report.target)}
                 </p>
 
-                <p className="report-date">
-                  Diterbitkan:{" "}
-                  {new Date(report.deadline).toLocaleDateString("id-ID")}
-                </p>
-
                 <Link href="/laporan" className="button button-dark-full">
                   Lihat Laporan →
                 </Link>
