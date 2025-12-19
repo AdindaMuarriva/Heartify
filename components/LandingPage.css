@@ -752,3 +752,147 @@ html, body {
     font-size: 2.5rem;
   }
 }
+
+/* =========================================
+   NAVBAR & HAMBURGER MENU STYLES
+   ========================================= */
+
+/* Default Navbar (Desktop) */
+.navbar-container {
+  background-color: var(--white);
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.navbar {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.navbar-logo {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: var(--maroon-dark);
+  text-decoration: none;
+  z-index: 1002;
+}
+
+/* Container Link & Button di Desktop */
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.navbar-links a {
+  color: var(--maroon-dark);
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.navbar-links a:hover {
+  color: var(--maroon-red);
+}
+
+.navbar-login-button {
+  background: white;
+  color: var(--maroon-dark);
+  font-weight: 600;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  border: 2px solid var(--maroon-dark);
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.navbar-login-button:hover {
+  background: var(--maroon-dark);
+  color: white;
+}
+
+/* Hamburger Icon (Garis 3) - Default Sembunyi di Laptop */
+.hamburger {
+  display: none;
+  cursor: pointer;
+  z-index: 1002;
+}
+
+.bar {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 5px auto;
+  background-color: var(--maroon-dark);
+  transition: all 0.3s ease-in-out;
+  border-radius: 3px;
+}
+
+/* =========================================
+   RESPONSIVE MOBILE (Layar < 768px)
+   ========================================= */
+@media screen and (max-width: 768px) {
+  /* Munculkan Ikon Hamburger */
+  .hamburger {
+    display: block;
+  }
+
+  /* Animasi Hamburger jadi X saat aktif */
+  .hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .hamburger.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* Sembunyikan Menu di HP secara default */
+  .navbar-menu {
+    position: fixed;
+    top: -100%; /* Sembunyi di atas layar */
+    left: 0;
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    background-color: var(--white);
+    padding: 2rem 0;
+    box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+    transition: 0.4s ease;
+    gap: 1.5rem;
+    z-index: 1001; /* Di bawah logo/hamburger tapi di atas konten */
+  }
+
+  /* Tampilkan Menu saat kelas active ditambahkan */
+  .navbar-menu.active {
+    top: 80px; /* Muncul tepat di bawah navbar header */
+  }
+
+  .navbar-links {
+    flex-direction: column;
+    width: 100%;
+    gap: 1.5rem;
+  }
+
+  .navbar-login-button {
+    width: 80%;
+    text-align: center;
+  }
+}
