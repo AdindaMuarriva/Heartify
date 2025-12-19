@@ -1,48 +1,38 @@
 import winston from 'winston';
-import LokiTransport from 'winston-loki';
 
-// 1. Konfigurasi Logger Utama
+// 1. Konfigurasi Logger Sederhana (Hanya ke Console)
 const logger = winston.createLogger({
   level: 'info',
   format: winston.format.combine(
     winston.format.timestamp(),
     winston.format.json()
   ),
-  defaultMeta: { service: 'heartify-app' }, // Label default
+  defaultMeta: { service: 'heartify-app' },
   transports: [
-    // Output ke Terminal VS Code (Warna-warni biar enak dibaca)
+    // Output ke Terminal VS Code saja (Aman & Tidak Error)
     new winston.transports.Console({
       format: winston.format.combine(
         winston.format.colorize(),
         winston.format.simple()
       ),
     }),
-    // Output ke Grafana Loki (Pastikan Docker jalan)
-    new LokiTransport({
-      host: 'http://127.0.0.1:3100', // Sesuai settingan Docker Compose tadi
-      json: true,
-      labels: { job: 'heartify-logs' },
-      onConnectionError: (err: any ) => {
-        console.error("⚠️ Gagal kirim log ke Loki (Cek Docker):", err.message);
-      }
-    }),
   ],
 });
 
-// 2. Fungsi Wrapper 'sendLog' (INI YANG HILANG SEBELUMNYA)
-// Fungsi ini menjembatani cara panggil kamu di API dengan winston
+// 2. Fungsi Wrapper 'sendLog'
+// Kita tetap pertahankan fungsi ini agar file API Login/Register TIDAK ERROR
 export const sendLog = async (
   level: 'info' | 'warn' | 'warning' | 'error', 
   message: string, 
   meta: any = {}
 ) => {
-  // Winston pakai 'warn', tapi kadang kita terbiasa ketik 'warning'
+  // Winston pakai 'warn', tapi API kamu pakai 'warning', kita samakan
   const validLevel = level === 'warning' ? 'warn' : level;
 
   logger.log({
     level: validLevel,
     message: message,
-    ...meta // Data tambahan (email, error stack, dll)
+    ...meta 
   });
 };
 
