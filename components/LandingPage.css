@@ -1,4 +1,5 @@
 /* landingPage.css */
+
 /* Import Font */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
@@ -22,11 +23,18 @@
   box-sizing: border-box;
 }
 
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden; /* Mencegah scroll ke samping di HP */
+}
+
 .landing-body {
   font-family: 'Inter', sans-serif;
   line-height: 1.6;
   color: var(--maroon-dark);
   background-color: var(--white);
+  width: 100%;
   overflow-x: hidden;
 }
 
@@ -35,6 +43,7 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 2rem;
+  width: 100%;
 }
 
 /* Navbar Styling - Premium */
@@ -236,6 +245,7 @@
   padding: 8rem 0;
   position: relative;
   overflow: hidden;
+  width: 100%;
 }
 
 .hero-section::before {
@@ -256,6 +266,7 @@
   text-align: center;
   position: relative;
   z-index: 2;
+  padding: 0 1rem;
 }
 
 .hero-title {
@@ -338,6 +349,7 @@
   color: var(--cream);
   font-size: 1.5rem;
   font-weight: 600;
+  width: 100%;
 }
 
 /* Features Section */
@@ -533,6 +545,7 @@
   grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: 4rem;
   margin-bottom: 3rem;
+  padding: 0 2rem;
 }
 
 .footer-column h3 {
@@ -606,15 +619,14 @@
   opacity: 0.6;
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .section-title {
-    font-size: 2.5rem;
-  }
-  
-  .hero-title {
-    font-size: 3rem;
-  }
+/* =========================================
+   MEDIA QUERIES (RESPONSIVE RULES)
+   Menggabungkan aturan responsif agar rapi di Mobile, Tablet, dan Desktop
+   ========================================= */
+
+@media screen and (max-width: 1024px) {
+  .section-title { font-size: 2.5rem; }
+  .hero-title { font-size: 3rem; }
   
   .features-grid,
   .testimonial-grid {
@@ -632,43 +644,82 @@
   }
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
+  /* --- NAVBAR RESPONSIVE --- */
   .navbar {
     flex-direction: column;
+    height: auto;
+    padding: 1rem;
     gap: 1rem;
-    padding: 1rem 0;
   }
   
   .navbar-links {
-    gap: 1.5rem;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 10px 0;
   }
-  
+
   .navbar-buttons {
-    gap: 0.5rem;
+    flex-direction: column;
+    width: 100%;
+    gap: 0.8rem;
   }
-  
+
+  .navbar-login-button,
+  .navbar-register-button {
+    width: 100%;
+    text-align: center;
+    display: block;
+  }
+
+  /* --- HERO SECTION --- */
+  .hero-section {
+    padding: 6rem 1rem 4rem 1rem;
+  }
+
   .hero-title {
     font-size: 2.5rem;
+    line-height: 1.2;
   }
-  
+
   .hero-buttons,
   .cta-buttons {
     flex-direction: column;
-    align-items: center;
+    width: 100%;
+    align-items: stretch;
   }
-  
+
+  .hero-buttons .button,
+  .cta-buttons .button {
+    width: 100%;
+  }
+
+  /* --- GRIDS & LAYOUTS --- */
   .stats-grid,
   .impact-stats {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr); /* 2 kolom di tablet/HP besar */
+    gap: 1.5rem;
   }
   
   .footer-grid {
     grid-template-columns: 1fr;
     text-align: center;
+    padding: 0 1rem;
+  }
+
+  .contact-info a,
+  .contact-info p {
+    justify-content: center;
+  }
+
+  .social-links {
+    justify-content: center;
   }
 }
 
-@media (max-width: 480px) {
+@media screen and (max-width: 480px) {
   .container {
     padding: 0 1rem;
   }
@@ -685,13 +736,19 @@
     font-size: 2rem;
   }
   
+  /* Stack everything to 1 column on small screens */
   .stats-grid,
-  .impact-stats {
+  .impact-stats,
+  .features-grid,
+  .testimonial-grid {
     grid-template-columns: 1fr;
   }
   
   .testimonial-card {
     padding: 2rem 1.5rem;
   }
-}
 
+  .stat-number, .impact-number {
+    font-size: 2.5rem;
+  }
+}
