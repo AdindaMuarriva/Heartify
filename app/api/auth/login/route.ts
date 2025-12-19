@@ -34,6 +34,11 @@ export async function POST(request: NextRequest) {
 
     const isMatch = await bcrypt.compare(password, user.password);
     console.log("Password match?", isMatch);
+    console.log("🔍 Debug info:");
+    console.log("Input password length:", password.length);
+    console.log("Stored hash length:", user.password.length);
+    console.log("Hash starts with $2a$ or $2b$?", user.password.substring(0, 4));
+    console.log("Password match?", isMatch);
 
     if (!isMatch) {
       console.log("Password mismatch");

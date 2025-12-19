@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/mongo";
 import User from "@/models/Users";
-import bcrypt from 'bcryptjs'; // Import bcrypt di sini
+import bcrypt from 'bcryptjs'; 
 
 export async function POST(request: NextRequest) {
   console.log("📝 REGISTER API - SIMPLE VERSION");
