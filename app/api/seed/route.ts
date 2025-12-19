@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongo";
 import Campaign from "@/models/Campaign";
-import Report from "@/models/Report";
+import Report from "@/models/Laporan";
 
 export async function GET() {
   try {

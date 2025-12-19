@@ -416,15 +416,13 @@ export default function AdminDashboard() {
 
                 <div className="stat-card-light">
                   <div className="light-body">
-                    <div className="light-icon-box icon-blue">
-                      📊
-                    </div>
+                    <div className="light-icon-box icon-blue">📊</div>
                     <div className="light-info">
                       <span className="light-number">{stats.distributed}</span>
                       <span className="light-label">Dana Disalurkan</span>
                     </div>
                   </div>
-                  <div className="light-footer">
+                  <div className="light-footer" onClick={() => router.push("/admin/dashboard/buat-laporan")}>
                     Buat Laporan <span className="arrow">➔</span>
                   </div>
                 </div>
