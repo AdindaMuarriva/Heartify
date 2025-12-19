@@ -1,0 +1,27 @@
+2025-12-18T07:15:25.139Z [INFO] API log-test dipanggil
+2025-12-18T07:15:25.140Z [ERROR] Error dari API Heartify
+{"timestamp":"2025-12-18T08:12:51.263Z","level":"error","service":"heartify","route":"/api/auth/login","email":"alsyamaulizar@gmail.com","message":"Login gagal: password salah"}
+{"timestamp":"2025-12-18T08:14:19.084Z","level":"error","service":"heartify","route":"/api/auth/login","email":"nisa@gmail.com","message":"Login gagal: password salah"}
+{"timestamp":"2025-12-18T08:35:46.880Z","level":"error","service":"heartify","route":"/api/auth/login","email":"alisyazarr@gmail.com","message":"Login gagal: password salah"}
+{"timestamp":"2025-12-18T08:36:01.967Z","level":"error","service":"heartify","route":"/api/auth/login","email":"alisyazarr@gmail.com","message":"Login gagal: password salah"}
+{"timestamp":"2025-12-18T09:34:27.439Z","level":"error","email":"alisyazarr@gmail.com","route":"/api/auth/login","message":"Login gagal: email tidak terdaftar"}
+{"timestamp":"2025-12-18T09:34:38.815Z","level":"error","email":"alisyazarr@gmail.com","route":"/api/auth/login","message":"Login gagal: email tidak terdaftar"}
+{"timestamp":"2025-12-18T09:34:53.038Z","level":"info","email":"alsyamaulizar@gmail.com","route":"/api/auth/login","message":"Login berhasil"}
+{"timestamp":"2025-12-18T09:34:53.039Z","level":"info","route":"/api/auth/login","email":"alsyamaulizar@gmail.com","message":"Debug: hasil perhitungan 10 / 2 = 5"}
+{"timestamp":"2025-12-18T09:35:01.116Z","level":"info","email":"alsyamaulizar@gmail.com","route":"/api/auth/login","message":"Login berhasil"}
+{"timestamp":"2025-12-18T09:35:01.117Z","level":"info","route":"/api/auth/login","email":"alsyamaulizar@gmail.com","message":"Debug: hasil perhitungan 10 / 2 = 5"}
+{"timestamp":"2025-12-18T09:40:21.461Z","level":"error","email":"tasya@gmail.com","route":"/api/auth/login","message":"Login gagal: email tidak terdaftar"}
+{"timestamp":"2025-12-18T09:40:29.349Z","level":"error","email":"tasya@gmail.com","route":"/api/auth/login","message":"Login gagal: email tidak terdaftar"}
+{"timestamp":"2025-12-18T09:40:41.749Z","level":"error","email":"tasya@gmail.com","route":"/api/auth/login","message":"Login gagal: email tidak terdaftar"}
+{"timestamp":"2025-12-18T09:40:46.048Z","level":"error","email":"tasya@gmail.com","route":"/api/auth/login","message":"Login gagal: email tidak terdaftar"}
+{"timestamp":"2025-12-18T09:40:49.144Z","level":"error","email":"tasya@gmail.com","route":"/api/auth/login","message":"Login gagal: email tidak terdaftar"}
+{"timestamp":"2025-12-18T09:40:51.279Z","level":"error","email":"tasya@gmail.com","route":"/api/auth/login","message":"Login gagal: email tidak terdaftar"}
+{"timestamp":"2025-12-18T09:42:58.793Z","level":"info","email":"alsyamaulizar@gmail.com","route":"/api/auth/login","message":"Login berhasil"}
+{"timestamp":"2025-12-18T09:42:58.795Z","level":"info","route":"/api/auth/login","email":"alsyamaulizar@gmail.com","message":"Debug: hasil perhitungan 10 / 2 = 5"}
+{"timestamp":"2025-12-18T09:55:17.451Z","level":"info","email":"alsyamaulizar@gmail.com","route":"/api/auth/login","message":"Login berhasil"}
+{"timestamp":"2025-12-18T09:55:17.452Z","level":"info","route":"/api/auth/login","email":"alsyamaulizar@gmail.com","message":"Debug: hasil perhitungan 10 / 2 = 5"}
+{"timestamp":"2025-12-18T10:09:07.942Z","level":"error","message":"Login gagal: email tidak terdaftar","email":"alsyamaulizar12@gmail.com"}
+{"timestamp":"2025-12-18T10:09:22.519Z","level":"error","message":"Login gagal: password salah","email":"alsyamaulizar@gmail.com"}
+{"timestamp":"2025-12-18T10:09:29.205Z","level":"info","message":"Login berhasil","email":"alsyamaulizar@gmail.com"}
+{"timestamp":"2025-12-18T10:20:47.379Z","level":"info","message":"Login berhasil","email":"alsyamaulizar@gmail.com"}
+{"timestamp":"2025-12-18T10:24:37.688Z","level":"info","message":"Login berhasil","email":"alsyamaulizar@gmail.com"}

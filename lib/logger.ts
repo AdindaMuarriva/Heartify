@@ -1,58 +1,42 @@
-type LogLevel = "info" | "warning" | "error";
+import fs from "fs";
+import path from "path";
 
-const LOKI_URL = process.env.LOKI_URL!;
-const LOKI_USERNAME = process.env.LOKI_USERNAME!;
-const LOKI_PASSWORD = process.env.LOKI_PASSWORD!;
+const logFile = path.join(process.cwd(), "logs/heartify.log");
 
-function toNanoTimestamp(): string {
-  // Date.now() = ms → tambahkan 6 nol agar jadi ns
-  return `${Date.now()}000000`;
+// Pastikan folder logs ada
+if (!fs.existsSync(path.dirname(logFile))) {
+  fs.mkdirSync(path.dirname(logFile), { recursive: true });
 }
 
-export async function sendLog(
-  level: LogLevel,
-  message: string,
-  extra?: Record<string, any>
-) {
-  if (!LOKI_URL || !LOKI_USERNAME || !LOKI_PASSWORD) {
-    console.warn("Loki env variables not set");
-    return;
-  }
-
-  const payload = {
-    streams: [
-      {
-        stream: {
-          app: "heartify",
-          env: process.env.NODE_ENV || "production",
-          level,
-        },
-        values: [
-          [
-            toNanoTimestamp(),
-            JSON.stringify({
-              level,
-              message,
-              ...extra,
-            }),
-          ],
-        ],
-      },
-    ],
-  };
-
-  try {
-    await fetch(LOKI_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization:
-          "Basic " +
-          Buffer.from(`${LOKI_USERNAME}:${LOKI_PASSWORD}`).toString("base64"),
-      },
-      body: JSON.stringify(payload),
-    });
-  } catch (err) {
-    console.error("Failed to send log to Loki:", err);
-  }
-}
+export const logger = {
+  info: async (message: string, meta: any = {}) => {
+    const log = {
+      timestamp: new Date().toISOString(),
+      level: "info",
+      message,
+      ...meta,
+    };
+    fs.appendFileSync(logFile, JSON.stringify(log) + "\n");
+    console.log(log);
+  },
+  warning: async (message: string, meta: any = {}) => {
+    const log = {
+      timestamp: new Date().toISOString(),
+      level: "warning",
+      message,
+      ...meta,
+    };
+    fs.appendFileSync(logFile, JSON.stringify(log) + "\n");
+    console.warn(log);
+  },
+  error: async (message: string, meta: any = {}) => {
+    const log = {
+      timestamp: new Date().toISOString(),
+      level: "error",
+      message,
+      ...meta,
+    };
+    fs.appendFileSync(logFile, JSON.stringify(log) + "\n");
+    console.error(log);
+  },
+};
