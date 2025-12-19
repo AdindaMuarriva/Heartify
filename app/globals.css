@@ -2,6 +2,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --maroon-dark: #3e0703;
+  --maroon-mid: #660e0a;
+  --maroon-red: #8b1c15;
+  --maroon-bright: #b32820;
+  --cream: #fff1c7;
+  --white: #ffffff;
+  --gray: #4a5568;
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -25,236 +32,13 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
-  /* Tambahan untuk mencegah scroll samping di HP */
   max-width: 100vw;
   overflow-x: hidden;
 }
 
 /* =================================================================
-   GLOBAL MOBILE RESPONSIVE ENGINE (UNTUK SEMUA HALAMAN)
-   Mengatur otomatis tampilan Login, Register, Admin, Profile, Beranda
-   agar rapi di layar HP/Tablet (< 768px).
+   GLOBAL NAVBAR & HAMBURGER MENU (DESKTOP DEFAULT)
    ================================================================= */
-
-/* 1. ATURAN UMUM UNTUK HP & TABLET (Layar < 768px) */
-@media screen and (max-width: 768px) {
-
-  /* --- PERBAIKAN NAVBAR (Berlaku untuk Beranda, Profile, Landing) --- */
-  .navbar {
-    flex-direction: column !important; /* Menu jadi susun ke bawah */
-    height: auto !important;
-    padding: 1rem !important;
-    gap: 15px;
-  }
-
-  .navbar-links {
-    flex-direction: column !important;
-    width: 100%;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px;
-    display: flex !important; /* Pastikan tetap flex */
-  }
-
-  .navbar-buttons, 
-  .navbar-login-button {
-    width: 100%;
-    text-align: center;
-    display: block;
-    margin-top: 10px;
-  }
-
-  /* --- PERBAIKAN GRID SYSTEM (Berlaku untuk Kartu Donasi, Statistik, dll) --- */
-  /* Memaksa semua yang berjejer 3 atau 4 kolom menjadi 1 kolom ke bawah */
-  .campaign-grid, 
-  .report-grid, 
-  .stats-grid,
-  .features-grid,
-  .testimonial-grid,
-  .footer-grid,
-  .stats-row,
-  .stats-row-1, 
-  .stats-row-2,
-  .form-grid-layout,
-  .profile-dashboard {
-    grid-template-columns: 1fr !important; /* Paksa jadi 1 kolom */
-    display: grid !important;
-    gap: 20px !important;
-    padding: 0 15px !important;
-  }
-
-  /* Flexbox yang tadinya row dipaksa column */
-  .profile-card,
-  .admin-layout,
-  .mission-content {
-    flex-direction: column !important;
-    height: auto !important;
-    width: 100% !important;
-  }
-
-  /* --- PERBAIKAN CONTAINER & CARD --- */
-  .container, 
-  .profile-wrapper, 
-  .hero-content, 
-  .content-wrapper,
-  .laporan-container,
-  .filter-container {
-    padding: 0 15px !important;
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-
-  .campaign-card, 
-  .report-card, 
-  .stat-card, 
-  .stat-card-solid, 
-  .stat-card-light,
-  .profile-card,
-  .laporan-detailed-card {
-    width: 100% !important;
-    min-height: auto !important;
-    margin-bottom: 15px;
-    grid-template-columns: 1fr !important; /* Reset grid di dalam card */
-    grid-template-rows: auto !important;
-  }
-
-  /* Khusus card laporan yang ada gambarnya di samping */
-  .laporan-detailed-card {
-    display: flex !important;
-    flex-direction: column !important;
-  }
-  
-  .laporan-image-container, .laporan-image {
-    width: 100% !important;
-    height: 200px !important;
-  }
-
-  /* --- PERBAIKAN SIDEBAR (Profile & Admin) --- */
-  /* Sidebar tidak lagi melayang di kiri, tapi di atas konten */
-  .profile-sidebar-panel,
-  .sidebar {
-    width: 100% !important;
-    position: relative !important;
-    height: auto !important;
-    border-right: none !important;
-    border-bottom: 1px solid #eee;
-    padding: 20px !important;
-    box-shadow: none !important;
-  }
-
-  /* Menu sidebar admin biar gak kepanjangan di HP */
-  .sidebar-menu {
-    flex-direction: row;
-    overflow-x: auto;
-    white-space: nowrap;
-    padding-bottom: 10px;
-  }
-  
-  .sidebar-menu .menu-item {
-    display: inline-flex;
-    width: auto;
-    margin-right: 10px;
-  }
-
-  /* Konten utama tidak lagi didorong ke kanan */
-  .main-content, 
-  .profile-content-panel {
-    margin-left: 0 !important;
-    padding: 20px !important;
-    width: 100% !important;
-  }
-
-  /* --- PERBAIKAN FONT (Typography) --- */
-  h1, .hero-title, .hero-title-beranda, .section-title, .laporan-hero-title {
-    font-size: 1.8rem !important; /* Judul besar dikecilkan */
-    text-align: center;
-    line-height: 1.3;
-  }
-
-  h2, h3 {
-    font-size: 1.4rem !important;
-  }
-
-  p, span, div {
-    font-size: 0.95rem !important; /* Teks paragraf disesuaikan */
-  }
-
-  /* --- PERBAIKAN TABEL (Admin & Data) --- */
-  /* Agar tabel bisa discroll ke samping jika kepanjangan */
-  .table-responsive {
-    display: block;
-    width: 100%;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch;
-    border: 1px solid #eee;
-  }
-  
-  .admin-table {
-    min-width: 600px; /* Paksa tabel lebar agar scrollable */
-  }
-
-  /* --- PERBAIKAN FORM (Login/Register/Input) --- */
-  .auth-card, 
-  .form-card, 
-  .modal-content {
-    width: 95% !important;
-    padding: 20px !important;
-    max-height: 90vh;
-    overflow-y: auto;
-    margin: 10px auto;
-  }
-
-  .form-group, .input-group {
-    width: 100% !important;
-  }
-  
-  .full-width {
-    grid-column: span 1 !important;
-  }
-  
-  /* Tombol Filter di Laporan */
-  .search-filter-wrapper {
-    flex-direction: column !important;
-  }
-  
-  .filter-group {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-/* 2. ATURAN KHUSUS HP KECIL (Di bawah 480px) */
-@media screen and (max-width: 480px) {
-  .hero-section, .hero-section-beranda {
-    padding: 80px 15px 40px 15px !important;
-  }
-  
-  .button, button, .btn-save, .btn-cancel, .btn-submit {
-    width: 100% !important; /* Tombol full width agar mudah ditekan */
-    padding: 12px !important;
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .navbar-logo {
-    font-size: 1.5rem !important;
-  }
-  
-  .stat-card, .stat-card-solid {
-    padding: 15px !important;
-  }
-  
-  .stat-number {
-    font-size: 1.8rem !important;
-  }
-}
-
-/* =========================================
-   NAVBAR & HAMBURGER MENU STYLES
-   ========================================= */
-
-/* Default Navbar (Desktop) */
 .navbar-container {
   background-color: var(--white);
   border-bottom: 1px solid #eee;
@@ -268,7 +52,7 @@ body {
 .navbar {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 2rem;
   height: 80px;
   display: flex;
   justify-content: space-between;
@@ -284,7 +68,7 @@ body {
   z-index: 1002;
 }
 
-/* Container Link & Button di Desktop */
+/* Menu Utama (Desktop) */
 .navbar-menu {
   display: flex;
   align-items: center;
@@ -304,9 +88,7 @@ body {
   transition: 0.3s;
 }
 
-.navbar-links a:hover {
-  color: var(--maroon-red);
-}
+.navbar-links a:hover { color: var(--maroon-red); }
 
 .navbar-login-button {
   background: white;
@@ -324,10 +106,12 @@ body {
   color: white;
 }
 
-/* Hamburger Icon (Garis 3) - Default Sembunyi di Laptop */
+/* Hamburger Icon (Sembunyi di Desktop) */
 .hamburger {
-  display: none;
+  display: none; /* Default Hidden */
   cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
   z-index: 1002;
 }
 
@@ -335,51 +119,49 @@ body {
   display: block;
   width: 25px;
   height: 3px;
-  margin: 5px auto;
   background-color: var(--maroon-dark);
-  transition: all 0.3s ease-in-out;
   border-radius: 3px;
+  transition: all 0.3s ease;
 }
 
-/* =========================================
-   RESPONSIVE MOBILE (Layar < 768px)
-   ========================================= */
+/* =================================================================
+   GLOBAL MOBILE RESPONSIVE ENGINE (HP & TABLET < 768px)
+   ================================================================= */
 @media screen and (max-width: 768px) {
-  /* Munculkan Ikon Hamburger */
+
+  /* 1. NAVBAR MOBILE (HAMBURGER MODE) */
+  .navbar {
+    padding: 0 1.5rem; /* Padding lebih kecil */
+  }
+
   .hamburger {
-    display: block;
+    display: flex; /* Munculkan Hamburger */
   }
 
-  /* Animasi Hamburger jadi X saat aktif */
-  .hamburger.active .bar:nth-child(2) {
-    opacity: 0;
-  }
-  .hamburger.active .bar:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
-  }
-  .hamburger.active .bar:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
-  }
+  /* Animasi Hamburger 'X' */
+  .hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .hamburger.active .bar:nth-child(2) { opacity: 0; }
+  .hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-  /* Sembunyikan Menu di HP secara default */
+  /* Menu Dropdown Mobile */
   .navbar-menu {
     position: fixed;
-    top: -100%; /* Sembunyi di atas layar */
+    top: -100%; /* Sembunyi di atas */
     left: 0;
     width: 100%;
     height: auto;
-    flex-direction: column;
     background-color: var(--white);
+    flex-direction: column; /* Susun ke bawah */
+    align-items: center;
     padding: 2rem 0;
-    box-shadow: 0 10px 10px rgba(0,0,0,0.1);
-    transition: 0.4s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: 0.4s ease-in-out;
     gap: 1.5rem;
-    z-index: 1001; /* Di bawah logo/hamburger tapi di atas konten */
+    z-index: 1001;
   }
 
-  /* Tampilkan Menu saat kelas active ditambahkan */
   .navbar-menu.active {
-    top: 80px; /* Muncul tepat di bawah navbar header */
+    top: 80px; /* Turun ke bawah saat aktif */
   }
 
   .navbar-links {
@@ -392,4 +174,127 @@ body {
     width: 80%;
     text-align: center;
   }
+
+  /* 2. LAYOUT GRID (Kartu Donasi, Statistik, dll) */
+  .campaign-grid, 
+  .report-grid, 
+  .stats-grid,
+  .features-grid,
+  .testimonial-grid,
+  .footer-grid,
+  .stats-row,
+  .stats-row-1, 
+  .stats-row-2,
+  .form-grid-layout,
+  .profile-dashboard {
+    grid-template-columns: 1fr !important; /* Paksa 1 kolom */
+    display: grid !important;
+    gap: 20px !important;
+    padding: 0 15px !important;
+  }
+
+  /* 3. FLEXBOX CONTAINER (Profile, Admin) */
+  .profile-card,
+  .admin-layout,
+  .mission-content {
+    flex-direction: column !important;
+    height: auto !important;
+    width: 100% !important;
+  }
+
+  /* 4. CONTAINER PADDING */
+  .container, 
+  .profile-wrapper, 
+  .hero-content, 
+  .content-wrapper,
+  .laporan-container,
+  .filter-container {
+    padding: 0 15px !important;
+    width: 100% !important;
+  }
+
+  /* 5. SIDEBAR (Pindah ke Atas) */
+  .profile-sidebar-panel,
+  .sidebar {
+    width: 100% !important;
+    position: relative !important;
+    height: auto !important;
+    border-right: none !important;
+    border-bottom: 1px solid #eee;
+    padding: 20px !important;
+    box-shadow: none !important;
+  }
+  
+  /* Menu Admin agar bisa discroll horizontal */
+  .sidebar-menu {
+    flex-direction: row;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 10px;
+    display: flex;
+  }
+  
+  .sidebar-menu .menu-item {
+    display: inline-flex;
+    width: auto;
+    margin-right: 10px;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+  }
+
+  /* 6. CONTENT UTAMA */
+  .main-content, 
+  .profile-content-panel {
+    margin-left: 0 !important;
+    padding: 20px !important;
+    width: 100% !important;
+  }
+
+  /* 7. TYPOGRAPHY (Font Size) */
+  h1, .hero-title, .hero-title-beranda, .section-title, .laporan-hero-title {
+    font-size: 1.8rem !important;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  h2, h3 { font-size: 1.4rem !important; }
+  p, span, div { font-size: 0.95rem !important; }
+
+  /* 8. TABEL & FORM */
+  .table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid #eee;
+  }
+  
+  .admin-table { min-width: 600px; }
+
+  .auth-card, .form-card, .modal-content {
+    width: 95% !important;
+    padding: 20px !important;
+    max-height: 90vh;
+    overflow-y: auto;
+    margin: 10px auto;
+  }
+
+  .form-group, .input-group { width: 100% !important; }
+  .full-width { grid-column: span 1 !important; }
+}
+
+/* 3. ATURAN KHUSUS HP KECIL (Di bawah 480px) */
+@media screen and (max-width: 480px) {
+  .hero-section, .hero-section-beranda {
+    padding: 80px 15px 40px 15px !important;
+  }
+  
+  .button, button, .btn-save, .btn-cancel, .btn-submit {
+    width: 100% !important;
+    padding: 12px !important;
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .navbar-logo { font-size: 1.5rem !important; }
 }
