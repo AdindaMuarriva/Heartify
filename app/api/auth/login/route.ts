@@ -8,23 +8,34 @@ const USERS = [
 export async function POST(req: Request) {
   const body = await req.json();
 
+  // WARNING
   if (!body.email || !body.password) {
-    await logger.warning("Login gagal: field kosong", { email: body.email });
-    return Response.json({ error: "Email dan password wajib diisi" }, { status: 400 });
+    await sendLog("warning", "Login gagal: field kosong", {
+      email: body.email,
+    });
+
+    return Response.json(
+      { error: "Email dan password wajib diisi" },
+      { status: 400 }
+    );
   }
 
-  const user = USERS.find(u => u.email === body.email);
+  // ERROR
+  if (body.password !== "123456") {
+    await sendLog("error", "Login gagal: password salah", {
+      email: body.email,
+    });
 
-  if (!user) {
-    await logger.error("Login gagal: email tidak terdaftar", { email: body.email });
-    return Response.json({ error: "Email tidak terdaftar" }, { status: 404 });
+    return Response.json(
+      { error: "Password salah" },
+      { status: 401 }
+    );
   }
 
-  if (user.password !== body.password) {
-    await logger.error("Login gagal: password salah", { email: body.email });
-    return Response.json({ error: "Password salah" }, { status: 401 });
-  }
+  // INFO
+  await sendLog("info", "Login berhasil", {
+    email: body.email,
+  });
 
-  await logger.info("Login berhasil", { email: body.email });
-  return Response.json({ success: true, email: user.email });
+  return Response.json({ success: true });
 }

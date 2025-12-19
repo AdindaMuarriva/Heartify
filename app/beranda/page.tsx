@@ -27,35 +27,49 @@ const Beranda = () => {
     router.push("/login"); 
   };
 
-  /* ================= FETCH DATA ================= */
-useEffect(() => {
-  const fetchCampaigns = async () => {
-    try {
-      const res = await fetch("/api/campaign");
-      const result = await res.json();
+  /* ================= FETCH DATA LENGKAP ================= */
+  useEffect(() => {
+    const fetchAllData = async () => {
+      try {
+        console.log("⏳ Memulai pengambilan data Beranda...");
 
-      const campaigns: Campaign[] = Array.isArray(result.data)
-        ? result.data
-        : [];
+        // Mengambil data kampanye dan laporan secara paralel 
+        const [campRes, reportRes] = await Promise.all([
+          fetch("/api/campaign"),
+          fetch("/api/laporan")
+        ]);
 
-      setCampaigns(campaigns);
+        // Validasi status respons
+        if (!campRes.ok || !reportRes.ok) {
+          throw new Error(`Gagal fetch: Campaign(${campRes.status}) Laporan(${reportRes.status})`);
+        }
 
-      // Laporan = campaign yang sudah melewati deadline
-      const today = new Date();
-      const finishedCampaigns = campaigns.filter(
-        (campaign) => new Date(campaign.deadline) < today
-      );
+        const campResult = await campRes.json();
+        const reportResult = await reportRes.json();
 
-      setReports(finishedCampaigns);
-    } catch (error) {
-      console.error("Gagal mengambil data campaign:", error);
-      setCampaigns([]);
-      setReports([]);
-    }
-  };
+        // 1. Set Kampanye Aktif (dari data properti .data)
+        const campaignData = Array.isArray(campResult.data) ? campResult.data : [];
+        setCampaigns(campaignData);
 
-  fetchCampaigns();
-}, []);
+        // 2. Set Laporan Resmi (data yang sudah di-craft oleh Admin)
+        const reportData = Array.isArray(reportResult) ? reportResult : [];
+        setReports(reportData);
+
+        console.log("✅ Data berhasil dimuat:", {
+          totalCampaigns: campaignData.length,
+          totalReports: reportData.length
+        });
+
+      } catch (error) {
+        console.error("❌ Gagal mengambil data Beranda:", error);
+        // Reset state ke array kosong jika terjadi error untuk mencegah crash pada .map()
+        setCampaigns([]);
+        setReports([]);
+      }
+    };
+
+    fetchAllData();
+  }, []); 
 
 
   /* ================= UTIL ================= */
