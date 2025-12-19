@@ -16,29 +16,15 @@ interface Campaign {
 
 const Beranda = () => {
   const router = useRouter();
-
-  // === STATE DATA ===
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [reports, setReports] = useState<Campaign[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  
-  // === STATE UI (Hamburger Menu) ===
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
 
   /* ================= HANDLERS ================= */
   const handleLogout = () => {
     localStorage.removeItem("user");
     router.push("/login"); 
-  };
-
-  // Fungsi Toggle Hamburger
-  const toggleMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  // Fungsi tutup menu saat link diklik (UX yang baik)
-  const closeMenu = () => {
-    setIsMobileMenuOpen(false);
   };
 
   /* ================= FETCH DATA LENGKAP ================= */
@@ -102,45 +88,17 @@ const Beranda = () => {
   return (
     <div className="beranda-body">
 
-      {/* === NAVBAR DENGAN HAMBURGER === */}
+      {/* Navbar */}
       <header className="navbar-container">
         <nav className="navbar">
-          {/* Logo */}
-          <Link href="/beranda" className="navbar-logo" onClick={closeMenu}>
-            Heartify
-          </Link>
-
-          {/* Tombol Hamburger (Muncul di Mobile) */}
-          <div 
-            className={`hamburger ${isMobileMenuOpen ? "active" : ""}`} 
-            onClick={toggleMenu}
-          >
-            <span className="bar"></span>
-            <span className="bar"></span>
-            <span className="bar"></span>
+          <Link href="/beranda" className="navbar-logo">Heartify</Link>
+          <div className="navbar-links">
+            <a href="/beranda">Beranda</a>
+            <a href="/about">Tentang Kami</a>
+            <a href="/ajukankampanye" >Ajukan Kampanye</a>
+            <a href="/Profile">Profile</a>
           </div>
-
-          {/* Menu Container (Links & Buttons) */}
-          <div className={`navbar-menu ${isMobileMenuOpen ? "active" : ""}`}>
-            <div className="navbar-links">
-              <Link href="/beranda" onClick={closeMenu} className="active-link" style={{color: '#8b1c15'}}>
-                Beranda
-              </Link>
-              <Link href="/about" onClick={closeMenu}>
-                Tentang Kami
-              </Link>
-              <Link href="/ajukankampanye" onClick={closeMenu}>
-                Ajukan Kampanye
-              </Link>
-              <Link href="/Profile" onClick={closeMenu}>
-                Profile
-              </Link>
-            </div>
-            
-            <button onClick={() => { closeMenu(); handleLogout(); }} className="navbar-login-button">
-              Keluar
-            </button>
-          </div>
+          <button onClick={handleLogout} className="navbar-login-button">Keluar</button>
         </nav>
       </header>
 
@@ -154,7 +112,7 @@ const Beranda = () => {
       </section>
 
       {/* ================= KAMPANYE ================= */}
-      <section id="kampanye" className="campaign-section">
+      <section className="campaign-section">
         <div className="section-header">
           <span className="section-tag">INFORMASI KAMPANYE</span>
           <h2 className="section-title-dark">Bantuan Mendesak Dibutuhkan</h2>
@@ -180,7 +138,7 @@ const Beranda = () => {
                   Target: <strong>{formatCurrency(campaign.target)}</strong>
                 </p>
 
-                {/* DEBUG INFO (Bisa dihapus nanti jika sudah production) */}
+                {/* DEBUG INFO */}
                 <div style={{ 
                   fontSize: '10px', 
                   color: '#666', 
@@ -188,15 +146,29 @@ const Beranda = () => {
                   backgroundColor: '#f5f5f5',
                   padding: '3px',
                   borderRadius: '3px',
-                  fontFamily: 'monospace',
-                  display: 'none' // Saya sembunyikan defaultnya biar rapi
+                  fontFamily: 'monospace'
                 }}>
-                  ID: {campaign._id}
+                  ID: {campaign._id}<br/>
+                  Length: {campaign._id?.length || 'undefined'}
                 </div>
 
                 <Link
                   href={`/informasi/${encodeURIComponent(campaign._id)}`}
                   className="campaign-see-more"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    console.log('=== DEBUG INFO ===');
+                    console.log('Campaign index:', index);
+                    console.log('Campaign title:', campaign.title);
+                    console.log('Campaign _id:', campaign._id);
+                    console.log('Campaign _id type:', typeof campaign._id);
+                    console.log('Campaign _id length:', campaign._id?.length);
+                    console.log('Encoded ID:', encodeURIComponent(campaign._id));
+                    console.log('URL akan ke:', `/informasi/${campaign._id}`);
+                    
+                    // Navigasi setelah log
+                    window.location.href = `/informasi/${campaign._id}`;
+                  }}
                 >
                   Lihat Selengkapnya →
                 </Link>

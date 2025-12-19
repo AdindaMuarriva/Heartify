@@ -64,6 +64,8 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  height: 72px;
 }
 
 .navbar-logo {
@@ -75,6 +77,8 @@ html, body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  position: absolute;
+  left: 0;
 }
 
 .navbar-logo::before {
@@ -115,6 +119,8 @@ html, body {
 
 .navbar-buttons {
   display: flex;
+  position: absolute;
+  right: 0;
   gap: 1rem;
   align-items: center;
 }
@@ -789,6 +795,7 @@ html, body {
 
 /* Container Link & Button di Desktop */
 .navbar-menu {
+  margin: 0 auto;
   display: flex;
   align-items: center;
   gap: 2rem;
@@ -844,55 +851,180 @@ html, body {
   border-radius: 3px;
 }
 
-/* =========================================
-   RESPONSIVE MOBILE (Layar < 768px)
-   ========================================= */
-@media screen and (max-width: 768px) {
-  /* Munculkan Ikon Hamburger */
+/* ======================================================
+   RESPONSIVE BREAKPOINTS + HAMBURGER NAVBAR
+   ====================================================== */
+
+/* ---------------- TABLET ---------------- */
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: 2.8rem;
+  }
+
+  .section-title {
+    font-size: 2.4rem;
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stats-grid,
+  .impact-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .testimonial-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------------- MOBILE ---------------- */
+@media (max-width: 768px) {
+  /* ===== NAVBAR ===== */
+  .navbar {
+    height: auto;
+    padding: 1rem;
+    flex-direction: row;
+  }
+
+  .navbar-logo {
+    font-size: 1.5rem;
+  }
+
+  /* Hamburger */
   .hamburger {
     display: block;
+    cursor: pointer;
+    z-index: 1002;
   }
 
-  /* Animasi Hamburger jadi X saat aktif */
-  .hamburger.active .bar:nth-child(2) {
-    opacity: 0;
-  }
-  .hamburger.active .bar:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
-  }
-  .hamburger.active .bar:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
+  .hamburger span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    margin: 5px 0;
+    background-color: var(--maroon-dark);
+    border-radius: 4px;
+    transition: 0.3s ease;
   }
 
-  /* Sembunyikan Menu di HP secara default */
+  /* Menu */
   .navbar-menu {
     position: fixed;
-    top: -100%; /* Sembunyi di atas layar */
+    top: 72px;
     left: 0;
     width: 100%;
-    height: auto;
+    background: var(--white);
     flex-direction: column;
-    background-color: var(--white);
-    padding: 2rem 0;
-    box-shadow: 0 10px 10px rgba(0,0,0,0.1);
-    transition: 0.4s ease;
     gap: 1.5rem;
-    z-index: 1001; /* Di bawah logo/hamburger tapi di atas konten */
+    padding: 2rem 0;
+    transform: translateY(-120%);
+    transition: transform 0.35s ease;
+    box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+    z-index: 1001;
   }
 
-  /* Tampilkan Menu saat kelas active ditambahkan */
   .navbar-menu.active {
-    top: 80px; /* Muncul tepat di bawah navbar header */
+    transform: translateY(0);
   }
 
   .navbar-links {
     flex-direction: column;
-    width: 100%;
-    gap: 1.5rem;
+    align-items: center;
+    gap: 1.25rem;
   }
 
-  .navbar-login-button {
-    width: 80%;
+  .navbar-buttons {
+    width: 90%;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .navbar-login-button,
+  .navbar-register-button {
+    width: 100%;
     text-align: center;
+  }
+
+  /* ===== HERO ===== */
+  .hero-section {
+    padding: 5rem 1rem 4rem;
+  }
+
+  .hero-title {
+    font-size: 2.2rem;
+    line-height: 1.25;
+  }
+
+  .hero-subtitle {
+    font-size: 1.05rem;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-buttons .button {
+    width: 100%;
+  }
+
+  /* ===== SECTION ===== */
+  .section {
+    padding: 4rem 0;
+  }
+
+  /* ===== GRID ===== */
+  .features-grid,
+  .stats-grid,
+  .impact-stats,
+  .testimonial-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    text-align: center;
+  }
+
+  .contact-info a,
+  .contact-info p,
+  .social-links {
+    justify-content: center;
+  }
+}
+
+/* ---------------- SMALL MOBILE ---------------- */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .hero-title {
+    font-size: 1.9rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .stat-number,
+  .impact-number {
+    font-size: 2.3rem;
+  }
+
+  .testimonial-card {
+    padding: 1.5rem;
+  }
+
+  .button {
+    width: 100%;
   }
 }

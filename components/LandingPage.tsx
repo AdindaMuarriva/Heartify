@@ -1,33 +1,51 @@
 // landingPage.tsx
 "use client";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import "./LandingPage.css";
 
 const LandingPage: React.FC = () => {
   
   const isLoggedIn = false;
-  
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div className="landing-body">
-      {/* Navbar */}
+    {/* Navbar */}
       <header className="navbar-container">
         <nav className="navbar container">
+          {/* Logo */}
           <a href="/" className="navbar-logo">
             Heartify
           </a>
-          <div className="navbar-links">
-            <a href={isLoggedIn ? "/" : "/register"}>Beranda</a>
-            <a href={isLoggedIn ? "/AboutPage" : "/register"}>Tentang</a>
-            <a href={isLoggedIn ?"/ajukankampanye" : "/register"}>Ajukan Kampanye</a>
-            <a href={isLoggedIn ? "/profile" : "/register"}>Profil</a>
+
+          {/* Menu (Links + Buttons) */}
+          <div className={`navbar-menu ${menuOpen ? "active" : ""}`}>
+            <div className="navbar-links">
+              <a href={isLoggedIn ? "/" : "/register"}>Beranda</a>
+              <a href={isLoggedIn ? "/about" : "/register"}>Tentang</a>
+              <a href={isLoggedIn ? "/ajukankampanye" : "/register"}>Ajukan Kampanye</a>
+              <a href={isLoggedIn ? "/Profile" : "/register"}>Profil</a>
+            </div>
+
+            <div className="navbar-buttons">
+              <a href="/login" className="navbar-login-button">
+                Masuk
+              </a>
+              <a href="/register" className="navbar-register-button">
+                Daftar
+              </a>
+            </div>
           </div>
-          <div className="navbar-buttons">
-            <a href="/login" className="navbar-login-button">
-              Masuk
-            </a>
-            <a href="/register" className="navbar-beranda-button">
-              Daftar
-            </a>
+
+          {/* Hamburger */}
+          <div
+            className={`hamburger ${menuOpen ? "active" : ""}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
           </div>
         </nav>
       </header>
