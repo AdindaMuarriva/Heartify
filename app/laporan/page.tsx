@@ -242,7 +242,7 @@ const Laporan = () => {
             <Link href="/beranda">Beranda</Link>
             <Link href="/about">Tentang Kami</Link>
             <Link href="/ajukankampanye">Ajukan Kampanye</Link>
-            <Link href="/Profile">Profil</Link>
+            <Link href="/profile">Profile</Link>
           </div>
           <Link href="/login" className="navbar-login-button">
             Keluar
