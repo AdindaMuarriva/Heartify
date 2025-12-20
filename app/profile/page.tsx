@@ -57,7 +57,7 @@ export default function Profile() {
   }, [router]);
 
   const handleLogout = () => {
-    localStorage.removeItem("registeredUser");
+    localStorage.removeItem("user");
     router.push("/login");
   };
 
