@@ -16,7 +16,7 @@ export default function About() {
             <Link href="/beranda">Beranda</Link>
             <Link href="/about">Tentang Kami</Link>
             <Link href="/ajukankampanye">Ajukan Kampanye</Link>
-            <Link href="/Profile">Profile</Link>
+            <Link href="/profile">Profile</Link>
           </div>
           <Link href="/login" className="navbar-login-button">
             Keluar

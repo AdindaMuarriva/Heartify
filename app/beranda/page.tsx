@@ -96,7 +96,7 @@ const Beranda = () => {
             <a href="/beranda">Beranda</a>
             <a href="/about">Tentang Kami</a>
             <a href="/ajukankampanye" >Ajukan Kampanye</a>
-            <a href="/Profile">Profile</a>
+            <a href="/profile">Profile</a>
           </div>
           <button onClick={handleLogout} className="navbar-login-button">Keluar</button>
         </nav>

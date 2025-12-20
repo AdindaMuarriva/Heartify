@@ -81,7 +81,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             <Link href="/beranda">Beranda</Link>
             <Link href="/about">Tentang Kami</Link>
             <Link href="/ajukankampanye" className="active-link" style={{ borderBottom: "2px solid #8b1c15", color: "#8b1c15" }}>Ajukan Kampanye</Link>
-            <Link href="/Profile">Profile</Link>
+            <Link href="/profile">Profile</Link>
           </div>
           <button onClick={handleLogout} className="navbar-login-button">Keluar</button>
         </div>

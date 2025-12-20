@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
         const body = await request.json();
         
         const {
-            _id, // Wajib: ID pengguna yang akan diubah
+            _id, 
             name,
             email,
             phone,
