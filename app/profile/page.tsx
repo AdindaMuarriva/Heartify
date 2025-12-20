@@ -27,7 +27,7 @@ export default function Profile() {
 
   useEffect(() => {
     // 1. Load User
-    const data = localStorage.getItem("registeredUser");
+    const data = localStorage.getItem("user");
     if (!data) {
       router.push("/login");
       return;
