@@ -64,76 +64,71 @@ export default function AdminDashboard() {
     }
   }, [router]);
 
-  // --- Fungsi Load Data dari API ---
-  const loadData = async () => {
-    setDataLoadError(null);
-    setLoading(true);
-    
-    try {
-      // Fetch data dari 5 API 
-      const [campaignsRes, donationsRes, pendingRes, usersCountRes, allUsersRes] = await Promise.all([
-        fetch("/api/campaign/all"), 
-        fetch("/api/donations"),    
-        fetch("/api/campaign/pending"),
-        fetch("/api/users/count"), 
-        fetch("/api/users/all")
-      ]);
-
-      // Cek status respons
-      if (!campaignsRes.ok || !donationsRes.ok || !pendingRes.ok || !usersCountRes.ok || !allUsersRes.ok) {
-        let errorMsg = "Gagal mengambil data dari API. Status:";
-        if (!campaignsRes.ok) errorMsg += ` Campaigns(${campaignsRes.status})`;
-        if (!donationsRes.ok) errorMsg += ` Donations(${donationsRes.status})`;
-        if (!usersCountRes.ok) errorMsg += ` UsersCount(${usersCountRes.status})`;
-        if (!allUsersRes.ok) errorMsg += ` AllUsers(${allUsersRes.status})`;
+    // --- Fungsi Load Data dari API ---
+      const loadData = async () => {
+        setDataLoadError(null);
+        setLoading(true);
         
-        throw new Error(errorMsg);
-      }
+        try {
+          // 1. Tambahkan 'laporansRes' ke dalam array hasil Promise.all
+          const [campaignsRes, donationsRes, pendingRes, usersCountRes, allUsersRes, laporansRes] = await Promise.all([
+            fetch("/api/campaign/all"), 
+            fetch("/api/donations"),    
+            fetch("/api/campaign/pending"),
+            fetch("/api/users/count"), 
+            fetch("/api/users/all"),
+            fetch("/api/laporan")
+          ]);
 
-      // Parse JSON
-      const campaigns = await campaignsRes.json();
-      const donations = await donationsRes.json();
-      const usersData = await usersCountRes.json(); 
-      const usersList = await allUsersRes.json();
-      
-      // Filter data
-      const approvedCampaigns = campaigns.filter((c: any) => c.status === "approved");
-      const pendingCampaigns = campaigns.filter((c: any) => c.status === "pending");
+          // 2. Cek status respons (Pastikan laporansRes.ok diperiksa)
+          if (!campaignsRes.ok || !donationsRes.ok || !pendingRes.ok || !usersCountRes.ok || !allUsersRes.ok || !laporansRes.ok) {
+            let errorMsg = "Gagal mengambil data dari API. Status:";
+            if (!campaignsRes.ok) errorMsg += ` Campaigns(${campaignsRes.status})`;
+            if (!donationsRes.ok) errorMsg += ` Donations(${donationsRes.status})`;
+            if (!laporansRes.ok) errorMsg += ` Laporan(${laporansRes.status})`;
+            
+            throw new Error(errorMsg);
+          }
 
-      setPendingCampaigns(pendingCampaigns);
-      setDonationHistory(donations);
-      setActiveCampaigns(approvedCampaigns);
-      setAllUsers(usersList);
+          // 3. Parse JSON menggunakan variabel Res masing-masing
+          const campaigns = await campaignsRes.json();
+          const donations = await donationsRes.json();
+          const usersData = await usersCountRes.json(); 
+          const usersList = await allUsersRes.json();
+          const laporans = await laporansRes.json();
+          
+          // 4. Filter data
+          const approvedCampaigns = campaigns.filter((c: any) => c.status === "approved");
+          const pendingCampaignsData = campaigns.filter((c: any) => c.status === "pending");
 
-      // Hitung statistik
-      const totalCollected = approvedCampaigns.reduce((sum: number, c: any) => sum + (c.collected || 0), 0);
-      const pendingDonationsCount = donations.filter((d: any) => d.status === 'pending').length;
-      
-      const totalUsers = usersData.count || 0; 
+          setPendingCampaigns(pendingCampaignsData);
+          setDonationHistory(donations);
+          setActiveCampaigns(approvedCampaigns);
+          setAllUsers(usersList);
 
-      setStats({
-        members: totalUsers,
-        totalMoney: totalCollected,
-        activePrograms: approvedCampaigns.length,
-        pendingTasks: pendingCampaigns.length + pendingDonationsCount,
-        transactionCount: donations.length,
-        distributed: 0 
-      });
+          // 5. Hitung statistik
+          const totalCollected = approvedCampaigns.reduce((sum: number, c: any) => sum + (c.collected || 0), 0);
+          const pendingDonationsCount = donations.filter((d: any) => d.status === 'pending').length;
+          const totalUsers = usersData.count || 0; 
 
-    } catch (error: any) {
-      console.error("Error loading data:", error);
-      setDataLoadError(`Gagal memuat data: ${error.message}. Cek konsol server.`);
-      // Reset states jika gagal
-      setPendingCampaigns([]);
-      setDonationHistory([]);
-      setActiveCampaigns([]);
-      setAllUsers([]);
-      setStats({ members: 0, totalMoney: 0, activePrograms: 0, pendingTasks: 0, transactionCount: 0, distributed: 0 });
-    } finally {
-      setLoading(false);
-    }
-  };
+          setStats({
+            members: totalUsers,
+            totalMoney: totalCollected,
+            activePrograms: approvedCampaigns.length,
+            pendingTasks: pendingCampaignsData.length + pendingDonationsCount,
+            transactionCount: donations.length,
+            // distributed sekarang mengambil jumlah dari data laporan di MongoDB
+            distributed: Array.isArray(laporans) ? laporans.length : 0 
+          });
 
+        } catch (error: any) {
+          console.error("Error loading data:", error);
+          setDataLoadError(`Gagal memuat data: ${error.message}. Cek konsol server.`);
+          setStats({ members: 0, totalMoney: 0, activePrograms: 0, pendingTasks: 0, transactionCount: 0, distributed: 0 });
+        } finally {
+          setLoading(false);
+  }
+};
   // --- ACTIONS ---
   const handleApproveCampaign = async (campaign: any) => {
     try {
